@@ -11,4 +11,12 @@ async function registerUser(overrides = {}) {
   return { res, body: res.body, payload };
 }
 
-module.exports = { registerUser, app };
+async function createConversation(token, title = 'New conversation') {
+  const res = await request(app)
+    .post('/api/conversations')
+    .set('Authorization', `Bearer ${token}`)
+    .send({ title });
+  return { res, body: res.body };
+}
+
+module.exports = { registerUser, createConversation, app };
