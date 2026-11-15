@@ -1,18 +1,23 @@
 {
   "info": {
     "_postman_id": "a1b2c3d4-0000-4000-8000-000000000001",
-    "name": "My Auth Collection",
-    "description": "Auth API tests for the SecureChat Express backend (register, login, me, health).",
+    "name": "My Auth + Conversations Collection",
+    "description": "Auth (register, login, me) + Conversation CRUD for the SecureChat Express backend.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
-    { "key": "baseUrl", "value": "http://localhost:5000" },
-    { "key": "token", "value": "" },
-    { "key": "userId", "value": "" },
-    { "key": "testEmail", "value": "" },
-    { "key": "testPassword", "value": "Password123!" },
-    { "key": "testName", "value": "Test User" }
-  ],
+  { "key": "baseUrl", "value": "http://localhost:5000" },
+  { "key": "token", "value": "" },
+  { "key": "userId", "value": "" },
+  { "key": "conversationId", "value": "" },
+  { "key": "testEmail", "value": "" },
+  { "key": "testPassword", "value": "Password123!" },
+  { "key": "testName", "value": "Test User" },
+  { "key": "bobToken", "value": "" },
+  { "key": "bobUserId", "value": "" },
+  { "key": "bobEmail", "value": "" },
+  { "key": "aliceConversationId", "value": "" }
+],
   "item": [
     {
       "name": "Health",
@@ -61,7 +66,6 @@
               "  pm.expect(body.user).to.have.keys('id','email','name','role');",
               "  pm.expect(body.user).to.not.have.property('passwordHash');",
               "});",
-              "// Save token + id for downstream requests",
               "pm.collectionVariables.set('token', body.token);",
               "pm.collectionVariables.set('userId', body.user.id);"
             ]
@@ -94,7 +98,6 @@
               "const body = pm.response.json();",
               "pm.test('Returns token', () => pm.expect(body.token).to.be.a('string').and.not.empty);",
               "pm.test('Returns user', () => pm.expect(body.user).to.have.property('email'));",
-              "// Refresh token in case register was skipped",
               "pm.collectionVariables.set('token', body.token);",
               "pm.collectionVariables.set('userId', body.user.id);"
             ]
@@ -270,6 +273,435 @@
           "path": ["does-not-exist"]
         }
       }
+    },
+    {
+      "name": "1. Create conversation",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('201 Created', () => pm.response.to.have.status(201));",
+              "const body = pm.response.json();",
+              "pm.test('Returns conversation object', () => pm.expect(body).to.have.property('conversation'));",
+              "pm.test('userId matches logged-in user', () => {",
+              "  pm.expect(body.conversation.userId).to.eql(pm.collectionVariables.get('userId'));",
+              "});",
+              "pm.test('Title set from body', () => pm.expect(body.conversation.title).to.eql('Test chat'));",
+              "pm.test('Empty messages array', () => {",
+              "  pm.expect(body.conversation.messages).to.be.an('array').that.is.empty;",
+              "});",
+              "// Save id for downstream requests #4-#7",
+              "pm.collectionVariables.set('conversationId', body.conversation._id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Test chat\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations"]
+        }
+      }
+    },
+    {
+      "name": "2. Create conversation (no token)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('401 Unauthorized', () => pm.response.to.have.status(401));",
+              "pm.test('Missing token message', () => pm.expect(pm.response.json().error).to.eql('Missing token'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Should fail\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations"]
+        }
+      }
+    },
+    {
+      "name": "3. List conversations",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Returns conversations array', () => pm.expect(body.conversations).to.be.an('array'));",
+              "pm.test('Contains our Test chat conversation', () => {",
+              "  const found = body.conversations.find((c) => c.title === 'Test chat');",
+              "  pm.expect(found, 'Test chat should appear in the list').to.exist;",
+              "});",
+              "pm.test('List items have no messages field (lightweight projection)', () => {",
+              "  body.conversations.forEach((c) => pm.expect(c).to.not.have.property('messages'));",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations"]
+        }
+      }
+    },
+    {
+      "name": "4. Get conversation by id",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Returns conversation object', () => pm.expect(body).to.have.property('conversation'));",
+              "pm.test('ID matches saved conversationId', () => {",
+              "  pm.expect(body.conversation._id).to.eql(pm.collectionVariables.get('conversationId'));",
+              "});",
+              "pm.test('Has full messages array', () => pm.expect(body.conversation.messages).to.be.an('array'));",
+              "pm.test('userId still matches owner', () => {",
+              "  pm.expect(body.conversation.userId).to.eql(pm.collectionVariables.get('userId'));",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations/{{conversationId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations", "{{conversationId}}"]
+        }
+      }
+    },
+    {
+      "name": "5. Rename conversation",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Title updated to Renamed', () => {",
+              "  pm.expect(body.conversation.title).to.eql('Renamed');",
+              "});",
+              "pm.test('ID unchanged', () => {",
+              "  pm.expect(body.conversation._id).to.eql(pm.collectionVariables.get('conversationId'));",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Renamed\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations/{{conversationId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations", "{{conversationId}}"]
+        }
+      }
+    },
+    {
+      "name": "6. Delete conversation",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "pm.test('Returns { deleted: true }', () => {",
+              "  pm.expect(pm.response.json()).to.eql({ deleted: true });",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations/{{conversationId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations", "{{conversationId}}"]
+        }
+      }
+    },
+    {
+      "name": "7. Get deleted conversation (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('404 Not Found', () => pm.response.to.have.status(404));",
+              "pm.test('Conversation not found message', () => {",
+              "  pm.expect(pm.response.json().error).to.eql('Conversation not found');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations/{{conversationId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations", "{{conversationId}}"]
+        }
+      }
+    },
+    {
+  "name": "8. Register Bob (second user)",
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "const email = `bob_${Date.now()}@example.com`;",
+          "pm.collectionVariables.set('bobEmail', email);"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('201 Created', () => pm.response.to.have.status(201));",
+          "const body = pm.response.json();",
+          "pm.test('Bob gets a token', () => pm.expect(body.token).to.be.a('string').and.not.empty);",
+          "pm.test('Bob id differs from Alice id', () => {",
+          "  pm.expect(body.user.id).to.not.eql(pm.collectionVariables.get('userId'));",
+          "});",
+          "pm.collectionVariables.set('bobToken', body.token);",
+          "pm.collectionVariables.set('bobUserId', body.user.id);"
+        ]
+      }
     }
+  ],
+  "request": {
+    "method": "POST",
+    "header": [{ "key": "Content-Type", "value": "application/json" }],
+    "body": {
+      "mode": "raw",
+      "raw": "{\n  \"email\": \"{{bobEmail}}\",\n  \"password\": \"Password123!\",\n  \"name\": \"Bob\"\n}"
+    },
+    "url": {
+      "raw": "{{baseUrl}}/api/auth/register",
+      "host": ["{{baseUrl}}"],
+      "path": ["api", "auth", "register"]
+    }
+  }
+},
+{
+  "name": "9. Alice creates conversation for ownership test",
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('201 Created', () => pm.response.to.have.status(201));",
+          "const body = pm.response.json();",
+          "pm.test('Conversation belongs to Alice', () => {",
+          "  pm.expect(body.conversation.userId).to.eql(pm.collectionVariables.get('userId'));",
+          "});",
+          "pm.test('Title set correctly', () => {",
+          "  pm.expect(body.conversation.title).to.eql(\"Alice's private chat\");",
+          "});",
+          "pm.collectionVariables.set('aliceConversationId', body.conversation._id);"
+        ]
+      }
+    }
+  ],
+  "request": {
+    "method": "POST",
+    "header": [
+      { "key": "Content-Type", "value": "application/json" },
+      { "key": "Authorization", "value": "Bearer {{token}}" }
+    ],
+    "body": {
+      "mode": "raw",
+      "raw": "{\n  \"title\": \"Alice's private chat\"\n}"
+    },
+    "url": {
+      "raw": "{{baseUrl}}/api/conversations",
+      "host": ["{{baseUrl}}"],
+      "path": ["api", "conversations"]
+    }
+  }
+},
+{
+  "name": "10. Bob GETs Alice's conversation -> 404",
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('404 Not Found (NOT 200)', () => pm.response.to.have.status(404));",
+          "pm.test('Conversation not found message', () => {",
+          "  pm.expect(pm.response.json().error).to.eql('Conversation not found');",
+          "});",
+          "pm.test('No conversation object leaked in response', () => {",
+          "  pm.expect(pm.response.json()).to.not.have.property('conversation');",
+          "});"
+        ]
+      }
+    }
+  ],
+  "request": {
+    "method": "GET",
+    "header": [{ "key": "Authorization", "value": "Bearer {{bobToken}}" }],
+    "url": {
+      "raw": "{{baseUrl}}/api/conversations/{{aliceConversationId}}",
+      "host": ["{{baseUrl}}"],
+      "path": ["api", "conversations", "{{aliceConversationId}}"]
+    }
+  }
+},
+{
+  "name": "11. Bob DELETEs Alice's conversation -> 404",
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('404 Not Found (NOT 200)', () => pm.response.to.have.status(404));",
+          "pm.test('Conversation not found message', () => {",
+          "  pm.expect(pm.response.json().error).to.eql('Conversation not found');",
+          "});",
+          "pm.test('No deleted:true in response', () => {",
+          "  pm.expect(pm.response.json()).to.not.have.property('deleted');",
+          "});"
+        ]
+      }
+    }
+  ],
+  "request": {
+    "method": "DELETE",
+    "header": [{ "key": "Authorization", "value": "Bearer {{bobToken}}" }],
+    "url": {
+      "raw": "{{baseUrl}}/api/conversations/{{aliceConversationId}}",
+      "host": ["{{baseUrl}}"],
+      "path": ["api", "conversations", "{{aliceConversationId}}"]
+    }
+  }
+},
+{
+  "name": "12. Alice verifies her conversation still exists (list)",
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('200 OK', () => pm.response.to.have.status(200));",
+          "const body = pm.response.json();",
+          "const convId = pm.collectionVariables.get('aliceConversationId');",
+          "pm.test('Alice\\'s private chat is still in her list', () => {",
+          "  const found = body.conversations.find((c) => c._id === convId);",
+          "  pm.expect(found, 'Alice\\'s conversation must still exist after Bob\\'s DELETE attempt').to.exist;",
+          "});",
+          "pm.test('Title is unchanged', () => {",
+          "  const found = body.conversations.find((c) => c._id === convId);",
+          "  pm.expect(found.title).to.eql(\"Alice's private chat\");",
+          "});"
+        ]
+      }
+    }
+  ],
+  "request": {
+    "method": "GET",
+    "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+    "url": {
+      "raw": "{{baseUrl}}/api/conversations",
+      "host": ["{{baseUrl}}"],
+      "path": ["api", "conversations"]
+    }
+  }
+},
+{
+  "name": "13. Alice GETs her conversation by id (bonus, direct proof)",
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('200 OK', () => pm.response.to.have.status(200));",
+          "const body = pm.response.json();",
+          "pm.test('Conversation still exists with original id', () => {",
+          "  pm.expect(body.conversation._id).to.eql(pm.collectionVariables.get('aliceConversationId'));",
+          "});",
+          "pm.test('Title still intact', () => {",
+          "  pm.expect(body.conversation.title).to.eql(\"Alice's private chat\");",
+          "});",
+          "pm.test('Owner is still Alice, not Bob', () => {",
+          "  pm.expect(body.conversation.userId).to.eql(pm.collectionVariables.get('userId'));",
+          "  pm.expect(body.conversation.userId).to.not.eql(pm.collectionVariables.get('bobUserId'));",
+          "});"
+        ]
+      }
+    }
+  ],
+  "request": {
+    "method": "GET",
+    "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+    "url": {
+      "raw": "{{baseUrl}}/api/conversations/{{aliceConversationId}}",
+      "host": ["{{baseUrl}}"],
+      "path": ["api", "conversations", "{{aliceConversationId}}"]
+    }
+  }
+}
   ]
 }

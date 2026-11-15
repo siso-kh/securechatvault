@@ -42,6 +42,7 @@ describe('POST /api/auth/login', () => {
 
     expect(res.status).toBe(200);
     expect(res.body.token).toEqual(expect.any(String));
+    expect(res.body.user).not.toHaveProperty('passwordHash');
   });
 
   it('rejects wrong password with 401', async () => {
@@ -86,6 +87,7 @@ describe('GET /api/auth/me', () => {
 
     expect(res.status).toBe(200);
     expect(res.body.user.email).toBe('me@b.com');
+    expect(res.body.user).not.toHaveProperty('passwordHash');
   });
 
   it('rejects missing token with 401', async () => {
