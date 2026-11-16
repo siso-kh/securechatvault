@@ -1,0 +1,360 @@
+{
+  "info": {
+    "name": "Redact API Tests",
+    "description": "Test suite for POST /redact endpoint with multiple cases",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Happy Path - Basic Redaction",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('Response is JSON', () => pm.response.to.be.json);",
+              "pm.test('Response has redacted field', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(body).to.have.property('redacted');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"My email is john.doe@example.com and my phone is 555-123-4567\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Happy Path - Multiple PII Types",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('PII is redacted', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(JSON.stringify(body)).to.not.include('john.doe@example.com');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"SSN: 123-45-6789, Credit Card: 4111-1111-1111-1111, Email: jane@test.com\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Edge Case - Empty String",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200 or 400', () => {",
+              "  pm.expect([200, 400]).to.include(pm.response.code);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Edge Case - No PII Present",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('Text is unchanged when no PII', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(JSON.stringify(body)).to.include('Hello world');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Hello world, this is a normal sentence.\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Edge Case - Very Long Text",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200 or 413', () => {",
+              "  pm.expect([200, 413]).to.include(pm.response.code);",
+              "});",
+              "pm.test('Response time is reasonable', () => {",
+              "  pm.expect(pm.response.responseTime).to.be.below(5000);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Edge Case - Unicode / Special Characters",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('Handles unicode correctly', () => {",
+              "  pm.expect(pm.response.code).to.equal(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Email: tést@exämple.com 📧 and phone ☎️ +1-555-0100 😀\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Negative - Missing Body",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 400', () => pm.response.to.have.status(400));",
+              "pm.test('Returns error message', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(body).to.have.property('error');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": { "mode": "raw", "raw": "", "options": { "raw": { "language": "json" } } }
+      }
+    },
+    {
+      "name": "Negative - Missing 'text' Field",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 400', () => pm.response.to.have.status(400));",
+              "pm.test('Error mentions text field', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(JSON.stringify(body).toLowerCase()).to.include('text');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"content\": \"wrong field name\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Negative - Wrong Data Type (number)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 400', () => pm.response.to.have.status(400));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": 12345\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Negative - Malformed JSON",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 400', () => pm.response.to.have.status(400));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"text\": \"missing closing brace\"",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Negative - Wrong Content-Type",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 400 or 415', () => {",
+              "  pm.expect([400, 415]).to.include(pm.response.code);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "text/plain" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"text\": \"this is plain text not json\"}"
+        }
+      }
+    },
+    {
+      "name": "Security - SQL Injection Attempt",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Does not crash server (5xx)', () => {",
+              "  pm.expect(pm.response.code).to.be.below(500);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"'; DROP TABLE users; -- admin@test.com\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Security - XSS Payload",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Does not reflect raw script tag', () => {",
+              "  pm.expect(pm.response.text()).to.not.include('<script>alert');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"<script>alert('xss')</script> user@example.com\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    }
+  ]
+}
