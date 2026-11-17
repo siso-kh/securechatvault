@@ -3,6 +3,15 @@
 // Resource caps for client-supplied policies. They bound the work a single
 // request can request; they do not make catastrophic backtracking impossible,
 // so a hard execution budget still belongs at the process boundary.
+const luhn = require('./utils/luhn');
+
+// Named validators referenced from policy data (e.g. `validator: 'luhn'`).
+// A function may also be passed directly for programmatic callers.
+const VALIDATORS = {
+  // Matches may carry separators ("4111 1111 1111 1111"), so strip non-digits first.
+  luhn: (value) => luhn(value.replace(/\D/g, '')),
+};
+
 const MAX_RULES = 50;
 const MAX_PATTERN_LENGTH = 500;
 const ALLOWED_ACTIONS = new Set(['mask', 'warn', 'block']);
@@ -61,23 +70,32 @@ function applyRules(text, rules = [], opts = {}) {
         continue;
       }
 
-      if (typeof rule.validator === 'function' && !rule.validator(match[0])) continue;
+      const validator =
+        typeof rule.validator === 'function' ? rule.validator : VALIDATORS[rule.validator];
+      if (validator && !validator(match[0])) continue;
 
       const start = match.index;
       const end = start + match[0].length;
       const isBlock = rule.action === 'block';
 
       // Overlap check: is this span already claimed by an earlier rule?
+      // AFTER
       const overlaps = detections.some((d) => start < d.end && end > d.start);
-
+          
       if (overlaps) {
-        // A masking rule must never silence a blocking rule, otherwise the
-        // policy fails open based on rule ordering alone.
-        if (!isBlock) continue;
-        const alreadyBlocked = detections.some(
-          (d) => d.action === 'block' && start < d.end && end > d.start,
-        );
-        if (alreadyBlocked) continue;
+        if (isBlock) {
+          // Block must record even when a mask already claimed the span.
+          const alreadyBlocked = detections.some(
+            (d) => d.action === 'block' && start < d.end && end > d.start,
+          );
+          if (alreadyBlocked) continue;
+        } else {
+          // A mask yields only to another non-block, never to a block.
+          const overlapsNonBlock = detections.some(
+            (d) => d.action !== 'block' && start < d.end && end > d.start,
+          );
+          if (overlapsNonBlock) continue;
+        }
       }
 
       detections.push({

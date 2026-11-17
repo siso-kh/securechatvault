@@ -22,7 +22,23 @@ describe('applyRules', () => {
       expect(r.detections).toEqual([]);
       expect(r.blocked).toBe(false);
     });
+    // tests/engine.test.js
+test('private-key block + inner secret-kv mask: order-independent masking', () => {
+  const rules = [
+    // deliberately reversed relative to DEFAULT_RULES to expose the bug
+    { id: 'secret-kv', pattern: 'secret:\\s*\\S+', category: 'secret',  action: 'mask' },
+    { id: 'private-key', pattern: '-----BEGIN [A-Z ]*PRIVATE KEY-----[\\s\\S]*?(?:-----END [A-Z ]*PRIVATE KEY-----|$)',
+      category: 'private_key', action: 'block' },
+  ];
+  const text = '-----BEGIN PRIVATE KEY-----\nsecret: hunter2\nMIIE...\n-----END PRIVATE KEY-----';
 
+  const result = applyRules(text, rules);
+
+  expect(result.blocked).toBe(true);
+  // Without the fix: maskedText still contains "secret: hunter2" because the
+  // mask detection was dropped when it overlapped the block detection.
+  expect(result.maskedText).not.toContain('hunter2');
+});
     test('undefined rules arg defaults to []', () => {
       expect(applyRules('hello').maskedText).toBe('hello');
     });
