@@ -1,0 +1,4255 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+client/
+  public/
+    favicon.svg
+    icons.svg
+  src/
+    assets/
+      hero.png
+      react.svg
+      vite.svg
+    App.css
+    App.jsx
+    index.css
+    main.jsx
+  .gitignore
+  eslint.config.js
+  index.html
+  package.json
+  README.md
+  vite.config.js
+docs/
+  architecture/
+    PROJECT_DESCRIPTION.md
+redactor/
+  postman/
+    redact-collection.json
+  src/
+    utils/
+      luhn.js
+    app.js
+    engine.js
+    index.js
+    rules.js
+  tests/
+    api.test.js
+    engine.test.js
+    luhn.test.js
+    rules.test.js
+  .env.example
+  ai_audit.md
+  package.json
+server/
+  postman/
+    my-auth-collection.json
+    my-auth-env.local.json
+  scripts/
+    mockRedactor.js
+  src/
+    config/
+      db.js
+    controllers/
+      authController.js
+      conversationController.js
+    middlewares/
+      auth.js
+      errorHandler.js
+    models/
+      Conversation.js
+      User.js
+    routes/
+      authRoutes.js
+      chatRoutes.js
+      conversationRoutes.js
+      healthRoutes.js
+    services/
+      redactorClient.js
+      redactorPipeline.js
+      routerClient.js
+    app.js
+    index.js
+  tests/
+    auth.test.js
+    authMiddleware.test.js
+    conversations.test.js
+    env.js
+    helpers.js
+    redactor.test.js
+    setup.js
+  .env.example
+  package.json
+.env.example
+.gitignore
+docker-compose.yml
+README.md
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="client/public/favicon.svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="46" fill="none" viewBox="0 0 48 46"><path fill="#863bff" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z" style="fill:#863bff;fill:color(display-p3 .5252 .23 1);fill-opacity:1"/><mask id="a" width="48" height="46" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><path fill="#000" d="M25.842 44.938c-.664.844-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.183c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.498 0-3.579-1.842-3.579H1.133c-.92 0-1.456-1.04-.92-1.787L9.91.473c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.578 1.842 3.578h11.377c.943 0 1.473 1.088.89 1.832L25.843 44.94z" style="fill:#000;fill-opacity:1"/></mask><g mask="url(#a)"><g filter="url(#b)"><ellipse cx="5.508" cy="14.704" fill="#ede6ff" rx="5.508" ry="14.704" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -4.47 31.516)"/></g><g filter="url(#c)"><ellipse cx="10.399" cy="29.851" fill="#ede6ff" rx="10.399" ry="29.851" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -39.328 7.883)"/></g><g filter="url(#d)"><ellipse cx="5.508" cy="30.487" fill="#7e14ff" rx="5.508" ry="30.487" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.814 -25.913 -14.639)scale(1 -1)"/></g><g filter="url(#e)"><ellipse cx="5.508" cy="30.599" fill="#7e14ff" rx="5.508" ry="30.599" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.814 -32.644 -3.334)scale(1 -1)"/></g><g filter="url(#f)"><ellipse cx="5.508" cy="30.599" fill="#7e14ff" rx="5.508" ry="30.599" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -34.34 30.47)"/></g><g filter="url(#g)"><ellipse cx="14.072" cy="22.078" fill="#ede6ff" rx="14.072" ry="22.078" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="rotate(93.35 24.506 48.493)scale(-1 1)"/></g><g filter="url(#h)"><ellipse cx="3.47" cy="21.501" fill="#7e14ff" rx="3.47" ry="21.501" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.009 28.708 47.59)scale(-1 1)"/></g><g filter="url(#i)"><ellipse cx="3.47" cy="21.501" fill="#7e14ff" rx="3.47" ry="21.501" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.009 28.708 47.59)scale(-1 1)"/></g><g filter="url(#j)"><ellipse cx=".387" cy="8.972" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(39.51 .387 8.972)"/></g><g filter="url(#k)"><ellipse cx="47.523" cy="-6.092" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 47.523 -6.092)"/></g><g filter="url(#l)"><ellipse cx="41.412" cy="6.333" fill="#47bfff" rx="5.971" ry="9.665" style="fill:#47bfff;fill:color(display-p3 .2799 .748 1);fill-opacity:1" transform="rotate(37.892 41.412 6.333)"/></g><g filter="url(#m)"><ellipse cx="-1.879" cy="38.332" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 -1.88 38.332)"/></g><g filter="url(#n)"><ellipse cx="-1.879" cy="38.332" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 -1.88 38.332)"/></g><g filter="url(#o)"><ellipse cx="35.651" cy="29.907" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 35.651 29.907)"/></g><g filter="url(#p)"><ellipse cx="38.418" cy="32.4" fill="#47bfff" rx="5.971" ry="15.297" style="fill:#47bfff;fill:color(display-p3 .2799 .748 1);fill-opacity:1" transform="rotate(37.892 38.418 32.4)"/></g></g><defs><filter id="b" width="60.045" height="41.654" x="-19.77" y="16.149" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="c" width="90.34" height="51.437" x="-54.613" y="-7.533" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="d" width="79.355" height="29.4" x="-49.64" y="2.03" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="e" width="79.579" height="29.4" x="-45.045" y="20.029" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="f" width="79.579" height="29.4" x="-43.513" y="21.178" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="g" width="74.749" height="58.852" x="15.756" y="-17.901" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="h" width="61.377" height="25.362" x="23.548" y="2.284" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="i" width="61.377" height="25.362" x="23.548" y="2.284" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="j" width="56.045" height="63.649" x="-27.636" y="-22.853" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="k" width="54.814" height="64.646" x="20.116" y="-38.415" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="l" width="33.541" height="35.313" x="24.641" y="-11.323" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="m" width="54.814" height="64.646" x="-29.286" y="6.009" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="n" width="54.814" height="64.646" x="-29.286" y="6.009" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="o" width="54.814" height="64.646" x="8.244" y="-2.416" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="p" width="39.409" height="43.623" x="18.713" y="10.588" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter></defs></svg>
+</file>
+
+<file path="client/public/icons.svg">
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="bluesky-icon" viewBox="0 0 16 17">
+    <g clip-path="url(#bluesky-clip)"><path fill="#08060d" d="M7.75 7.735c-.693-1.348-2.58-3.86-4.334-5.097-1.68-1.187-2.32-.981-2.74-.79C.188 2.065.1 2.812.1 3.251s.241 3.602.398 4.13c.52 1.744 2.367 2.333 4.07 2.145-2.495.37-4.71 1.278-1.805 4.512 3.196 3.309 4.38-.71 4.987-2.746.608 2.036 1.307 5.91 4.93 2.746 2.72-2.746.747-4.143-1.747-4.512 1.702.189 3.55-.4 4.07-2.145.156-.528.397-3.691.397-4.13s-.088-1.186-.575-1.406c-.42-.19-1.06-.395-2.741.79-1.755 1.24-3.64 3.752-4.334 5.099"/></g>
+    <defs><clipPath id="bluesky-clip"><path fill="#fff" d="M.1.85h15.3v15.3H.1z"/></clipPath></defs>
+  </symbol>
+  <symbol id="discord-icon" viewBox="0 0 20 19">
+    <path fill="#08060d" d="M16.224 3.768a14.5 14.5 0 0 0-3.67-1.153c-.158.286-.343.67-.47.976a13.5 13.5 0 0 0-4.067 0c-.128-.306-.317-.69-.476-.976A14.4 14.4 0 0 0 3.868 3.77C1.546 7.28.916 10.703 1.231 14.077a14.7 14.7 0 0 0 4.5 2.306q.545-.748.965-1.587a9.5 9.5 0 0 1-1.518-.74q.191-.14.372-.293c2.927 1.369 6.107 1.369 8.999 0q.183.152.372.294-.723.437-1.52.74.418.838.963 1.588a14.6 14.6 0 0 0 4.504-2.308c.37-3.911-.63-7.302-2.644-10.309m-9.13 8.234c-.878 0-1.599-.82-1.599-1.82 0-.998.705-1.82 1.6-1.82.894 0 1.614.82 1.599 1.82.001 1-.705 1.82-1.6 1.82m5.91 0c-.878 0-1.599-.82-1.599-1.82 0-.998.705-1.82 1.6-1.82.893 0 1.614.82 1.599 1.82 0 1-.706 1.82-1.6 1.82"/>
+  </symbol>
+  <symbol id="documentation-icon" viewBox="0 0 21 20">
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="m15.5 13.333 1.533 1.322c.645.555.967.833.967 1.178s-.322.623-.967 1.179L15.5 18.333m-3.333-5-1.534 1.322c-.644.555-.966.833-.966 1.178s.322.623.966 1.179l1.534 1.321"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M17.167 10.836v-4.32c0-1.41 0-2.117-.224-2.68-.359-.906-1.118-1.621-2.08-1.96-.599-.21-1.349-.21-2.848-.21-2.623 0-3.935 0-4.983.369-1.684.591-3.013 1.842-3.641 3.428C3 6.449 3 7.684 3 10.154v2.122c0 2.558 0 3.838.706 4.726q.306.383.713.671c.76.536 1.79.64 3.581.66"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M3 10a2.78 2.78 0 0 1 2.778-2.778c.555 0 1.209.097 1.748-.047.48-.129.854-.503.982-.982.145-.54.048-1.194.048-1.749a2.78 2.78 0 0 1 2.777-2.777"/>
+  </symbol>
+  <symbol id="github-icon" viewBox="0 0 19 19">
+    <path fill="#08060d" fill-rule="evenodd" d="M9.356 1.85C5.05 1.85 1.57 5.356 1.57 9.694a7.84 7.84 0 0 0 5.324 7.44c.387.079.528-.168.528-.376 0-.182-.013-.805-.013-1.454-2.165.467-2.616-.935-2.616-.935-.349-.91-.864-1.143-.864-1.143-.71-.48.051-.48.051-.48.787.051 1.2.805 1.2.805.695 1.194 1.817.857 2.268.649.064-.507.27-.857.49-1.052-1.728-.182-3.545-.857-3.545-3.87 0-.857.31-1.558.8-2.104-.078-.195-.349-1 .077-2.078 0 0 .657-.208 2.14.805a7.5 7.5 0 0 1 1.946-.26c.657 0 1.328.092 1.946.26 1.483-1.013 2.14-.805 2.14-.805.426 1.078.155 1.883.078 2.078.502.546.799 1.247.799 2.104 0 3.013-1.818 3.675-3.558 3.87.284.247.528.714.528 1.454 0 1.052-.012 1.896-.012 2.156 0 .208.142.455.528.377a7.84 7.84 0 0 0 5.324-7.441c.013-4.338-3.48-7.844-7.773-7.844" clip-rule="evenodd"/>
+  </symbol>
+  <symbol id="social-icon" viewBox="0 0 20 20">
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M12.5 6.667a4.167 4.167 0 1 0-8.334 0 4.167 4.167 0 0 0 8.334 0"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M2.5 16.667a5.833 5.833 0 0 1 8.75-5.053m3.837.474.513 1.035c.07.144.257.282.414.309l.93.155c.596.1.736.536.307.965l-.723.73a.64.64 0 0 0-.152.531l.207.903c.164.715-.213.991-.84.618l-.872-.52a.63.63 0 0 0-.577 0l-.872.52c-.624.373-1.003.094-.84-.618l.207-.903a.64.64 0 0 0-.152-.532l-.723-.729c-.426-.43-.289-.864.306-.964l.93-.156a.64.64 0 0 0 .412-.31l.513-1.034c.28-.562.735-.562 1.012 0"/>
+  </symbol>
+  <symbol id="x-icon" viewBox="0 0 19 19">
+    <path fill="#08060d" fill-rule="evenodd" d="M1.893 1.98c.052.072 1.245 1.769 2.653 3.77l2.892 4.114c.183.261.333.48.333.486s-.068.089-.152.183l-.522.593-.765.867-3.597 4.087c-.375.426-.734.834-.798.905a1 1 0 0 0-.118.148c0 .01.236.017.664.017h.663l.729-.83c.4-.457.796-.906.879-.999a692 692 0 0 0 1.794-2.038c.034-.037.301-.34.594-.675l.551-.624.345-.392a7 7 0 0 1 .34-.374c.006 0 .93 1.306 2.052 2.903l2.084 2.965.045.063h2.275c1.87 0 2.273-.003 2.266-.021-.008-.02-1.098-1.572-3.894-5.547-2.013-2.862-2.28-3.246-2.273-3.266.008-.019.282-.332 2.085-2.38l2-2.274 1.567-1.782c.022-.028-.016-.03-.65-.03h-.674l-.3.342a871 871 0 0 1-1.782 2.025c-.067.075-.405.458-.75.852a100 100 0 0 1-.803.91c-.148.172-.299.344-.99 1.127-.304.343-.32.358-.345.327-.015-.019-.904-1.282-1.976-2.808L6.365 1.85H1.8zm1.782.91 8.078 11.294c.772 1.08 1.413 1.973 1.425 1.984.016.017.241.02 1.05.017l1.03-.004-2.694-3.766L7.796 5.75 5.722 2.852l-1.039-.004-1.039-.004z" clip-rule="evenodd"/>
+  </symbol>
+</svg>
+</file>
+
+<file path="client/src/assets/react.svg">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="35.93" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 228"><path fill="#00D8FF" d="M210.483 73.824a171.49 171.49 0 0 0-8.24-2.597c.465-1.9.893-3.777 1.273-5.621c6.238-30.281 2.16-54.676-11.769-62.708c-13.355-7.7-35.196.329-57.254 19.526a171.23 171.23 0 0 0-6.375 5.848a155.866 155.866 0 0 0-4.241-3.917C100.759 3.829 77.587-4.822 63.673 3.233C50.33 10.957 46.379 33.89 51.995 62.588a170.974 170.974 0 0 0 1.892 8.48c-3.28.932-6.445 1.924-9.474 2.98C17.309 83.498 0 98.307 0 113.668c0 15.865 18.582 31.778 46.812 41.427a145.52 145.52 0 0 0 6.921 2.165a167.467 167.467 0 0 0-2.01 9.138c-5.354 28.2-1.173 50.591 12.134 58.266c13.744 7.926 36.812-.22 59.273-19.855a145.567 145.567 0 0 0 5.342-4.923a168.064 168.064 0 0 0 6.92 6.314c21.758 18.722 43.246 26.282 56.54 18.586c13.731-7.949 18.194-32.003 12.4-61.268a145.016 145.016 0 0 0-1.535-6.842c1.62-.48 3.21-.974 4.76-1.488c29.348-9.723 48.443-25.443 48.443-41.52c0-15.417-17.868-30.326-45.517-39.844Zm-6.365 70.984c-1.4.463-2.836.91-4.3 1.345c-3.24-10.257-7.612-21.163-12.963-32.432c5.106-11 9.31-21.767 12.459-31.957c2.619.758 5.16 1.557 7.61 2.4c23.69 8.156 38.14 20.213 38.14 29.504c0 9.896-15.606 22.743-40.946 31.14Zm-10.514 20.834c2.562 12.94 2.927 24.64 1.23 33.787c-1.524 8.219-4.59 13.698-8.382 15.893c-8.067 4.67-25.32-1.4-43.927-17.412a156.726 156.726 0 0 1-6.437-5.87c7.214-7.889 14.423-17.06 21.459-27.246c12.376-1.098 24.068-2.894 34.671-5.345a134.17 134.17 0 0 1 1.386 6.193ZM87.276 214.515c-7.882 2.783-14.16 2.863-17.955.675c-8.075-4.657-11.432-22.636-6.853-46.752a156.923 156.923 0 0 1 1.869-8.499c10.486 2.32 22.093 3.988 34.498 4.994c7.084 9.967 14.501 19.128 21.976 27.15a134.668 134.668 0 0 1-4.877 4.492c-9.933 8.682-19.886 14.842-28.658 17.94ZM50.35 144.747c-12.483-4.267-22.792-9.812-29.858-15.863c-6.35-5.437-9.555-10.836-9.555-15.216c0-9.322 13.897-21.212 37.076-29.293c2.813-.98 5.757-1.905 8.812-2.773c3.204 10.42 7.406 21.315 12.477 32.332c-5.137 11.18-9.399 22.249-12.634 32.792a134.718 134.718 0 0 1-6.318-1.979Zm12.378-84.26c-4.811-24.587-1.616-43.134 6.425-47.789c8.564-4.958 27.502 2.111 47.463 19.835a144.318 144.318 0 0 1 3.841 3.545c-7.438 7.987-14.787 17.08-21.808 26.988c-12.04 1.116-23.565 2.908-34.161 5.309a160.342 160.342 0 0 1-1.76-7.887Zm110.427 27.268a347.8 347.8 0 0 0-7.785-12.803c8.168 1.033 15.994 2.404 23.343 4.08c-2.206 7.072-4.956 14.465-8.193 22.045a381.151 381.151 0 0 0-7.365-13.322Zm-45.032-43.861c5.044 5.465 10.096 11.566 15.065 18.186a322.04 322.04 0 0 0-30.257-.006c4.974-6.559 10.069-12.652 15.192-18.18ZM82.802 87.83a323.167 323.167 0 0 0-7.227 13.238c-3.184-7.553-5.909-14.98-8.134-22.152c7.304-1.634 15.093-2.97 23.209-3.984a321.524 321.524 0 0 0-7.848 12.897Zm8.081 65.352c-8.385-.936-16.291-2.203-23.593-3.793c2.26-7.3 5.045-14.885 8.298-22.6a321.187 321.187 0 0 0 7.257 13.246c2.594 4.48 5.28 8.868 8.038 13.147Zm37.542 31.03c-5.184-5.592-10.354-11.779-15.403-18.433c4.902.192 9.899.29 14.978.29c5.218 0 10.376-.117 15.453-.343c-4.985 6.774-10.018 12.97-15.028 18.486Zm52.198-57.817c3.422 7.8 6.306 15.345 8.596 22.52c-7.422 1.694-15.436 3.058-23.88 4.071a382.417 382.417 0 0 0 7.859-13.026a347.403 347.403 0 0 0 7.425-13.565Zm-16.898 8.101a358.557 358.557 0 0 1-12.281 19.815a329.4 329.4 0 0 1-23.444.823c-7.967 0-15.716-.248-23.178-.732a310.202 310.202 0 0 1-12.513-19.846h.001a307.41 307.41 0 0 1-10.923-20.627a310.278 310.278 0 0 1 10.89-20.637l-.001.001a307.318 307.318 0 0 1 12.413-19.761c7.613-.576 15.42-.876 23.31-.876H128c7.926 0 15.743.303 23.354.883a329.357 329.357 0 0 1 12.335 19.695a358.489 358.489 0 0 1 11.036 20.54a329.472 329.472 0 0 1-11 20.722Zm22.56-122.124c8.572 4.944 11.906 24.881 6.52 51.026c-.344 1.668-.73 3.367-1.15 5.09c-10.622-2.452-22.155-4.275-34.23-5.408c-7.034-10.017-14.323-19.124-21.64-27.008a160.789 160.789 0 0 1 5.888-5.4c18.9-16.447 36.564-22.941 44.612-18.3ZM128 90.808c12.625 0 22.86 10.235 22.86 22.86s-10.235 22.86-22.86 22.86s-22.86-10.235-22.86-22.86s10.235-22.86 22.86-22.86Z"></path></svg>
+</file>
+
+<file path="client/src/assets/vite.svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="77" height="47" fill="none" aria-labelledby="vite-logo-title" viewBox="0 0 77 47"><title id="vite-logo-title">Vite</title><style>.parenthesis{fill:#000}@media (prefers-color-scheme:dark){.parenthesis{fill:#fff}}</style><path fill="#9135ff" d="M40.151 45.71c-.663.844-2.02.374-2.02-.699V34.708a2.26 2.26 0 0 0-2.262-2.262H24.493c-.92 0-1.457-1.04-.92-1.788l7.479-10.471c1.07-1.498 0-3.578-1.842-3.578H15.443c-.92 0-1.456-1.04-.92-1.788l9.696-13.576c.213-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.472c-1.07 1.497 0 3.578 1.842 3.578h11.376c.944 0 1.474 1.087.89 1.83L40.153 45.712z"/><mask id="a" width="48" height="47" x="14" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><path fill="#000" d="M40.047 45.71c-.663.843-2.02.374-2.02-.699V34.708a2.26 2.26 0 0 0-2.262-2.262H24.389c-.92 0-1.457-1.04-.92-1.788l7.479-10.472c1.07-1.497 0-3.578-1.842-3.578H15.34c-.92 0-1.456-1.04-.92-1.788l9.696-13.575c.213-.297.556-.474.92-.474H53.93c.92 0 1.456 1.04.92 1.788L47.37 13.03c-1.07 1.498 0 3.578 1.842 3.578h11.376c.944 0 1.474 1.088.89 1.831L40.049 45.712z"/></mask><g mask="url(#a)"><g filter="url(#b)"><ellipse cx="5.508" cy="14.704" fill="#eee6ff" rx="5.508" ry="14.704" transform="rotate(269.814 20.96 11.29)scale(-1 1)"/></g><g filter="url(#c)"><ellipse cx="10.399" cy="29.851" fill="#eee6ff" rx="10.399" ry="29.851" transform="rotate(89.814 -16.902 -8.275)scale(1 -1)"/></g><g filter="url(#d)"><ellipse cx="5.508" cy="30.487" fill="#8900ff" rx="5.508" ry="30.487" transform="rotate(89.814 -19.197 -7.127)scale(1 -1)"/></g><g filter="url(#e)"><ellipse cx="5.508" cy="30.599" fill="#8900ff" rx="5.508" ry="30.599" transform="rotate(89.814 -25.928 4.177)scale(1 -1)"/></g><g filter="url(#f)"><ellipse cx="5.508" cy="30.599" fill="#8900ff" rx="5.508" ry="30.599" transform="rotate(89.814 -25.738 5.52)scale(1 -1)"/></g><g filter="url(#g)"><ellipse cx="14.072" cy="22.078" fill="#eee6ff" rx="14.072" ry="22.078" transform="rotate(93.35 31.245 55.578)scale(-1 1)"/></g><g filter="url(#h)"><ellipse cx="3.47" cy="21.501" fill="#8900ff" rx="3.47" ry="21.501" transform="rotate(89.009 35.419 55.202)scale(-1 1)"/></g><g filter="url(#i)"><ellipse cx="3.47" cy="21.501" fill="#8900ff" rx="3.47" ry="21.501" transform="rotate(89.009 35.419 55.202)scale(-1 1)"/></g><g filter="url(#j)"><ellipse cx="14.592" cy="9.743" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(39.51 14.592 9.743)"/></g><g filter="url(#k)"><ellipse cx="61.728" cy="-5.321" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 61.728 -5.32)"/></g><g filter="url(#l)"><ellipse cx="55.618" cy="7.104" fill="#00c2ff" rx="5.971" ry="9.665" transform="rotate(37.892 55.618 7.104)"/></g><g filter="url(#m)"><ellipse cx="12.326" cy="39.103" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 12.326 39.103)"/></g><g filter="url(#n)"><ellipse cx="12.326" cy="39.103" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 12.326 39.103)"/></g><g filter="url(#o)"><ellipse cx="49.857" cy="30.678" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 49.857 30.678)"/></g><g filter="url(#p)"><ellipse cx="52.623" cy="33.171" fill="#00c2ff" rx="5.971" ry="15.297" transform="rotate(37.892 52.623 33.17)"/></g></g><path d="M6.919 0c-9.198 13.166-9.252 33.575 0 46.789h6.215c-9.25-13.214-9.196-33.623 0-46.789zm62.424 0h-6.215c9.198 13.166 9.252 33.575 0 46.789h6.215c9.25-13.214 9.196-33.623 0-46.789" class="parenthesis"/><defs><filter id="b" width="60.045" height="41.654" x="-5.564" y="16.92" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="c" width="90.34" height="51.437" x="-40.407" y="-6.762" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="d" width="79.355" height="29.4" x="-35.435" y="2.801" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="e" width="79.579" height="29.4" x="-30.84" y="20.8" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="f" width="79.579" height="29.4" x="-29.307" y="21.949" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="g" width="74.749" height="58.852" x="29.961" y="-17.13" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="h" width="61.377" height="25.362" x="37.754" y="3.055" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="i" width="61.377" height="25.362" x="37.754" y="3.055" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="j" width="56.045" height="63.649" x="-13.43" y="-22.082" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="k" width="54.814" height="64.646" x="34.321" y="-37.644" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="l" width="33.541" height="35.313" x="38.847" y="-10.552" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="m" width="54.814" height="64.646" x="-15.081" y="6.78" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="n" width="54.814" height="64.646" x="-15.081" y="6.78" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="o" width="54.814" height="64.646" x="22.45" y="-1.645" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="p" width="39.409" height="43.623" x="32.919" y="11.36" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter></defs></svg>
+</file>
+
+<file path="client/src/App.css">
+.counter {
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+  margin-bottom: 24px;
+
+  &:hover {
+    border-color: var(--accent-border);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.hero {
+  position: relative;
+
+  .base,
+  .framework,
+  .vite {
+    inset-inline: 0;
+    margin: 0 auto;
+  }
+
+  .base {
+    width: 170px;
+    position: relative;
+    z-index: 0;
+  }
+
+  .framework,
+  .vite {
+    position: absolute;
+  }
+
+  .framework {
+    z-index: 1;
+    top: 34px;
+    height: 28px;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
+      scale(1.4);
+  }
+
+  .vite {
+    z-index: 0;
+    top: 107px;
+    height: 26px;
+    width: auto;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
+      scale(0.8);
+  }
+}
+
+#center {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  place-content: center;
+  place-items: center;
+  flex-grow: 1;
+
+  @media (max-width: 1024px) {
+    padding: 32px 20px 24px;
+    gap: 18px;
+  }
+}
+
+#next-steps {
+  display: flex;
+  border-top: 1px solid var(--border);
+  text-align: left;
+
+  & > div {
+    flex: 1 1 0;
+    padding: 32px;
+    @media (max-width: 1024px) {
+      padding: 24px 20px;
+    }
+  }
+
+  .icon {
+    margin-bottom: 16px;
+    width: 22px;
+    height: 22px;
+  }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+#docs {
+  border-right: 1px solid var(--border);
+
+  @media (max-width: 1024px) {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+#next-steps ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+  margin: 32px 0 0;
+
+  .logo {
+    height: 18px;
+  }
+
+  a {
+    color: var(--text-h);
+    font-size: 16px;
+    border-radius: 6px;
+    background: var(--social-bg);
+    display: flex;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      box-shadow: var(--shadow);
+    }
+    .button-icon {
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    li {
+      flex: 1 1 calc(50% - 8px);
+    }
+
+    a {
+      width: 100%;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+  }
+}
+
+#spacer {
+  height: 88px;
+  border-top: 1px solid var(--border);
+  @media (max-width: 1024px) {
+    height: 48px;
+  }
+}
+
+.ticks {
+  position: relative;
+  width: 100%;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: -4.5px;
+    border: 5px solid transparent;
+  }
+
+  &::before {
+    left: 0;
+    border-left-color: var(--border);
+  }
+  &::after {
+    right: 0;
+    border-right-color: var(--border);
+  }
+}
+</file>
+
+<file path="client/src/App.jsx">
+import { useState } from 'react'
+import heroImg from './assets/hero.png'
+import reactLogo from './assets/react.svg'
+import viteLogo from './assets/vite.svg'
+import './App.css'
+
+function App() {
+  const [count, setCount] = useState(0)
+
+  return (
+    <>
+      <section id="center">
+        <div className="hero">
+          <img src={heroImg} className="base" width="170" height="179" alt="" />
+          <img src={reactLogo} className="framework" alt="React logo" />
+          <img src={viteLogo} className="vite" alt="Vite logo" />
+        </div>
+        <div>
+          <h1>Get started</h1>
+          <p>
+            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+          </p>
+        </div>
+        <button
+          type="button"
+          className="counter"
+          onClick={() => setCount((count) => count + 1)}
+        >
+          Count is {count}
+        </button>
+      </section>
+
+      <div className="ticks"></div>
+
+      <section id="next-steps">
+        <div id="docs">
+          <svg className="icon" role="presentation" aria-hidden="true">
+            <use href="/icons.svg#documentation-icon"></use>
+          </svg>
+          <h2>Documentation</h2>
+          <p>Your questions, answered</p>
+          <ul>
+            <li>
+              <a href="https://vite.dev/" target="_blank">
+                <img className="logo" src={viteLogo} alt="" />
+                Explore Vite
+              </a>
+            </li>
+            <li>
+              <a href="https://react.dev/" target="_blank">
+                <img className="button-icon" src={reactLogo} alt="" />
+                Learn more
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div id="social">
+          <svg className="icon" role="presentation" aria-hidden="true">
+            <use href="/icons.svg#social-icon"></use>
+          </svg>
+          <h2>Connect with us</h2>
+          <p>Join the Vite community</p>
+          <ul>
+            <li>
+              <a href="https://github.com/vitejs/vite" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#github-icon"></use>
+                </svg>
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a href="https://chat.vite.dev/" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#discord-icon"></use>
+                </svg>
+                Discord
+              </a>
+            </li>
+            <li>
+              <a href="https://x.com/vite_js" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#x-icon"></use>
+                </svg>
+                X.com
+              </a>
+            </li>
+            <li>
+              <a href="https://bsky.app/profile/vite.dev" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#bluesky-icon"></use>
+                </svg>
+                Bluesky
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <div className="ticks"></div>
+      <section id="spacer"></section>
+    </>
+  )
+}
+
+export default App
+</file>
+
+<file path="client/src/index.css">
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --border: #2e303a;
+    --code-bg: #1f2028;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+    --social-bg: rgba(47, 48, 58, 0.5);
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}
+</file>
+
+<file path="client/src/main.jsx">
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+</file>
+
+<file path="client/.gitignore">
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+</file>
+
+<file path="client/eslint.config.js">
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import { defineConfig, globalIgnores } from 'eslint/config'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{js,jsx}'],
+    extends: [
+      js.configs.recommended,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      globals: globals.browser,
+      parserOptions: { ecmaFeatures: { jsx: true } },
+    },
+  },
+])
+</file>
+
+<file path="client/index.html">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>client</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+</file>
+
+<file path="client/package.json">
+{
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "eslint": "^10.14.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.13.0",
+    "vite": "^8.3.6"
+  }
+}
+</file>
+
+<file path="client/README.md">
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+</file>
+
+<file path="client/vite.config.js">
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+})
+</file>
+
+<file path="docs/architecture/PROJECT_DESCRIPTION.md">
+# SecureChat Vault: Project Description
+
+> A MERN chat application that detects and masks sensitive data (passwords, API keys, IDs, emails, card numbers) **before** any message reaches an LLM, with an admin dashboard to manage detection policies and monitor leaks. Packaged as containers, run with Docker Compose, and orchestrated with Kubernetes (Minikube).
+
+**Subjects covered:** Full Stack Development (MERN) and Virtualization and Cloud Computing (Proposition 2: containerization and orchestration).
+**Team:** 2 students. **Duration:** 14 days (about 2h per day each).
+
+---
+
+## 1. Context and motivation
+
+Employees and students paste text into AI assistants all the time, and that text often contains secrets: API keys, passwords, personal IDs, emails, internal URLs. Once sent to a third-party LLM, that data is out of their control.
+
+**SecureChat Vault** places a security layer between the user and the LLM:
+
+1. The user writes a message.
+2. A dedicated **redactor microservice** scans it using rules (regex patterns) defined by an administrator.
+3. Sensitive parts are masked, blocked, or flagged according to the policy.
+4. Only the **masked** text is sent to the LLM. The LLM never sees the raw secrets.
+5. Every detection is logged so the admin can see what is leaking and how often.
+
+## 2. Objectives
+
+**Full stack objectives**
+- Build a complete MERN application with authentication, role-based access, and full CRUD.
+- Show React hooks in real use cases (state, effects, context, refs, memoization, custom hooks).
+- Use MongoDB with different kinds of data (documents, embedded arrays, logs, configuration).
+- Provide both a user dashboard and an admin dashboard.
+
+**Cloud objectives (Proposition 2)**
+- Write optimized Dockerfiles (multi-stage, slim images, non-root users).
+- Compose the full stack locally with Docker Compose (networks, volumes, environment files).
+- Deploy on Kubernetes (Minikube) with Deployments, Services, Secrets, ConfigMaps, and a PersistentVolumeClaim.
+- Demonstrate scalability by changing the replica count of a service live.
+
+**Security objectives**
+- Prevent sensitive data leakage to external AI services.
+- Apply authentication, authorization (RBAC), input validation, rate limiting, and network isolation.
+
+---
+
+## 3. Architecture
+
+### 3.1 Global diagram
+
+```
+                    ┌────────────────────────────┐
+   Browser  ──────► │  React (nginx container)   │
+                    └──────────────┬─────────────┘
+                                   │ REST + JWT
+                    ┌──────────────▼─────────────┐        ┌───────────────┐
+                    │  Express API (Node)        │ ─────► │  LLM API      │
+                    │  auth, CRUD, stats, RBAC   │ HTTPS  │ (Gemini/Groq) │
+                    └───────┬─────────────┬──────┘        └───────────────┘
+                            │             │ POST /redact
+                  ┌─────────▼───┐   ┌─────▼──────────────┐
+                  │  MongoDB    │   │ Redactor (Node)    │
+                  │  + volume   │   │ regex rules, scale │
+                  └─────────────┘   └────────────────────┘
+```
+
+### 3.2 Services
+
+| Service | Role | Exposed? | Scalable? |
+|---|---|---|---|
+| `frontend` | Serves the React build through nginx | Yes (the only public entry) | Yes |
+| `backend` | REST API: auth, CRUD, stats, orchestration of the message flow | Internal (reached through the frontend) | Yes (stateless, JWT) |
+| `redactor` | Detects and masks sensitive data | Internal only | Yes (main scaling demo) |
+| `mongo` | Persistent storage | Internal only | No (single instance with a volume) |
+
+### 3.3 Message flow
+
+1. The user sends `POST /conversations/:id/messages` with the raw text.
+2. The backend loads the active policies from MongoDB.
+3. The backend calls the redactor: `POST /redact { text, rules }`.
+4. The redactor returns `{ maskedText, detections[], blocked }`.
+5. The backend stores the detections in `redaction_events`.
+6. If a rule with the action `block` was triggered, the message is rejected with an explanation. Otherwise, the masked text is sent to the LLM API.
+7. The LLM reply and the masked user message are saved in the conversation, and the reply goes back to the user.
+
+### 3.4 Network isolation
+
+- **Public network:** only `frontend` is reachable from outside.
+- **Internal network:** `backend`, `redactor`, and `mongo` talk to each other, but are not reachable from outside.
+- `mongo` accepts connections only from `backend`.
+- `redactor` accepts requests only from `backend`.
+
+---
+
+## 4. Functional description
+
+### 4.1 Roles
+
+| Role | Capabilities |
+|---|---|
+| **User** | Register and log in, chat with the AI, manage their own conversations, see their personal redaction statistics |
+| **Admin** | Everything a user can do, plus: manage users, manage policies, see global statistics, see audit and health information |
+
+### 4.2 User features
+- Registration and login (JWT).
+- Chat interface with a "typing..." state and a visual indicator on masked parts of a message.
+- Conversation history: create, rename, read, and delete conversations.
+- Personal dashboard: number of messages, number of redactions, most common data types.
+
+### 4.3 Admin features
+- **Users table:** list, search, change role, ban or delete.
+- **Policy editor:** create, edit, enable or disable, and delete rules (name, regex, category, severity, action: `mask`, `block`, or `warn`).
+- **Global charts:** redactions per day, top leaked data types, most active users.
+- **Audit and health view:** recent admin actions and a status card for each service (up or down, replica count when available).
+
+---
+
+## 5. Data model (MongoDB)
+
+| Collection | Type of data | Main fields |
+|---|---|---|
+| `users` | Profile and credentials | `email`, `passwordHash`, `name`, `role` (user/admin), `isBanned`, `createdAt` |
+| `conversations` | Nested documents | `userId`, `title`, `messages[]` (each: `role`, `content`, `maskedContent`, `createdAt`), `updatedAt` |
+| `policies` | Configuration | `name`, `pattern`, `category`, `severity`, `action` (mask/block/warn), `enabled`, `createdBy` |
+| `redaction_events` | Log-style time data | `userId`, `conversationId`, `policyId`, `category`, `severity`, `action`, `createdAt` (never the raw value) |
+| `audit_logs` (optional) | Admin traceability | `actorId`, `action`, `target`, `createdAt` |
+
+Design notes:
+- Messages are **embedded** in conversations because they are always read together.
+- `redaction_events` is a separate collection because it is queried and aggregated across users.
+- Raw secrets are **never stored** in `redaction_events`, only the category and metadata.
+- Indexes: unique on `users.email`, and on `redaction_events` for `createdAt` and `category`.
+
+---
+
+## 6. Backend API (Express)
+
+| Area | Routes | Access |
+|---|---|---|
+| Auth | `POST /auth/register`, `POST /auth/login`, `POST /auth/refresh`, `GET /auth/me` | Public / authenticated |
+| Conversations | `GET /conversations`, `POST /conversations`, `GET /conversations/:id`, `PUT /conversations/:id`, `DELETE /conversations/:id` | User (own data) |
+| Messages | `POST /conversations/:id/messages` (redaction, then LLM) | User |
+| Policies | `GET /policies`, `POST /policies`, `PUT /policies/:id`, `DELETE /policies/:id` | Admin (read by backend internally) |
+| Users | `GET /users`, `PATCH /users/:id/role`, `PATCH /users/:id/ban`, `DELETE /users/:id` | Admin |
+| Stats | `GET /stats/me`, `GET /stats/global` (aggregation pipelines) | User / Admin |
+| Health | `GET /health` | Public (used by Docker and Kubernetes probes) |
+
+**Middleware:** JWT verification, role-based access control, input validation (express-validator), rate limiting, centralized error handler, request logging.
+
+---
+
+## 7. Frontend (React)
+
+### 7.1 Pages
+
+| Page | Route | Access |
+|---|---|---|
+| Login / Register | `/login`, `/register` | Public |
+| Chat | `/chat/:id?` | User |
+| History | `/history` | User |
+| My stats | `/stats` | User |
+| Admin: users | `/admin/users` | Admin |
+| Admin: policies | `/admin/policies` | Admin |
+| Admin: analytics | `/admin/analytics` | Admin |
+| Admin: audit and health | `/admin/system` | Admin |
+
+React Router with protected and role-protected routes.
+
+### 7.2 Hooks demonstration
+
+| Hook | Where it is used |
+|---|---|
+| `useState` | Forms, input fields, modals |
+| `useReducer` | Chat state (messages, loading, error) |
+| `useEffect` | Data fetching, polling the health card |
+| `useContext` | `AuthContext` (user, token, login/logout), optional theme |
+| `useRef` | Auto-scroll to the last chat message, focus on the input |
+| `useMemo` | Filtered and sorted tables, chart data transformation |
+| `useCallback` | Stable handlers passed to child components |
+| Custom hooks | `useFetch`, `useAuth`, `usePolling` |
+
+---
+
+## 8. The redactor microservice
+
+**Contract**
+
+```
+POST /redact
+Request:  { "text": "my key is sk-abc123...", "rules": [ { "id", "pattern", "category", "action" } ] }
+Response: { "maskedText": "my key is [API_KEY]",
+            "detections": [ { "ruleId", "category", "start", "end", "action" } ],
+            "blocked": false,
+            "servedBy": "<hostname>" }
+```
+
+**Default detections:** emails, phone numbers, API keys and tokens, passwords after keywords (`password:`, `pwd=`), credit card numbers (with a Luhn check), IP addresses, national ID patterns, JWTs.
+
+**Why a separate service:** independent scaling, internal-only network exposure, and a clear micro-service responsibility. The `servedBy` field (container hostname) makes load balancing visible during the demo.
+
+**Evolution path (bonus):** keep the same contract and swap the implementation for Python and spaCy to add named-entity detection (names, organizations, locations).
+
+---
+
+## 9. Technologies
+
+### 9.1 Stack summary
+
+| Layer | Technology | Why this choice |
+|---|---|---|
+| Frontend | React, React Router, Recharts, Axios (or fetch) | Required by the MERN architecture, strong hooks showcase, simple charts |
+| Backend | Node.js, Express, Mongoose | Required by MERN, fast to build, schemas and validation with Mongoose |
+| Auth and security | JWT, bcrypt, express-validator, express-rate-limit, helmet, cors | Stateless auth (allows scaling), standard hardening |
+| Database | MongoDB | Flexible documents for chats and logs, aggregation pipelines for statistics |
+| Redactor | Node.js (regex engine) | Same language as the backend, no extra learning curve, still a separate service |
+| AI | Gemini or Groq API (HTTPS call from Express), with a mock fallback | Free tier, no Python needed because the model runs on the provider's servers |
+| Containers | Docker (multi-stage builds), Docker Compose | Required by Proposition 2 |
+| Orchestration | Kubernetes on Minikube, `kubectl` | Local cluster, no AWS Academy permission issues |
+| Tooling | Git (monorepo), Postman or Thunder Client, Draw.io | Collaboration, API testing, architecture diagram |
+
+### 9.2 Containerization details
+
+| Image | Strategy |
+|---|---|
+| `frontend` | Stage 1: `node:alpine` builds the React app. Stage 2: `nginx:alpine` serves the static files. Includes an nginx config that proxies `/api` to the backend. |
+| `backend` | `node:alpine`, production dependencies only, non-root user, `HEALTHCHECK`, `.dockerignore`. |
+| `redactor` | `node:alpine`, minimal dependencies, non-root user. |
+| `mongo` | Official `mongo` image with a named volume (Compose) or PVC (Kubernetes). |
+
+### 9.3 Docker Compose
+- Four services, two networks (`public`, `internal`).
+- Named volume for MongoDB data.
+- `.env` file for secrets and configuration (with a committed `.env.example`).
+- `depends_on` with health checks so the backend starts after MongoDB.
+
+### 9.4 Kubernetes (Minikube)
+- **Deployments:** `frontend`, `backend`, `redactor`.
+- **MongoDB:** Deployment or StatefulSet with a **PersistentVolumeClaim**.
+- **Services:** `NodePort` (or Ingress as a bonus) for the frontend; `ClusterIP` for backend, redactor, and mongo.
+- **Secret:** JWT secret, LLM API key, Mongo credentials.
+- **ConfigMap:** non-sensitive configuration (service URLs, ports, environment).
+- **Probes:** liveness and readiness on `/health`.
+- **Resource requests and limits** on each container.
+- **Scaling demo:** `kubectl scale deployment redactor --replicas=5`, then observe requests served by different pods.
+- **Bonus:** HorizontalPodAutoscaler, Ingress, NetworkPolicies.
+
+---
+
+## 10. Security measures
+
+| Threat | Measure |
+|---|---|
+| Secrets leaking to the LLM | Redaction pipeline before every LLM call |
+| Stolen or weak credentials | bcrypt hashing, JWT with expiry and refresh |
+| Privilege escalation | Role-based middleware on every admin route |
+| Brute force and API abuse | Rate limiting on auth and message routes |
+| Injection and malformed input | Validation and sanitization (express-validator), Mongoose schemas |
+| Prompt injection | Basic filtering of known injection phrases before the LLM call |
+| Container compromise | Non-root users, slim images, internal-only networks, resource limits |
+| Secrets in code | `.env` files and Kubernetes Secrets, never committed |
+
+---
+
+## 11. Coverage of the Proposition 2 grading grid
+
+| Criterion | Points | How the project covers it |
+|---|---|---|
+| Dockerfile quality | 3 | Multi-stage builds, alpine images, non-root, `.dockerignore` |
+| Compose and local orchestration | 3 | 4 services, 2 networks, env file, health checks |
+| Orchestrator deployment | 5 | Minikube: Deployments, Services, Secret, ConfigMap, probes, scaling |
+| Volumes and inter-container network | 3 | Mongo volume or PVC, internal-only services |
+| Technical report and reproducibility | 3 | README, architecture diagram, setup script or Makefile |
+| Live demo and questions | 3 | Send a fake API key and show it masked, then scale the redactor live |
+
+## 12. Demo scenario (5 to 7 minutes)
+
+1. Show the architecture diagram.
+2. Log in as a user and send: *"My AWS key is AKIA... and my email is john@mail.com"*.
+3. Show the masked message and the LLM reply.
+4. Log in as admin: show the new event in the charts, edit a policy (for example, switch a rule to `block`), and resend the message.
+5. In the terminal: `kubectl get pods`, then `kubectl scale deployment redactor --replicas=5`.
+6. Send several messages and show different `servedBy` values.
+7. Delete the MongoDB pod, show it restart, and show the data still there (PVC).
+
+## 13. Scope control
+
+**In scope:** everything above in the trimmed version (4 services, 4 to 5 collections, regex-based redaction).
+
+**Bonus only if time remains:** spaCy-based NER in Python, Ingress, HorizontalPodAutoscaler, NetworkPolicies, response streaming, WebSockets.
+
+## 14. Risks and mitigations
+
+| Risk | Mitigation |
+|---|---|
+| Cloud part starts too late | Docker by day 7, Kubernetes by day 9 |
+| LLM API unavailable on demo day | Mock reply fallback controlled by an environment variable |
+| Merge conflicts | Folder ownership per person, shared files edited by one person |
+| Kubernetes learning curve | Start with one simple Deployment, then add resources step by step |
+| Scope creep | Bonus features are frozen until the core works |
+
+## 15. Repository structure
+
+```
+securechat-vault/
+├── client/            # React app (+ Dockerfile, nginx.conf)
+├── server/            # Express API (+ Dockerfile)
+├── redactor/          # Redactor microservice (+ Dockerfile)
+├── k8s/               # Kubernetes manifests
+├── docs/              # api.md, architecture diagram, report
+├── docker-compose.yml
+├── .env.example
+└── README.md
+```
+</file>
+
+<file path="redactor/postman/redact-collection.json">
+{
+  "info": {
+    "name": "Redact API Tests",
+    "description": "Test suite for POST /redact endpoint with multiple cases",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Happy Path - Basic Redaction",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('Response is JSON', () => pm.response.to.be.json);",
+              "pm.test('Response has redacted field', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(body).to.have.property('redacted');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"My email is john.doe@example.com and my phone is 555-123-4567\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Happy Path - Multiple PII Types",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('PII is redacted', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(JSON.stringify(body)).to.not.include('john.doe@example.com');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"SSN: 123-45-6789, Credit Card: 4111-1111-1111-1111, Email: jane@test.com\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Edge Case - Empty String",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200 or 400', () => {",
+              "  pm.expect([200, 400]).to.include(pm.response.code);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Edge Case - No PII Present",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('Text is unchanged when no PII', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(JSON.stringify(body)).to.include('Hello world');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Hello world, this is a normal sentence.\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Edge Case - Very Long Text",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200 or 413', () => {",
+              "  pm.expect([200, 413]).to.include(pm.response.code);",
+              "});",
+              "pm.test('Response time is reasonable', () => {",
+              "  pm.expect(pm.response.responseTime).to.be.below(5000);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Edge Case - Unicode / Special Characters",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('Handles unicode correctly', () => {",
+              "  pm.expect(pm.response.code).to.equal(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Email: tést@exämple.com 📧 and phone ☎️ +1-555-0100 😀\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Negative - Missing Body",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 400', () => pm.response.to.have.status(400));",
+              "pm.test('Returns error message', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(body).to.have.property('error');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": { "mode": "raw", "raw": "", "options": { "raw": { "language": "json" } } }
+      }
+    },
+    {
+      "name": "Negative - Missing 'text' Field",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 400', () => pm.response.to.have.status(400));",
+              "pm.test('Error mentions text field', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(JSON.stringify(body).toLowerCase()).to.include('text');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"content\": \"wrong field name\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Negative - Wrong Data Type (number)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 400', () => pm.response.to.have.status(400));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": 12345\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Negative - Malformed JSON",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 400', () => pm.response.to.have.status(400));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"text\": \"missing closing brace\"",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Negative - Wrong Content-Type",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 400 or 415', () => {",
+              "  pm.expect([400, 415]).to.include(pm.response.code);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "text/plain" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"text\": \"this is plain text not json\"}"
+        }
+      }
+    },
+    {
+      "name": "Security - SQL Injection Attempt",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Does not crash server (5xx)', () => {",
+              "  pm.expect(pm.response.code).to.be.below(500);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"'; DROP TABLE users; -- admin@test.com\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    },
+    {
+      "name": "Security - XSS Payload",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Does not reflect raw script tag', () => {",
+              "  pm.expect(pm.response.text()).to.not.include('<script>alert');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/redact", "host": ["{{baseUrl}}"], "path": ["redact"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"<script>alert('xss')</script> user@example.com\"\n}",
+          "options": { "raw": { "language": "json" } }
+        }
+      }
+    }
+  ]
+}
+</file>
+
+<file path="redactor/src/utils/luhn.js">
+// src/utils/luhn.js
+function luhn(num) {
+  if (!num || num.length < 12) return false;   // ← defensive floor
+  let sum = 0;
+  let dbl = false;
+  for (let i = num.length - 1; i >= 0; i--) {
+    let d = num.charCodeAt(i) - 48;
+    if (d < 0 || d > 9) return false;          // ← non-digit guard
+    if (dbl) { d *= 2; if (d > 9) d -= 9; }
+    sum += d;
+    dbl = !dbl;
+  }
+  return sum % 10 === 0;
+}
+
+module.exports = luhn;
+</file>
+
+<file path="redactor/src/app.js">
+const os = require('os');
+const express = require('express');
+const { applyRules, validateRules } = require('./engine');
+const { DEFAULT_RULES } = require('./rules');
+
+
+const app = express();
+app.disable('x-powered-by');
+app.use(express.json({ limit: '100kb' }));
+
+const REDACTION_TIMEOUT_MS = 500;
+
+app.post('/redact', (req, res) => {
+  const body = req.body || {};
+  const { text } = body;
+
+  if (typeof text !== 'string') {
+    return res.status(400).json({ error: '"text" (string) is required' });
+  }
+
+  const ruleError = validateRules(body.rules);
+  if (ruleError) {
+    return res.status(400).json({ error: ruleError });
+  }
+
+  // Omitting "rules" means "apply the default policy". An explicit empty
+  // array still means "run no rules".
+  const policy = body.rules == null ? DEFAULT_RULES : body.rules;
+
+  const timedOut = { value: false };
+  const result = applyRules(text, policy, {
+    deadline: Date.now() + REDACTION_TIMEOUT_MS,
+    timedOut,
+  });
+
+  if (timedOut.value) {
+    return res.status(503).json({ error: 'Redaction timed out' });
+  }
+
+  res.json({ ...result, servedBy: os.hostname() });
+});
+
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', service: 'redactor' });
+});
+
+app.use((err, req, res, _next) => {
+  if (err.type === 'entity.parse.failed') {
+    return res.status(400).json({ error: 'Invalid JSON body' });
+  }
+  if (err.type === 'entity.too.large') {
+    return res.status(413).json({ error: 'Payload too large' });
+  }
+  console.error(err);
+  res.status(500).json({ error: 'Internal server error' });
+});
+
+module.exports = app;
+</file>
+
+<file path="redactor/src/engine.js">
+// src/engine.js
+
+// Resource caps for client-supplied policies. They bound the work a single
+// request can request; they do not make catastrophic backtracking impossible,
+// so a hard execution budget still belongs at the process boundary.
+const luhn = require('./utils/luhn');
+
+// Named validators referenced from policy data (e.g. `validator: 'luhn'`).
+// A function may also be passed directly for programmatic callers.
+const VALIDATORS = {
+  // Matches may carry separators ("4111 1111 1111 1111"), so strip non-digits first.
+  luhn: (value) => luhn(value.replace(/\D/g, '')),
+};
+
+const MAX_RULES = 50;
+const MAX_PATTERN_LENGTH = 500;
+const ALLOWED_ACTIONS = new Set(['mask', 'warn', 'block']);
+
+/**
+ * Validates a request-supplied policy.
+ * @returns {string|null} an error message, or null when the policy is usable.
+ */
+function validateRules(rules) {
+  if (rules === undefined || rules === null) return null; // caller applies defaults
+  if (!Array.isArray(rules)) return '"rules" must be an array';
+  if (rules.length > MAX_RULES) {
+    return `"rules" must contain at most ${MAX_RULES} entries`;
+  }
+
+  for (let i = 0; i < rules.length; i++) {
+    const rule = rules[i];
+    if (!rule || typeof rule !== 'object' || Array.isArray(rule)) {
+      return `rules[${i}] must be an object`;
+    }
+    if (typeof rule.pattern !== 'string' || rule.pattern.length === 0) {
+      return `rules[${i}].pattern must be a non-empty string`;
+    }
+    if (rule.pattern.length > MAX_PATTERN_LENGTH) {
+      return `rules[${i}].pattern must be at most ${MAX_PATTERN_LENGTH} characters`;
+    }
+    if (!ALLOWED_ACTIONS.has(rule.action)) {
+      return `rules[${i}].action must be one of: mask, warn, block`;
+    }
+  }
+
+  return null;
+}
+
+function applyRules(text, rules = [], opts = {}) {
+  const detections = [];
+  const ruleList = Array.isArray(rules) ? rules : [];
+  let timedOut = false;
+
+  for (const rule of ruleList) {
+    if (opts.deadline && Date.now() > opts.deadline) {
+      timedOut = true;
+      break;
+    }
+    let regex;
+    try {
+      regex = new RegExp(rule.pattern, 'gi'); // g: all matches, i: case-insensitive
+    } catch {
+      continue; // skip invalid patterns — validation happens at the policy layer
+    }
+
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      if (match[0].length === 0) {
+        regex.lastIndex++; // avoid infinite loop on empty matches (e.g. "a*")
+        continue;
+      }
+
+      const validator =
+        typeof rule.validator === 'function' ? rule.validator : VALIDATORS[rule.validator];
+      if (validator && !validator(match[0])) continue;
+
+      const start = match.index;
+      const end = start + match[0].length;
+      const isBlock = rule.action === 'block';
+
+      // Overlap check: is this span already claimed by an earlier rule?
+      // AFTER
+      const overlaps = detections.some((d) => start < d.end && end > d.start);
+          
+      if (overlaps) {
+        if (isBlock) {
+          // Block must record even when a mask already claimed the span.
+          const alreadyBlocked = detections.some(
+            (d) => d.action === 'block' && start < d.end && end > d.start,
+          );
+          if (alreadyBlocked) continue;
+        } else {
+          // A mask yields only to another non-block, never to a block.
+          const overlapsNonBlock = detections.some(
+            (d) => d.action !== 'block' && start < d.end && end > d.start,
+          );
+          if (overlapsNonBlock) continue;
+        }
+      }
+
+      detections.push({
+        ruleId: rule.id,
+        category: rule.category,
+        severity: rule.severity,
+        action: rule.action,
+        start,
+        end,
+      });
+    }
+  }
+
+  if (timedOut && opts.timedOut) opts.timedOut.value = true;
+
+  const blocked = detections.some((d) => d.action === 'block');
+
+  // Reconstruct: apply masks from the END backwards so earlier
+  // start/end indices stay valid after each replacement
+  let maskedText = text;
+  const byPositionDesc = [...detections].sort((a, b) => b.start - a.start);
+  for (const d of byPositionDesc) {
+    if (d.action === 'mask') {
+      const placeholder = `[${String(d.category).toUpperCase()}]`;
+      maskedText =
+        maskedText.slice(0, d.start) + placeholder + maskedText.slice(d.end);
+    }
+    // "warn" -> text stays as-is, detection is only reported
+    // "block"  -> text stays as-is here; the backend rejects the message
+  }
+
+  return { maskedText, detections, blocked };
+}
+
+exports.applyRules = applyRules;
+exports.validateRules = validateRules;
+exports.MAX_RULES = MAX_RULES;
+exports.MAX_PATTERN_LENGTH = MAX_PATTERN_LENGTH;
+</file>
+
+<file path="redactor/src/index.js">
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+
+const app = require('./app');
+const PORT = process.env.PORT || 4000;
+const server = app.listen(PORT, () => console.log(`Redactor on :${PORT}`));
+
+server.on('error', (err) => {
+  console.error('Server failed to start:', err.message);
+  process.exit(1);
+});
+</file>
+
+<file path="redactor/src/rules.js">
+const luhn = require('./utils/luhn');
+const strip = (s) => s.replace(/\D/g, '');
+
+const R = String.raw; // avoids double-escaping, produces the same regex strings
+const KV_TAIL = R`["']?\s*[:=]\s*`;
+const VALUE   = R`(?:"[^"]*"|'[^']*'|[^\s,;]+)`;
+
+exports.DEFAULT_RULES = [
+  // ---- Secrets and credentials ----
+  { id: 'private-key', category: 'private_key', severity: 'high', action: 'block',
+    pattern: R`-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?(?:-----END [A-Z ]*PRIVATE KEY-----|$)` },
+  { id: 'db-url', category: 'connection_string', severity: 'high', action: 'mask',
+    pattern: R`\b(?:mongodb(?:\+srv)?|postgres(?:ql)?|mysql|redis|amqp)://[^\s:@/]+:[^\s@/]+@\S+` },
+  { id: 'aws-key', category: 'api_key', severity: 'high', action: 'mask',
+    pattern: R`\b(?:AKIA|ASIA)[0-9A-Z]{16}\b` },
+  { id: 'api-key', category: 'api_key', severity: 'high', action: 'mask',
+    pattern: R`\bsk[-_](?:live|test|proj|svcacct)?[-_]?[A-Za-z0-9_-]{20,}\b` },
+  { id: 'vendor-token', category: 'api_key', severity: 'high', action: 'mask',
+    pattern: R`\b(?:gh[pousr]_[A-Za-z0-9]{36,}|github_pat_[A-Za-z0-9_]{22,}|xox[baprs]-[A-Za-z0-9-]{10,}|AIza[0-9A-Za-z_-]{35}|gsk_[A-Za-z0-9]{20,})\b` },
+  { id: 'jwt', category: 'token', severity: 'high', action: 'mask',
+    pattern: R`\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]*` },
+  { id: 'bearer', category: 'token', severity: 'high', action: 'mask',
+    pattern: R`(?<=\bBearer\s+)[A-Za-z0-9._~+/-]{16,}=*` },
+  { id: 'password', category: 'password', severity: 'high', action: 'mask',
+    pattern: R`(?<=(?:[\w-]*(?:password|passwd|pwd|mdp)|\bpass|mot de passe)${KV_TAIL})${VALUE}` },
+  { id: 'secret-kv', category: 'secret', severity: 'high', action: 'mask',
+    pattern: R`(?<=[\w-]*(?:secret|token|api[_-]?key|access[_-]?key)${KV_TAIL})${VALUE}` },
+  { id: 'url-secret', category: 'secret', severity: 'medium', action: 'mask',
+    pattern: R`(?<=[?&](?:token|access_token|api_key|apikey|key|secret|password|sig)=)[^&\s#]+` },
+
+  // ---- Personal data ----
+  { id: 'credit-card', category: 'credit_card', severity: 'high', action: 'mask',
+    pattern: R`\b\d(?:[ -]?\d){12,18}\b`,
+    validator: (m) => luhn(strip(m)) },
+  { id: 'email', category: 'email', severity: 'medium', action: 'warn',
+    pattern: R`\b[\w.+-]+@[\w-]+(?:\.[\w-]+)+\b` },
+  { id: 'phone-intl', category: 'phone', severity: 'medium', action: 'warn',
+    pattern: R`(?<![\w.])\+\d{1,3}[ .-]?\(?\d{1,4}\)?(?:[ .-]?\d{2,4}){2,4}(?!\w)` },
+  { id: 'ipv4', category: 'ip_address', severity: 'low', action: 'mask',
+    pattern: R`\b(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\b` },
+];
+</file>
+
+<file path="redactor/tests/engine.test.js">
+// tests/engine.test.js
+const { applyRules } = require('../src/engine');
+
+const rule = (overrides = {}) => ({
+  id: 'r1',
+  pattern: 'x',
+  category: 'test',
+  severity: 'low',
+  action: 'mask',
+  ...overrides,
+});
+
+describe('applyRules', () => {
+  describe('trivial input', () => {
+    test('empty text + no rules', () => {
+      expect(applyRules('', [])).toEqual({ maskedText: '', detections: [], blocked: false });
+    });
+
+    test('non-empty text + no rules leaves text unchanged', () => {
+      const r = applyRules('hello world', []);
+      expect(r.maskedText).toBe('hello world');
+      expect(r.detections).toEqual([]);
+      expect(r.blocked).toBe(false);
+    });
+    // tests/engine.test.js
+test('private-key block + inner secret-kv mask: order-independent masking', () => {
+  const rules = [
+    // deliberately reversed relative to DEFAULT_RULES to expose the bug
+    { id: 'secret-kv', pattern: 'secret:\\s*\\S+', category: 'secret',  action: 'mask' },
+    { id: 'private-key', pattern: '-----BEGIN [A-Z ]*PRIVATE KEY-----[\\s\\S]*?(?:-----END [A-Z ]*PRIVATE KEY-----|$)',
+      category: 'private_key', action: 'block' },
+  ];
+  const text = '-----BEGIN PRIVATE KEY-----\nsecret: hunter2\nMIIE...\n-----END PRIVATE KEY-----';
+
+  const result = applyRules(text, rules);
+
+  expect(result.blocked).toBe(true);
+  // Without the fix: maskedText still contains "secret: hunter2" because the
+  // mask detection was dropped when it overlapped the block detection.
+  expect(result.maskedText).not.toContain('hunter2');
+});
+    test('undefined rules arg defaults to []', () => {
+      expect(applyRules('hello').maskedText).toBe('hello');
+    });
+  });
+
+  describe('mask action', () => {
+    test('masks email', () => {
+      const r = applyRules('contact me at john@x.com please', [
+        rule({ pattern: '\\b[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}\\b', category: 'email' }),
+      ]);
+      expect(r.maskedText).toBe('contact me at [EMAIL] please');
+      expect(r.detections).toHaveLength(1);
+      expect(r.detections[0]).toMatchObject({ category: 'email', action: 'mask' });
+    });
+
+    test('masks multiple occurrences', () => {
+      const r = applyRules('a 555-111-2222 b 555-333-4444', [
+        rule({ pattern: '\\b\\d{3}-\\d{3}-\\d{4}\\b', category: 'phone' }),
+      ]);
+      expect(r.maskedText).toBe('a [PHONE] b [PHONE]');
+      expect(r.detections).toHaveLength(2);
+    });
+
+    test('empty-match regex does not infinite-loop', () => {
+      // "a*" matches empty string at every position. The lastIndex++ guard must terminate it.
+      const r = applyRules('bbb', [rule({ pattern: 'a*', category: 'x' })]);
+      expect(r.maskedText).toBe('bbb');
+    });
+
+    test('unicode / emoji preserved around masks', () => {
+      const r = applyRules('tëst 😀 555-1234 ✓', [
+        rule({ pattern: '\\d{3}-\\d{4}', category: 'num' }),
+      ]);
+      expect(r.maskedText).toBe('tëst 😀 [NUM] ✓');
+    });
+  });
+
+  describe('warn action', () => {
+    test('reports detection but leaves text intact', () => {
+      const r = applyRules('the secret is out', [
+        rule({ pattern: 'secret', category: 'keyword', action: 'warn' }),
+      ]);
+      expect(r.maskedText).toBe('the secret is out');
+      expect(r.detections).toHaveLength(1);
+      expect(r.detections[0].action).toBe('warn');
+      expect(r.blocked).toBe(false);
+    });
+  });
+
+  describe('block action', () => {
+    test('sets blocked=true but leaves text intact', () => {
+      const r = applyRules('this is forbidden stuff', [
+        rule({ pattern: 'forbidden', category: 'keyword', action: 'block' }),
+      ]);
+      expect(r.blocked).toBe(true);
+      expect(r.maskedText).toBe('this is forbidden stuff');
+    });
+  });
+
+  describe('overlap handling', () => {
+    test('second rule skips overlapping span', () => {
+      const r = applyRules('abcd', [
+        rule({ id: 'a', pattern: 'abc', category: 'first' }),
+        rule({ id: 'b', pattern: 'bcd', category: 'second' }),
+      ]);
+      expect(r.detections).toHaveLength(1);
+      expect(r.detections[0].category).toBe('first');
+      expect(r.maskedText).toBe('[FIRST]d');
+    });
+
+    test('non-overlapping matches both fire', () => {
+      const r = applyRules('ab-cd', [rule({ pattern: 'ab|cd', category: 'x' })]);
+      expect(r.detections).toHaveLength(2);
+      expect(r.maskedText).toBe('[X]-[X]');
+    });
+
+    test('block rule fires even when a mask rule claims the same span first', () => {
+      // A masking rule must not silence a blocking rule via rule ordering.
+      const r = applyRules('the secret', [
+        rule({ id: 'm', pattern: 'secret', category: 'kw', action: 'mask' }),
+        rule({ id: 'b', pattern: 'secret', category: 'kw', action: 'block' }),
+      ]);
+      expect(r.maskedText).toBe('the [KW]');
+      expect(r.blocked).toBe(true);
+      expect(r.detections).toHaveLength(2);
+    });
+  });
+
+  describe('invalid regex', () => {
+    test('invalid pattern is skipped without throwing', () => {
+      const r = applyRules('abc', [rule({ pattern: '([', category: 'bad' })]);
+      expect(r.detections).toEqual([]);
+      expect(r.maskedText).toBe('abc');
+    });
+  });
+
+  describe('case insensitivity', () => {
+    test('matches regardless of case', () => {
+      const r = applyRules('SECRET Secret secret', [
+        rule({ pattern: 'secret', category: 'kw' }),
+      ]);
+      expect(r.detections).toHaveLength(3);
+      expect(r.maskedText).toBe('[KW] [KW] [KW]');
+    });
+  });
+
+  describe('security invariants', () => {
+    test('detections never include the matched raw text', () => {
+      const r = applyRules('my password here', [
+        rule({ pattern: 'password', category: 'kw' }),
+      ]);
+      expect(JSON.stringify(r.detections)).not.toContain('password');
+    });
+
+    test('mask + block on different spans coexist', () => {
+      const r = applyRules('send to a@b.co the forbidden doc', [
+        rule({ id: 'em', pattern: '\\w+@\\w+\\.\\w+', category: 'email', action: 'mask' }),
+        rule({ id: 'bad', pattern: 'forbidden', category: 'kw', action: 'block' }),
+      ]);
+      expect(r.maskedText).toBe('send to [EMAIL] the forbidden doc');
+      expect(r.blocked).toBe(true);
+      expect(r.detections).toHaveLength(2);
+    });
+  });
+});
+</file>
+
+<file path="redactor/tests/luhn.test.js">
+// tests/luhn.test.js
+const luhn = require('../src/utils/luhn');
+
+describe('luhn', () => {
+  describe('valid card numbers', () => {
+    test.each([
+      ['Visa',       '4111111111111111'],
+      ['Mastercard', '5500005555555559'],
+      ['Amex',       '378282246310005'],
+      ['Discover',   '6011111111111117'],
+      ['Diners',     '30569309025904'],
+      ['JCB',        '3530111333300000'],
+    ])('%s: %s', (_brand, num) => {
+      expect(luhn(num)).toBe(true);
+    });
+  });
+
+  describe('invalid card numbers', () => {
+    test.each([
+      ['off-by-one last digit', '4111111111111112'],
+      ['random 16 digits',      '1234567890123456'],
+      ['all nines (16)',        '9999999999999999'],
+      ['truncated Visa',        '411111111111111'],
+    ])('%s: %s', (_label, num) => {
+      expect(luhn(num)).toBe(false);
+    });
+  });
+
+  describe('edge cases', () => {
+    // NOTE: a stale test here asserted luhn('0') === true, contradicting the
+    // length-floor test below. The 12-digit floor makes false correct, so the
+    // contradictory case was removed.
+    test('single non-zero digit is invalid', () => {
+      expect(luhn('7')).toBe(false);
+    });
+
+    test('empty string is invalid', () => {
+      expect(luhn('')).toBe(false);
+    });
+
+    test('does not mutate — same input twice → same output', () => {
+      expect(luhn('4111111111111111')).toBe(luhn('4111111111111111'));
+    });
+
+    test('all zeros (16 digits) is valid', () => {
+      // sum of doubled 0s = 0 → valid. Documenting behavior.
+      expect(luhn('0000000000000000')).toBe(true);
+    });
+    test('empty string is invalid', () => {
+  expect(luhn('')).toBe(false);
+});
+
+test('single "0" is invalid (length floor)', () => {
+  expect(luhn('0')).toBe(false);
+});
+
+test('all zeros (16 digits) still passes (documented)', () => {
+  expect(luhn('0000000000000000')).toBe(true);
+});
+
+test('non-digit inside → false', () => {
+  expect(luhn('4111x1111111111')).toBe(false);
+});
+  });
+});
+</file>
+
+<file path="redactor/.env.example">
+PORT=4000
+NODE_ENV=development
+</file>
+
+<file path="redactor/ai_audit.md">
+# AI Change Audit — `redactor`
+
+**Date:** 2026-11-16 (round 1), 2026-11-17 (round 2)
+**Author:** Buffy (AI QA pass)
+**Scope:** Repair the defects found in the prior audit, then re-run the suite; then reconcile the tests with the rewritten rules policy.
+**Result:** `npm test` — **4/4 suites, 120/120 tests passing, exit 0** (round 1 start: 82 failed / 21 passed; round 2 start: 16 failed / 92 passed).
+
+Every code change made in this session is recorded below. Nothing outside this list was touched.
+
+---
+
+## 1. Change log (round 1)
+
+| # | File | Lines | Change | Bug ref |
+|---|------|-------|--------|---------|
+| 1 | `src/utils/luhn.js` | 16 | Added `module.exports = luhn;` | P0-1 |
+| 2 | `src/engine.js` | 40–49 | `applyRules(text, rules, opts)` — added the missing third parameter; deadline now readable | P0-2 |
+| 3 | `src/engine.js` | 45–49, 94 | Replaced the undeclared `opts` ReferenceError block; sets `opts.timedOut.value` only when a deadline actually trips | P0-2, P2-14 |
+| 4 | `src/engine.js` | 41–42 | `ruleList` guard — non-array `rules` no longer throws `rules is not iterable` | P1-9 |
+| 5 | `src/engine.js` | 14–38, 116 | New `validateRules()` + exported `MAX_RULES` / `MAX_PATTERN_LENGTH` | P1-9 |
+| 6 | `src/engine.js` | 68–82 | `block` detections are no longer discarded by the overlap check (block wins regardless of rule order) | P1-6 |
+| 7 | `src/engine.js` | 66–92 | Fixed broken indentation/brace structure left by the `opts` edit (no behaviour change) | P0-2 |
+| 8 | `src/app.js` | 21–24 | Calls `validateRules()`; invalid policies now return **400**, not 500 | P1-9 |
+| 9 | `src/app.js` | 26–28 | Omitting `rules` now applies `DEFAULT_RULES`; explicit `[]` still means "no rules" | P0-3 |
+| 10 | `src/app.js` | 11, 30–38 | Removed the decorative `setTimeout`/`clearTimeout`; the real deadline is passed to the engine; timeout body changed **408 → 503** | P1-5 |
+| 11 | `src/app.js` | 8 | `app.disable('x-powered-by')` | P1-8 |
+| 12 | `src/rules.js` | 2 | `strip` now removes **all** non-digits (`/\D/g`) instead of only spaces/dashes | P2-10 |
+| 13 | `src/rules.js` | 9 | Credit-card pattern `\b(?:\d[ -]?){13,19}\b` → `\b\d(?:[ -]?\d){12,18}\b` (must end on a digit) | P2-10 |
+| 14 | `src/rules.js` | 7 | API-key pattern now covers `sk-`, `sk_live_`, `sk_test_`, `sk-proj-`, `sk-svcacct-`; no nested unbounded quantifier | P2-11 |
+| 15 | `src/index.js` | 6–11 | `server.on('error', …)` — listen failures exit with a message instead of an unhandled event | P2-17 |
+| 16 | `package.json` | 5 | `"main"` corrected `index.js` → `src/index.js` | P2-16 |
+| 17 | `tests/luhn.test.js` | 29–33 | Removed a self-contradictory assertion (see §3) | test defect |
+| 18 | `tests/engine.test.js` | 118–126 | Updated the overlap test to the new block-wins contract | P1-6 |
+| 19 | `tests/rules.test.js` | 74–80 | Replaced "sk_live_ does not match" with coverage for `sk_live_` / `sk-proj-` | P2-11 |
+| 20 | `tests/api.test.js` | 148–159 | Added 4 tests locking the 400-on-invalid-policy behaviour | P1-9 |
+
+---
+
+## 2. Detailed changes (round 1)
+
+### `src/utils/luhn.js`
+
+- **Line 16 (added):** `module.exports = luhn;`
+- **Why:** the file defined `luhn` but never exported it, so `require('./utils/luhn')` returned `{}`. `src/rules.js:1` bound that empty object and `src/rules.js:10` threw `TypeError: luhn is not a function` for any 13–19 digit run, producing a 500.
+- **Evidence:** `node -e "require('./src/utils/luhn')"` previously printed `{}`; now returns a function, and credit-card masking works.
+
+### `src/engine.js`
+
+- **Line 40:** signature changed to `function applyRules(text, rules = [], opts = {})`. The caller in `src/app.js` was already passing a third argument that the old two-parameter signature silently dropped.
+- **Lines 45–49:** the malformed block
+
+  ```js
+  if (opts?.deadline && Date.now() > opts.deadline) {
+  if (opts.timedOut) opts.timedOut.value = true;
+  break;
+  }
+  ```
+
+  became
+
+  ```js
+  if (opts.deadline && Date.now() > opts.deadline) { timedOut = true; break; }
+  ```
+
+  `opts` is now a declared parameter, so no ReferenceError; `opts.timedOut` is dereferenced only when a deadline has actually tripped (line 94), so a caller that passes `{ deadline }` without `timedOut` no longer crashes.
+- **Lines 41–42:** `const ruleList = Array.isArray(rules) ? rules : [];` — a non-array `rules` previously threw `TypeError: rules is not iterable` from the `for…of`, yielding a 500.
+- **Lines 14–38:** new `validateRules(rules)` returning an error string or `null`. Caps: `MAX_RULES = 50`, `MAX_PATTERN_LENGTH = 500`, actions restricted to `mask | warn | block`. Exported for the HTTP layer.
+- **Lines 68–82:** overlap handling. Previously `if (overlaps) continue;` dropped a `block` detection whose span was already claimed by an earlier `mask` rule, so `blocked` came out `false`. Now a `block` detection is always recorded (deduplicated against existing block spans), while non-block overlapping detections are still skipped. A `mask` rule can no longer silence a `block` rule by appearing first.
+- No change to: empty-match `lastIndex++` guard, reverse-order masking, or the `{ maskedText, detections, blocked }` return shape.
+
+### `src/app.js`
+
+- **Lines 21–24:** `validateRules(body.rules)` → `400 { error }`. Closes the 500s previously reachable with `rules: {}`, `rules: "abc"`, `rules: [null]`.
+- **Lines 26–28:** `const policy = body.rules == null ? DEFAULT_RULES : body.rules;` — the service now honours its documented default policy instead of returning `200` with all PII echoed. `DEFAULT_RULES` was imported at line 4 and previously never used.
+- **Lines 11, 30–38:** the `setTimeout(…, 500)` is gone. It could never fire — the handler is fully synchronous, so the timer callback only runs after the response is already sent — which made the old 408 branch unreachable. The engine now receives a real `deadline` and reports through `timedOut`, and the response is **503** (server cannot complete in budget) rather than **408** (client sent the request too slowly).
+- **Line 8:** `app.disable('x-powered-by')`.
+- The `try/catch` that only existed to `clearTimeout` was removed; synchronous throws still reach the error middleware via Express.
+
+### `src/rules.js` (round 1 — later superseded by the user's rewrite)
+
+- **Line 2:** `strip` changed from `/[\s-]/g` to `/\D/g`. The validator received the raw match, which the credit-card pattern can end with a separator; any non-digit character made `luhn()` return `false` and the card passed through **unmasked**.
+- **Line 9:** `\b(?:\d[ -]?){13,19}\b` → `\b\d(?:[ -]?\d){12,18}\b`, so the match always ends on a digit and no trailing space is consumed.
+- **Line 7:** API-key pattern extended to `sk_live_` / `sk_proj_` / `sk-proj-` styles with explicit alternatives (no nested unbounded quantifier).
+
+### `src/index.js`
+
+- **Lines 6–11:** captured the `listen` handle and attached an `error` listener that logs and exits(1) — an `EADDRINUSE` previously surfaced as an unhandled `'error'` event.
+
+### `package.json`
+
+- **Line 5:** `"main": "src/index.js"` — `index.js` does not exist at the project root, so `require('redactor')` failed with `MODULE_NOT_FOUND`.
+
+---
+
+## 3. Test changes (round 1) and why
+
+1. **`tests/luhn.test.js` — removed a contradictory case.**
+   The file contained two mutually exclusive assertions: `luhn('0') === true` and `luhn('0') === false` (length-floor block). Both could not pass. The implementation has `if (!num || num.length < 12) return false`, so `false` is correct and the newer test matches it; the stale case was deleted.
+   *This is not an assertion being weakened — the pair was unsatisfiable.*
+
+2. **`tests/engine.test.js` — contract change, not a concession.**
+   `block rule skipped when mask rule claims same span first` asserted `blocked: false` for text containing a blocked term — the policy bypass written down as a spec. Renamed to `block rule fires even when a mask rule claims the same span first`, asserting `blocked: true` and 2 detections. **If the product intends mask-first-wins, revert change #6 instead of this test.**
+
+3. **`tests/rules.test.js` — removed a vulnerability-encoding assertion.**
+   `Stripe-style sk_live_ does not match` asserted that a real live Stripe key is *not* redacted. Replaced with positive coverage.
+
+4. **`tests/api.test.js` — added coverage** for `rules: {}`, `rules: [null]`, a rule with no `pattern`, and an unknown `action`, all expecting 400.
+
+---
+
+## 4. Verification (round 1)
+
+| Check | Result |
+|---|---|
+| `npm test` | 4/4 suites, **107/107 passing**, exit 0 |
+| `node --check` on all 5 source files | OK |
+| Default policy | `200` → `"My email is [EMAIL] and my phone is [PHONE]"` |
+| Luhn path | `200` → `"card [CREDIT_CARD] ok"` (was 500) |
+| Block precedence | `blocked: true`, text masked |
+| Invalid policy | `rules: {}` / `[null]` / no pattern / bad action → `400` (was 500) |
+| Resource caps | pattern > 500 chars; 51 rules → `400` |
+| Real deadline | `timedOut === true`, 0 detections |
+| Fingerprint | no `x-powered-by` |
+
+> **Note on one failed invocation.** Mid-session `npm test` returned exit 1 with `Could not determine Node.js install directory`, and one shell call lost the terminal broker entirely. Neither is a code failure: `npx jest --runInBand` (the binary `npm test` invokes) passed in the same directory at the same moment, and the next `npm test` exited 0.
+
+---
+
+## 5. Deliberately NOT fixed (needs a product decision)
+
+| Issue | Why left alone |
+|---|---|
+| **No auth / rate limiting on `POST /redact`** | Requires a dependency and an infrastructure decision. |
+| **`block`/`warn` still return plaintext secrets in `maskedText`** | Changing it breaks the documented response contract. `blocked: true` with the body withheld (or a 422) is the safer design — decide before changing. See §8.2. |
+| **`os.hostname()` in every response** | Operational disclosure, but removing it may break dashboards keyed on `servedBy`. |
+| **ReDoS is mitigated, not solved** | See below. |
+| **`phone` / `ipv4` / `email` over-masking** | Resolved by the round-2 policy rewrite instead. |
+| **`aws-key` 40-char secret keys** | Still uncovered; `ASIA` prefix was added by the rewrite. |
+
+### Residual ReDoS risk (important)
+
+The 500 ms deadline is checked **between rules** (`engine.js:46`), so a single catastrophic pattern still blocks the event loop until it completes. What changed is the attack surface: rule count is capped at 50 and pattern length at 500. That materially reduces exposure but **does not eliminate catastrophic backtracking**.
+
+A real fix requires an execution boundary the synchronous regex engine cannot cross:
+- run redaction in a `worker_threads` worker with a hard kill, or
+- use `re2` / a linear-time engine, or
+- launch Node with `--regexp-backtracks-before-fallback`.
+
+Recommended follow-up, not done here.
+
+---
+
+# Round 2 — policy rewrite review (2026-11-17)
+
+`src/rules.js` was rewritten externally: 14 rules, lookbehind-based masking, new rule ids, `email` and `phone-intl` downgraded to `warn`. That rewrite is **not mine**. This section records the one defect it exposed and the tests I updated to match the new intended behaviour.
+
+**Result:** `npm test` — 4/4 suites, **120/120 passing**, exit 0 (16 failures before the updates).
+
+## 6. Change log — round 2
+
+| # | File | Lines | Change | Why |
+|---|------|-------|--------|-----|
+| 21 | `src/engine.js` | 6–16 | Added `VALIDATORS` registry | `validator: 'luhn'` is a string; the old `typeof … === 'function'` test ignored it |
+| 22 | `src/engine.js` | 66–69 | Resolve `rule.validator` as function **or** registered name; strip non-digits for `luhn` | Separator forms (`4111 1111 1111 1111`) must still validate |
+| 23 | `tests/rules.test.js` | 7–8 | Added `spansOf()` helper | `warn` rules need span assertions, not `maskedText` |
+| 24 | `tests/rules.test.js` | 11–34 | `email` → warn semantics | action changed mask → warn |
+| 25 | `tests/rules.test.js` | 11–34 | Trailing dot excluded from the span | the new `\b` anchor fixed the old FP |
+| 26 | `tests/rules.test.js` | 97–103 | `999.999.999.999` / `256.1.1.1` must **not** match | new octet range checks |
+| 27 | `tests/rules.test.js` | 118–136 | `phone` → `phone-intl` | rule removed/renamed; requires `+` |
+| 28 | `tests/rules.test.js` | 138–164 | `password` keeps the key, masks only the value | lookbehind form; `compass:` FP gone |
+| 29 | `tests/rules.test.js` | 165–205 | +13 tests for `private-key`, `db-url`, `vendor-token`, `bearer`, `secret-kv`, `url-secret`, `ASIA` | new rules had zero coverage |
+
+### 6.1 The defect: the named validator was silently ignored
+
+`src/rules.js` declares `validator: 'luhn'` — a **string**. `src/engine.js` tested `typeof rule.validator === 'function'`, so the validator was skipped and every 13–19 digit run was masked as a credit card, valid or not. The existing test `does NOT mask invalid Luhn (this is the point of the validator)` caught it (1 detection, expected 0).
+
+Fix in `src/engine.js`:
+
+```js
+const VALIDATORS = {
+  luhn: (value) => luhn(value.replace(/\D/g, '')),
+};
+
+const validator =
+  typeof rule.validator === 'function' ? rule.validator : VALIDATORS[rule.validator];
+if (validator && !validator(match[0])) continue;
+```
+
+Non-digits are stripped before validating because `luhn()` returns `false` for any separator — without the strip, `"4111 1111 1111 1111"` would stop being masked. Both directions verified: invalid `4111111111111112` → 0 detections (text unchanged); `4111 1111 1111 1111` → `[CREDIT_CARD]`.
+
+`src/rules.js` itself was left untouched, including its now-unused `luhn` / `strip` imports.
+
+### 6.2 Behaviour changes the tests now encode
+
+| Rule | Before | Now |
+|---|---|---|
+| `email` | `mask` → `[EMAIL]` | `warn` → detected, text unchanged |
+| `phone` | masked bare/national numbers, FP on dates | `phone-intl`, `warn`, requires a `+` prefix |
+| `password` | replaced `key=value` entirely | masks the **value** only, keeps `password=` |
+| `ipv4` | `999.999.999.999` matched | octets range-checked, no match |
+
+---
+
+## 7. Behaviour notes for sign-off (round 2)
+
+1. **Email and phone now pass through in plaintext.** `POST /redact` returns `200` with `john@mail.com` and `+1-555-123-4567` intact in `maskedText`; they appear only in `detections`. Verified end-to-end. If the endpoint is meant to scrub PII, the caller must act on `warn` itself.
+2. **`block` returns the secret.** `private-key` sets `blocked: true` but still returns `200` and the full PEM in `maskedText` (verified `leaked=true`). See §5 — withholding the body on `blocked` is the open recommendation, and this rule makes it more urgent.
+3. **Bare national phone numbers are no longer detected at all** (`5551234567`, `555 123 4567` → 0 detections), by design of the `+`-anchored pattern.
+
+---
+
+## 9. Round 3 — review of the added action-contract tests (2026-11-17)
+
+New tests were added by the user at the top of `tests/rules.test.js` (`DEFAULT_RULES — action contract`). All 14 probes and the per-action behaviour tests were already sound; the block did not run because of one missing import.
+
+| # | File | Lines | Change | Why |
+|---|------|-------|--------|-----|
+| 30 | `tests/rules.test.js` | 2 | `require('../src/engine')` destructures `validateRules` as well | `ReferenceError: validateRules is not defined` — the new test called it without importing it |
+| 31 | `tests/rules.test.js` | ~196 | Removed a duplicated `// cross-rule overlap` header that had drifted above the `secrets and credentials` block | leftover from an earlier edit; the header now sits on its own `overlap across rules` describe |
+
+**Result:** `npm test` — 4/4 suites, **153/153 passing**, exit 0.
+
+Reviewed but left as-is (recommendations, not defects): the probe loop's `if (!rule) continue;` can silently drop coverage on a rule rename; `detections.length > 0` does not pin the matched span; `validateRules` accepts an uncompilable pattern and an unknown `validator` name (both verified to fail silently at run time).
+
+## 10. Re-verify
+
+```bash
+npm test
+```
+
+Expected: `Test Suites: 4 passed`, `Tests: 153 passed`, exit 0.
+</file>
+
+<file path="redactor/package.json">
+{
+  "name": "redactor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "jest": "^30.5.2",
+    "supertest": "^7.3.2"
+  }
+}
+</file>
+
+<file path="server/postman/my-auth-collection.json">
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-0000-4000-8000-000000000001",
+    "name": "My Auth + Conversations Collection",
+    "description": "Auth (register, login, me) + Conversation CRUD for the SecureChat Express backend.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+  { "key": "baseUrl", "value": "http://localhost:5000" },
+  { "key": "token", "value": "" },
+  { "key": "userId", "value": "" },
+  { "key": "conversationId", "value": "" },
+  { "key": "testEmail", "value": "" },
+  { "key": "testPassword", "value": "Password123!" },
+  { "key": "testName", "value": "Test User" },
+  { "key": "bobToken", "value": "" },
+  { "key": "bobUserId", "value": "" },
+  { "key": "bobEmail", "value": "" },
+  { "key": "aliceConversationId", "value": "" }
+],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "{{baseUrl}}/health", "host": ["{{baseUrl}}"], "path": ["health"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Service is backend', () => pm.expect(body.service).to.eql('backend'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Generate a unique email so re-runs don't hit 409 Conflict",
+              "const email = `test_${Date.now()}@example.com`;",
+              "pm.collectionVariables.set('testEmail', email);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('201 Created', () => pm.response.to.have.status(201));",
+              "const body = pm.response.json();",
+              "pm.test('Returns token', () => pm.expect(body.token).to.be.a('string').and.not.empty);",
+              "pm.test('Returns user without passwordHash', () => {",
+              "  pm.expect(body.user).to.have.keys('id','email','name','role');",
+              "  pm.expect(body.user).to.not.have.property('passwordHash');",
+              "});",
+              "pm.collectionVariables.set('token', body.token);",
+              "pm.collectionVariables.set('userId', body.user.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\",\n  \"name\": \"{{testName}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/register",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "register"]
+        }
+      }
+    },
+    {
+      "name": "Login (valid)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Returns token', () => pm.expect(body.token).to.be.a('string').and.not.empty);",
+              "pm.test('Returns user', () => pm.expect(body.user).to.have.property('email'));",
+              "pm.collectionVariables.set('token', body.token);",
+              "pm.collectionVariables.set('userId', body.user.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "Login (wrong password)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('401 Unauthorized', () => pm.response.to.have.status(401));",
+              "const body = pm.response.json();",
+              "pm.test('Generic error message', () => pm.expect(body.error).to.eql('Invalid email or password'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"WrongPassword123!\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "Get Me (valid token)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Returns user', () => pm.expect(body).to.have.property('user'));",
+              "pm.test('No passwordHash exposed', () => pm.expect(body.user).to.not.have.property('passwordHash'));",
+              "pm.test('ID matches saved userId', () => pm.expect(body.user.id).to.eql(pm.collectionVariables.get('userId')));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/me",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "me"]
+        }
+      }
+    },
+    {
+      "name": "Get Me (missing token)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('401 Unauthorized', () => pm.response.to.have.status(401));",
+              "pm.test('Missing token message', () => pm.expect(pm.response.json().error).to.eql('Missing token'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/me",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "me"]
+        }
+      }
+    },
+    {
+      "name": "Get Me (invalid token)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('401 Unauthorized', () => pm.response.to.have.status(401));",
+              "pm.test('Invalid token message', () => pm.expect(pm.response.json().error).to.eql('Invalid or expired token'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer this.is.not.a.valid.jwt" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/me",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "me"]
+        }
+      }
+    },
+    {
+      "name": "Register (duplicate email)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('409 Conflict', () => pm.response.to.have.status(409));",
+              "pm.test('Duplicate message', () => pm.expect(pm.response.json().error).to.eql('Email already in use'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\",\n  \"name\": \"Duplicate User\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/register",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "register"]
+        }
+      }
+    },
+    {
+      "name": "404 Not Found",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('404 Not Found', () => pm.response.to.have.status(404));",
+              "pm.test('Has path in body', () => pm.expect(pm.response.json()).to.have.property('path'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/does-not-exist",
+          "host": ["{{baseUrl}}"],
+          "path": ["does-not-exist"]
+        }
+      }
+    },
+    {
+      "name": "1. Create conversation",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('201 Created', () => pm.response.to.have.status(201));",
+              "const body = pm.response.json();",
+              "pm.test('Returns conversation object', () => pm.expect(body).to.have.property('conversation'));",
+              "pm.test('userId matches logged-in user', () => {",
+              "  pm.expect(body.conversation.userId).to.eql(pm.collectionVariables.get('userId'));",
+              "});",
+              "pm.test('Title set from body', () => pm.expect(body.conversation.title).to.eql('Test chat'));",
+              "pm.test('Empty messages array', () => {",
+              "  pm.expect(body.conversation.messages).to.be.an('array').that.is.empty;",
+              "});",
+              "// Save id for downstream requests #4-#7",
+              "pm.collectionVariables.set('conversationId', body.conversation._id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Test chat\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations"]
+        }
+      }
+    },
+    {
+      "name": "2. Create conversation (no token)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('401 Unauthorized', () => pm.response.to.have.status(401));",
+              "pm.test('Missing token message', () => pm.expect(pm.response.json().error).to.eql('Missing token'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Should fail\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations"]
+        }
+      }
+    },
+    {
+      "name": "3. List conversations",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Returns conversations array', () => pm.expect(body.conversations).to.be.an('array'));",
+              "pm.test('Contains our Test chat conversation', () => {",
+              "  const found = body.conversations.find((c) => c.title === 'Test chat');",
+              "  pm.expect(found, 'Test chat should appear in the list').to.exist;",
+              "});",
+              "pm.test('List items have no messages field (lightweight projection)', () => {",
+              "  body.conversations.forEach((c) => pm.expect(c).to.not.have.property('messages'));",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations"]
+        }
+      }
+    },
+    {
+      "name": "4. Get conversation by id",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Returns conversation object', () => pm.expect(body).to.have.property('conversation'));",
+              "pm.test('ID matches saved conversationId', () => {",
+              "  pm.expect(body.conversation._id).to.eql(pm.collectionVariables.get('conversationId'));",
+              "});",
+              "pm.test('Has full messages array', () => pm.expect(body.conversation.messages).to.be.an('array'));",
+              "pm.test('userId still matches owner', () => {",
+              "  pm.expect(body.conversation.userId).to.eql(pm.collectionVariables.get('userId'));",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations/{{conversationId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations", "{{conversationId}}"]
+        }
+      }
+    },
+    {
+      "name": "5. Rename conversation",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Title updated to Renamed', () => {",
+              "  pm.expect(body.conversation.title).to.eql('Renamed');",
+              "});",
+              "pm.test('ID unchanged', () => {",
+              "  pm.expect(body.conversation._id).to.eql(pm.collectionVariables.get('conversationId'));",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Renamed\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations/{{conversationId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations", "{{conversationId}}"]
+        }
+      }
+    },
+    {
+      "name": "6. Delete conversation",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "pm.test('Returns { deleted: true }', () => {",
+              "  pm.expect(pm.response.json()).to.eql({ deleted: true });",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations/{{conversationId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations", "{{conversationId}}"]
+        }
+      }
+    },
+    {
+      "name": "7. Get deleted conversation (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('404 Not Found', () => pm.response.to.have.status(404));",
+              "pm.test('Conversation not found message', () => {",
+              "  pm.expect(pm.response.json().error).to.eql('Conversation not found');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/conversations/{{conversationId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "conversations", "{{conversationId}}"]
+        }
+      }
+    },
+    {
+  "name": "8. Register Bob (second user)",
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "const email = `bob_${Date.now()}@example.com`;",
+          "pm.collectionVariables.set('bobEmail', email);"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('201 Created', () => pm.response.to.have.status(201));",
+          "const body = pm.response.json();",
+          "pm.test('Bob gets a token', () => pm.expect(body.token).to.be.a('string').and.not.empty);",
+          "pm.test('Bob id differs from Alice id', () => {",
+          "  pm.expect(body.user.id).to.not.eql(pm.collectionVariables.get('userId'));",
+          "});",
+          "pm.collectionVariables.set('bobToken', body.token);",
+          "pm.collectionVariables.set('bobUserId', body.user.id);"
+        ]
+      }
+    }
+  ],
+  "request": {
+    "method": "POST",
+    "header": [{ "key": "Content-Type", "value": "application/json" }],
+    "body": {
+      "mode": "raw",
+      "raw": "{\n  \"email\": \"{{bobEmail}}\",\n  \"password\": \"Password123!\",\n  \"name\": \"Bob\"\n}"
+    },
+    "url": {
+      "raw": "{{baseUrl}}/api/auth/register",
+      "host": ["{{baseUrl}}"],
+      "path": ["api", "auth", "register"]
+    }
+  }
+},
+{
+  "name": "9. Alice creates conversation for ownership test",
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('201 Created', () => pm.response.to.have.status(201));",
+          "const body = pm.response.json();",
+          "pm.test('Conversation belongs to Alice', () => {",
+          "  pm.expect(body.conversation.userId).to.eql(pm.collectionVariables.get('userId'));",
+          "});",
+          "pm.test('Title set correctly', () => {",
+          "  pm.expect(body.conversation.title).to.eql(\"Alice's private chat\");",
+          "});",
+          "pm.collectionVariables.set('aliceConversationId', body.conversation._id);"
+        ]
+      }
+    }
+  ],
+  "request": {
+    "method": "POST",
+    "header": [
+      { "key": "Content-Type", "value": "application/json" },
+      { "key": "Authorization", "value": "Bearer {{token}}" }
+    ],
+    "body": {
+      "mode": "raw",
+      "raw": "{\n  \"title\": \"Alice's private chat\"\n}"
+    },
+    "url": {
+      "raw": "{{baseUrl}}/api/conversations",
+      "host": ["{{baseUrl}}"],
+      "path": ["api", "conversations"]
+    }
+  }
+},
+{
+  "name": "10. Bob GETs Alice's conversation -> 404",
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('404 Not Found (NOT 200)', () => pm.response.to.have.status(404));",
+          "pm.test('Conversation not found message', () => {",
+          "  pm.expect(pm.response.json().error).to.eql('Conversation not found');",
+          "});",
+          "pm.test('No conversation object leaked in response', () => {",
+          "  pm.expect(pm.response.json()).to.not.have.property('conversation');",
+          "});"
+        ]
+      }
+    }
+  ],
+  "request": {
+    "method": "GET",
+    "header": [{ "key": "Authorization", "value": "Bearer {{bobToken}}" }],
+    "url": {
+      "raw": "{{baseUrl}}/api/conversations/{{aliceConversationId}}",
+      "host": ["{{baseUrl}}"],
+      "path": ["api", "conversations", "{{aliceConversationId}}"]
+    }
+  }
+},
+{
+  "name": "11. Bob DELETEs Alice's conversation -> 404",
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('404 Not Found (NOT 200)', () => pm.response.to.have.status(404));",
+          "pm.test('Conversation not found message', () => {",
+          "  pm.expect(pm.response.json().error).to.eql('Conversation not found');",
+          "});",
+          "pm.test('No deleted:true in response', () => {",
+          "  pm.expect(pm.response.json()).to.not.have.property('deleted');",
+          "});"
+        ]
+      }
+    }
+  ],
+  "request": {
+    "method": "DELETE",
+    "header": [{ "key": "Authorization", "value": "Bearer {{bobToken}}" }],
+    "url": {
+      "raw": "{{baseUrl}}/api/conversations/{{aliceConversationId}}",
+      "host": ["{{baseUrl}}"],
+      "path": ["api", "conversations", "{{aliceConversationId}}"]
+    }
+  }
+},
+{
+  "name": "12. Alice verifies her conversation still exists (list)",
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('200 OK', () => pm.response.to.have.status(200));",
+          "const body = pm.response.json();",
+          "const convId = pm.collectionVariables.get('aliceConversationId');",
+          "pm.test('Alice\\'s private chat is still in her list', () => {",
+          "  const found = body.conversations.find((c) => c._id === convId);",
+          "  pm.expect(found, 'Alice\\'s conversation must still exist after Bob\\'s DELETE attempt').to.exist;",
+          "});",
+          "pm.test('Title is unchanged', () => {",
+          "  const found = body.conversations.find((c) => c._id === convId);",
+          "  pm.expect(found.title).to.eql(\"Alice's private chat\");",
+          "});"
+        ]
+      }
+    }
+  ],
+  "request": {
+    "method": "GET",
+    "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+    "url": {
+      "raw": "{{baseUrl}}/api/conversations",
+      "host": ["{{baseUrl}}"],
+      "path": ["api", "conversations"]
+    }
+  }
+},
+{
+  "name": "13. Alice GETs her conversation by id (bonus, direct proof)",
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('200 OK', () => pm.response.to.have.status(200));",
+          "const body = pm.response.json();",
+          "pm.test('Conversation still exists with original id', () => {",
+          "  pm.expect(body.conversation._id).to.eql(pm.collectionVariables.get('aliceConversationId'));",
+          "});",
+          "pm.test('Title still intact', () => {",
+          "  pm.expect(body.conversation.title).to.eql(\"Alice's private chat\");",
+          "});",
+          "pm.test('Owner is still Alice, not Bob', () => {",
+          "  pm.expect(body.conversation.userId).to.eql(pm.collectionVariables.get('userId'));",
+          "  pm.expect(body.conversation.userId).to.not.eql(pm.collectionVariables.get('bobUserId'));",
+          "});"
+        ]
+      }
+    }
+  ],
+  "request": {
+    "method": "GET",
+    "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+    "url": {
+      "raw": "{{baseUrl}}/api/conversations/{{aliceConversationId}}",
+      "host": ["{{baseUrl}}"],
+      "path": ["api", "conversations", "{{aliceConversationId}}"]
+    }
+  }
+}
+  ]
+}
+</file>
+
+<file path="server/postman/my-auth-env.local.json">
+{
+  "id": "a1b2c3d4-0000-4000-8000-000000000010",
+  "name": "My Auth - Local",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "default",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}
+</file>
+
+<file path="server/scripts/mockRedactor.js">
+// scripts/mockRedactor.js
+// Minimal stand-in for the redactor service. Real one will follow the same
+// contract: POST /redact { text } -> 200 { maskedText, detections, blocked }
+//                                  or 422 { blocked: true, detections }
+const express = require('express');
+const app = express();
+app.use(express.json({ limit: '5mb' }));
+
+const RULES = [
+  { id: 'email',        action: 'mask',  pattern: /[\w.+-]+@[\w-]+\.[\w.-]+/g,       replace: '[EMAIL]' },
+  { id: 'phone',        action: 'mask',  pattern: /\b\d{3}[-.\s]\d{3}[-.\s]\d{4}\b/g, replace: '[PHONE]' },
+  { id: 'ssn',          action: 'mask',  pattern: /\b\d{3}-\d{2}-\d{4}\b/g,           replace: '[SSN]' },
+  { id: 'credit_card',  action: 'mask',  pattern: /\b(?:\d[ -]?){13,16}\b/g,          replace: '[CARD]' },
+  { id: 'block_keyword', action: 'block', pattern: /\b(BOMB|TERRORIST|EXPLICIT_BAN)\b/i },
+];
+
+app.post('/redact', (req, res) => {
+  const text = String(req.body?.text ?? '');
+  let masked = text;
+  const detections = [];
+  let blocked = false;
+
+  for (const rule of RULES) {
+    if (rule.action === 'block') {
+      if (rule.pattern.test(text)) {
+        blocked = true;
+        detections.push({ ruleId: rule.id, action: 'block' });
+      }
+    } else {
+      masked = masked.replace(rule.pattern, (match) => {
+        detections.push({ ruleId: rule.id, action: 'mask', match });
+        return rule.replace;
+      });
+    }
+  }
+
+  if (blocked) return res.status(422).json({ blocked: true, detections });
+  return res.json({ maskedText: masked, detections, blocked: false });
+});
+
+app.get('/health', (_req, res) => res.json({ ok: true }));
+
+const PORT = Number(process.env.PORT || 4000);
+app.listen(PORT, () => console.log(`mock redactor on :${PORT}`));
+</file>
+
+<file path="server/src/config/db.js">
+const mongoose = require('mongoose');
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/securechat';
+
+module.exports = function connectDB() {
+  mongoose.connect(MONGO_URI)
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.error('Mongo not reachable yet:', err.message));
+};
+</file>
+
+<file path="server/src/controllers/authController.js">
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1d';
+
+function signToken(user) {
+  return jwt.sign(
+    { sub: user._id, role: user.role },   // payload
+    JWT_SECRET,
+    { expiresIn: JWT_EXPIRES_IN }
+  );
+}
+
+// Shape what we send back — never include passwordHash
+function publicUser(user) {
+  return {
+    id: user._id,
+    email: user.email,
+    name: user.name,
+    role: user.role,
+  };
+}
+
+exports.register = async (req, res, next) => {
+  try {
+    const { email, password, name } = req.body;
+
+    // Check for duplicate email (Mongo unique index -> error code 11000)
+    const existing = await User.findOne({ email: email.toLowerCase() });
+    if (existing) {
+      return res.status(409).json({ error: 'Email already in use' });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10); // 10 = salt rounds
+    const user = await User.create({ email, passwordHash, name });
+
+    const token = signToken(user);
+    res.status(201).json({ token, user: publicUser(user) });
+  } catch (err) {
+    next(err); // let the centralized error handler deal with it
+  }
+};
+exports.login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const invalid = { error: 'Invalid email or password' };
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+    if (!user) return res.status(401).json(invalid);
+
+    if (user.isBanned) {
+      return res.status(403).json({ error: 'Account banned' });
+    }
+
+    const ok = await bcrypt.compare(password, user.passwordHash);
+    if (!ok) return res.status(401).json(invalid);
+
+    const token = signToken(user);
+    res.json({ token, user: publicUser(user) });
+  } catch (err) {
+    next(err);
+  }
+};
+exports.me = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id).select('-passwordHash');
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json({ user: publicUser(user) });
+  } catch (err) {
+    next(err);
+  }
+};
+</file>
+
+<file path="server/src/controllers/conversationController.js">
+const Conversation = require('../models/Conversation');
+
+// POST /api/conversations
+exports.create = async (req, res, next) => {
+  try {
+    const conv = await Conversation.create({
+      userId: req.user.id,                 // from the auth middleware — never from the body
+      title: req.body.title || 'New conversation',
+    });
+    res.status(201).json({ conversation: conv });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// GET /api/conversations
+exports.list = async (req, res, next) => {
+  try {
+    const conversations = await Conversation.find({ userId: req.user.id })
+      .select('title updatedAt createdAt')  // message bodies not needed for the list view
+      .sort({ updatedAt: -1 });               // most recent first
+    res.json({ conversations });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// GET /api/conversations/:id
+exports.get = async (req, res, next) => {
+  try {
+    const conv = await Conversation.findOne({
+      _id: req.params.id,
+      userId: req.user.id,     // ownership is part of the query itself
+    });
+    if (!conv) {
+      return res.status(404).json({ error: 'Conversation not found' });
+    }
+    res.json({ conversation: conv });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// PUT /api/conversations/:id  (rename)
+exports.update = async (req, res, next) => {
+  try {
+    const conv = await Conversation.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user.id },
+      { title: req.body.title },
+      { new: true, runValidators: true }  // return the updated doc, validate the title
+    );
+    if (!conv) {
+      return res.status(404).json({ error: 'Conversation not found' });
+    }
+    res.json({ conversation: conv });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// DELETE /api/conversations/:id
+exports.remove = async (req, res, next) => {
+  try {
+    const conv = await Conversation.findOneAndDelete({
+      _id: req.params.id,
+      userId: req.user.id,
+    });
+    if (!conv) {
+      return res.status(404).json({ error: 'Conversation not found' });
+    }
+    res.json({ deleted: true });
+  } catch (err) {
+    next(err);
+  }
+};
+</file>
+
+<file path="server/src/middlewares/auth.js">
+const jwt = require('jsonwebtoken');
+
+// Verifies the JWT and attaches the user info to req.user
+exports.auth = (req, res, next) => {
+  const header = req.headers.authorization || '';
+  const token = header.startsWith('Bearer ') ? header.slice(7) : null;
+
+  if (!token) {
+    return res.status(401).json({ error: 'Missing token' });
+  }
+
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = { id: payload.sub, role: payload.role };
+    next();
+  } catch (err) {
+    return res.status(401).json({ error: 'Invalid or expired token' });
+  }
+};
+
+exports.requireRole = (role) => (req, res, next) => {
+  if (!req.user || req.user.role !== role) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+  next();
+};
+</file>
+
+<file path="server/src/middlewares/errorHandler.js">
+module.exports = (err, req, res, next) => {
+  if (err.name === 'CastError') {
+    return res.status(400).json({ error: 'Invalid id format' });
+  }
+  if (err.name === 'ValidationError') {
+    return res.status(400).json({ error: err.message });
+  }
+  console.error(err);
+  res.status(err.status || 500).json({ error: err.message || 'Server error' });
+};
+</file>
+
+<file path="server/src/models/Conversation.js">
+const mongoose = require('mongoose');
+
+const messageSchema = new mongoose.Schema(
+  {
+    role: {
+      type: String,
+      enum: ['user', 'assistant'],
+      required: true,
+    },
+    content: {              // what is shown/stored — masked if redaction happened
+      type: String,
+      required: true,
+    },
+    maskedContent: {        // the masked version actually sent to the LLM (same as content if no redaction)
+      type: String,
+    },
+    redacted: {             // quick flag: were any secrets masked in this message?
+      type: Boolean,
+      default: false,
+    },
+    servedBy: {             // which redactor pod handled it (visible in k8s demo)
+      type: String,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  { _id: false }            // messages don't need their own ids for this project
+);
+
+const conversationSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+      index: true,          // we always query "conversations of user X"
+    },
+    title: {
+      type: String,
+      trim: true,
+      maxlength: 100,
+      default: 'New conversation',
+    },
+    messages: [messageSchema],   // embedded — always read together, per project doc
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model('Conversation', conversationSchema);
+</file>
+
+<file path="server/src/models/User.js">
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: [true, 'Email is required'],
+      unique: true,
+      lowercase: true,
+      trim: true,
+      match: [/^\S+@\S+\.\S+$/, 'Invalid email format'],
+    },
+    passwordHash: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: [true, 'Name is required'],
+      trim: true,
+      maxlength: 50,
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'user',
+    },
+    isBanned: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  { timestamps: true } // adds createdAt and updatedAt automatically
+);
+
+module.exports = mongoose.model('User', userSchema);
+</file>
+
+<file path="server/src/routes/authRoutes.js">
+const router = require('express').Router();
+const { register, login, me } = require('../controllers/authController');
+const { auth } = require('../middlewares/auth');
+
+router.post('/register', register);
+router.post('/login', login);
+router.get('/me', auth, me); 
+
+module.exports = router;
+</file>
+
+<file path="server/src/routes/chatRoutes.js">
+const router = require('express').Router();
+const { auth } = require('../middlewares/auth');
+const {
+  chatCompletion,
+  RouterUpstreamError,
+  RouterUnavailableError,
+} = require('../services/routerClient');
+const {
+  redactMessages,
+  ChatRedactionError,
+} = require('../services/redactorPipeline');
+
+router.post('/', auth, async (req, res, next) => {
+  const { messages, task, model, temperature, max_tokens, redact_response } = req.body || {};
+
+  if (!Array.isArray(messages) || messages.length === 0) {
+    return res.status(400).json({ error: 'messages[] is required' });
+  }
+
+  // 1. Redact outbound — before the LLM ever sees the text.
+  let redaction;
+  try {
+    redaction = await redactMessages(messages);
+  } catch (err) {
+    if (err instanceof ChatRedactionError) {
+      return res.status(err.status).json({
+        error: err.message,
+        code: err.code,
+        redactor_report: {
+          blocked: err.code === 'CONTENT_BLOCKED',
+          ...err.details,
+        },
+      });
+    }
+    return next(err);
+  }
+
+  // 2. Call the gateway with MASKED messages.
+  const target = model || (task ? `router/auto:${task}` : 'router/auto');
+  const extraHeaders = {};
+  if (req.headers['x-router-task']) {
+    extraHeaders['X-Router-Task'] = String(req.headers['x-router-task']);
+  }
+
+  let llmResult;
+  try {
+    llmResult = await chatCompletion({
+      model: target,
+      messages: redaction.maskedMessages,
+      temperature,
+      max_tokens,
+      extraHeaders,
+    });
+  } catch (err) {
+    if (err instanceof RouterUpstreamError) {
+      for (const [k, v] of Object.entries(err.headers)) res.set(k, v);
+      return res.status(err.status).json({
+        ...err.body,
+        redactor_report: redaction.report,
+      });
+    }
+    if (err instanceof RouterUnavailableError) {
+      return res.status(502).json({
+        error: 'Router unavailable',
+        redactor_report: redaction.report,
+      });
+    }
+    return next(err);
+  }
+
+  // 3. Relay router headers (X-Router-Model / -Task / -Hops / -Latency-Ms).
+  for (const [k, v] of Object.entries(llmResult.headers)) res.set(k, v);
+
+  // 4. Optionally redact the assistant's reply too (default off).
+  let responseBody = llmResult.body;
+  if (redact_response === true && Array.isArray(responseBody.choices)) {
+    const assistantMessages = responseBody.choices.map((c) => c.message);
+    try {
+      const inbound = await redactMessages(assistantMessages);
+      responseBody = {
+        ...responseBody,
+        choices: responseBody.choices.map((c, i) => ({
+          ...c,
+          message: inbound.maskedMessages[i],
+        })),
+      };
+      redaction.report.inbound = inbound.report;
+    } catch (err) {
+      // Inbound redaction failure should not destroy a valid reply —
+      // log it, leave the reply as-is, and record it in the report.
+      console.error('[chat] inbound redaction failed', err.message);
+      redaction.report.inbound = { error: err.message };
+    }
+  }
+
+  // 5. Return completion + report.
+  return res.json({
+    ...responseBody,
+    redactor_report: redaction.report,
+  });
+});
+
+module.exports = router;
+</file>
+
+<file path="server/src/routes/conversationRoutes.js">
+const router = require('express').Router();
+const { auth } = require('../middlewares/auth');
+const ctrl = require('../controllers/conversationController');
+
+router.use(auth);                    // everything below requires a valid JWT
+
+router.post('/', ctrl.create);
+router.get('/', ctrl.list);
+router.get('/:id', ctrl.get);
+router.put('/:id', ctrl.update);
+router.delete('/:id', ctrl.remove);
+
+module.exports = router;
+</file>
+
+<file path="server/src/routes/healthRoutes.js">
+const router = require('express').Router();
+router.get('/', (req, res) => res.json({ status: 'ok', service: 'backend' }));
+module.exports = router;
+</file>
+
+<file path="server/src/services/redactorClient.js">
+const REDACTOR_URL = process.env.REDACTOR_URL || 'http://localhost:4000';
+const TIMEOUT_MS = 5000;
+
+class RedactorError extends Error {
+  constructor(msg, opts) { super(msg, opts); this.name = 'RedactorError'; }
+}
+class RedactorBlockedError extends RedactorError {
+  constructor(detections) { super('Content blocked'); this.name = 'RedactorBlockedError'; this.detections = detections; }
+}
+class RedactorUnavailableError extends RedactorError {
+  constructor(cause) { super('Redactor unavailable', { cause }); this.name = 'RedactorUnavailableError'; }
+}
+class RedactorBadInputError extends RedactorError {
+  constructor(msg) { super(msg); this.name = 'RedactorBadInputError'; }
+}
+class RedactorInvalidResponseError extends RedactorError {
+  constructor(body) { super('Invalid redactor response'); this.name = 'RedactorInvalidResponseError'; this.body = body; }
+}
+
+/**
+ * Calls the redactor. Throws one of:
+ *   RedactorBlockedError          (422 — message contains blocked content)
+ *   RedactorUnavailableError      (timeout, network, 5xx)
+ *   RedactorBadInputError         (400 — caller bug, never retry)
+ *   RedactorInvalidResponseError  (200 with unexpected shape — treat as 500)
+ * The caller decides what "fail closed" means per error class.
+ */
+async function redact(text, rules = undefined) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), TIMEOUT_MS);
+
+  let res;
+  try {
+    res = await fetch(`${REDACTOR_URL}/redact`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, rules }),
+      signal: controller.signal,
+    });
+  } catch (err) {
+    // AbortError (timeout) or network error (DNS, ECONNREFUSED)
+    console.error('[redactor]', err.name, err.message);
+    throw new RedactorUnavailableError(err);
+  } finally {
+    clearTimeout(timeout);
+  }
+
+  if (res.status === 422) {
+    const body = await res.json().catch(() => ({}));
+    throw new RedactorBlockedError(body.detections || []);
+  }
+  if (res.status === 400) {
+    const body = await res.json().catch(() => ({}));
+    throw new RedactorBadInputError(body.error || 'Redactor rejected request');
+  }
+  if (!res.ok) {
+    console.error('[redactor] status', res.status);
+    throw new RedactorUnavailableError(new Error(`status ${res.status}`));
+  }
+
+  const body = await res.json().catch(() => null);
+  if (
+    !body ||
+    typeof body.maskedText !== 'string' ||
+    !Array.isArray(body.detections) ||
+    typeof body.blocked !== 'boolean'
+  ) {
+    console.error('[redactor] invalid response shape', Object.keys(body || {}));
+    throw new RedactorInvalidResponseError(body);
+  }
+  return body;
+}
+
+module.exports = {
+  redact,
+  RedactorError,
+  RedactorBlockedError,
+  RedactorUnavailableError,
+  RedactorBadInputError,
+  RedactorInvalidResponseError,
+};
+</file>
+
+<file path="server/src/services/redactorPipeline.js">
+const {
+  redact,
+  RedactorBlockedError,
+  RedactorUnavailableError,
+  RedactorBadInputError,
+  RedactorInvalidResponseError,
+} = require('./redactorClient');
+
+class ChatRedactionError extends Error {
+  constructor(status, code, message, details = {}) {
+    super(message);
+    this.name = 'ChatRedactionError';
+    this.status = status;
+    this.code = code;
+    this.details = details;
+  }
+}
+
+/**
+ * Redacts every text part of every message.
+ * Returns { maskedMessages, report } on success.
+ * Throws ChatRedactionError on:
+ *   422 — a message was blocked (err.details.detections explains why)
+ *   503 — the redactor is unreachable / timed out (fail closed)
+ *   500 — redactor gave a bad response (our bug)
+ */
+async function redactMessages(messages, { rules } = {}) {
+  const maskedMessages = [];
+  const detections = [];
+  let redactedMessageCount = 0;
+
+  for (let i = 0; i < messages.length; i++) {
+    const msg = messages[i];
+    if (!msg || typeof msg.content !== 'string' || msg.content.length === 0) {
+      maskedMessages.push(msg);
+      continue;
+    }
+
+    let result;
+    try {
+      result = await redact(msg.content, rules);
+    } catch (err) {
+      if (err instanceof RedactorBlockedError) {
+        throw new ChatRedactionError(422, 'CONTENT_BLOCKED',
+          'Content blocked by policy', {
+            message_index: i,
+            role: msg.role,
+            detections: err.detections,
+          });
+      }
+      if (err instanceof RedactorUnavailableError) {
+        throw new ChatRedactionError(503, 'REDACTOR_UNAVAILABLE',
+          'Redactor service unavailable — refusing to forward unredacted content', {
+            message_index: i,
+          });
+      }
+      if (err instanceof RedactorBadInputError) {
+        throw new ChatRedactionError(500, 'REDACTOR_BAD_INPUT',
+          'Redactor rejected the request', { message_index: i, cause: err.message });
+      }
+      if (err instanceof RedactorInvalidResponseError) {
+        throw new ChatRedactionError(500, 'REDACTOR_INVALID_RESPONSE',
+          'Redactor returned an invalid response', { message_index: i });
+      }
+      throw new ChatRedactionError(500, 'REDACTOR_ERROR',
+        'Redactor failed', { message_index: i, cause: String(err) });
+    }
+
+    if (result.detections.length > 0) redactedMessageCount++;
+    for (const d of result.detections) {
+      detections.push({
+        message_index: i,
+        role: msg.role,
+        ...d,
+      });
+    }
+    maskedMessages.push({ ...msg, content: result.maskedText });
+  }
+
+  return {
+    maskedMessages,
+    report: {
+      blocked: false,
+      message_count: messages.length,
+      redacted_message_count: redactedMessageCount,
+      detections,
+    },
+  };
+}
+
+module.exports = { redactMessages, ChatRedactionError };
+</file>
+
+<file path="server/src/services/routerClient.js">
+const ROUTER_URL = (process.env.GATEWAY_URL || 'http://127.0.0.1:8090').replace(/\/$/, '');
+const GATEWAY_KEY = process.env.GATEWAY_KEY;
+const TIMEOUT_MS = 120_000; // 2 min — free endpoints can be slow
+
+if (!GATEWAY_KEY) {
+  throw new Error('GATEWAY_KEY is required — add it to .env');
+}
+
+const ENDPOINT = `${ROUTER_URL}/v1/chat/completions`;
+
+class RouterError extends Error {
+  constructor(msg, opts) { super(msg, opts); this.name = 'RouterError'; }
+}
+class RouterUpstreamError extends RouterError {
+  constructor(status, body, headers) {
+    super(`upstream ${status}`);
+    this.name = 'RouterUpstreamError';
+    this.status = status;
+    this.body = body;
+    this.headers = headers || {};
+  }
+}
+class RouterUnavailableError extends RouterError {
+  constructor(cause) { super('router unavailable', { cause }); this.name = 'RouterUnavailableError'; }
+}
+
+async function chatCompletion({ model, messages, temperature, max_tokens, extraHeaders = {} }) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+
+  let res;
+  try {
+    res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${GATEWAY_KEY}`,
+        'Content-Type': 'application/json',
+        ...extraHeaders,
+      },
+      body: JSON.stringify({ model, messages, temperature, max_tokens }),
+      signal: controller.signal,
+    });
+  } catch (err) {
+    console.error('[router]', err.name, err.message);
+    throw new RouterUnavailableError(err);
+  } finally {
+    clearTimeout(timer);
+  }
+
+  const routerHeaders = {};
+  for (const h of ['x-router-model', 'x-router-task', 'x-router-hops',
+                   'x-router-latency-ms', 'x-router-attempts']) {
+    const v = res.headers.get(h);
+    if (v !== null) routerHeaders[h] = v;
+  }
+
+  const raw = await res.text();
+  let body;
+  try { body = JSON.parse(raw); } catch { body = { raw }; }
+
+  if (!res.ok) throw new RouterUpstreamError(res.status, body, routerHeaders);
+  return { body, headers: routerHeaders };
+}
+
+module.exports = {
+  chatCompletion,
+  RouterError,
+  RouterUpstreamError,
+  RouterUnavailableError,
+};
+</file>
+
+<file path="server/src/app.js">
+const express = require('express');
+const helmet = require('helmet');
+const cors = require('cors');
+
+const healthRoutes = require('./routes/healthRoutes');
+const authRoutes = require('./routes/authRoutes');
+const errorHandler = require('./middlewares/errorHandler');
+const conversationRoutes = require('./routes/conversationRoutes');
+const chatRoutes = require('./routes/chatRoutes');
+
+
+const app = express();
+
+app.use(helmet());
+app.use(cors());
+app.use(express.json({ limit: '100kb' }));
+
+app.use('/health', healthRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/conversations', conversationRoutes);
+app.use('/api/chat', chatRoutes);                     // ← new
+
+
+app.use((req, res) => res.status(404).json({ error: 'Not found', path: req.originalUrl }));
+app.use(errorHandler);
+
+module.exports = app;
+</file>
+
+<file path="server/src/index.js">
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+
+const app = require('./app');
+const connectDB = require('./config/db');
+
+const PORT = process.env.PORT || 5000;
+connectDB();
+app.listen(PORT, () => console.log(`API on :${PORT}`));
+</file>
+
+<file path="server/tests/auth.test.js">
+const request = require('supertest');
+const { registerUser, app } = require('./helpers');
+
+describe('POST /api/auth/register', () => {
+  it('creates a user and returns a token', async () => {
+    const { res, body } = await registerUser({ email: 'a@b.com' });
+
+    expect(res.status).toBe(201);
+    expect(body.token).toEqual(expect.any(String));
+    expect(body.user).toMatchObject({
+      email: 'a@b.com',
+      name: 'Test User',
+      role: 'user',
+    });
+    expect(body.user).not.toHaveProperty('passwordHash');
+  });
+
+  it('rejects duplicate email with 409', async () => {
+    await registerUser({ email: 'dup@b.com' });
+    const { res, body } = await registerUser({ email: 'dup@b.com' });
+
+    expect(res.status).toBe(409);
+    expect(body.error).toMatch(/already in use/i);
+  });
+
+  it('stores a bcrypt hash, not the raw password', async () => {
+    const User = require('../src/models/User');
+    await registerUser({ email: 'hash@b.com', password: 'Secret123!' });
+
+    const user = await User.findOne({ email: 'hash@b.com' });
+    expect(user.passwordHash).not.toBe('Secret123!');
+    expect(user.passwordHash).toMatch(/^\$2[aby]\$/); // bcrypt prefix
+  });
+});
+
+describe('POST /api/auth/login', () => {
+  it('returns a token for valid credentials', async () => {
+    await registerUser({ email: 'login@b.com', password: 'Password123!' });
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'login@b.com', password: 'Password123!' });
+
+    expect(res.status).toBe(200);
+    expect(res.body.token).toEqual(expect.any(String));
+    expect(res.body.user).not.toHaveProperty('passwordHash');
+  });
+
+  it('rejects wrong password with 401', async () => {
+    await registerUser({ email: 'wrong@b.com', password: 'Password123!' });
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'wrong@b.com', password: 'nope' });
+
+    expect(res.status).toBe(401);
+    expect(res.body.error).toBe('Invalid email or password');
+  });
+
+  it('rejects unknown email with 401 (same message as wrong password)', async () => {
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'ghost@b.com', password: 'x' });
+
+    expect(res.status).toBe(401);
+    expect(res.body.error).toBe('Invalid email or password');
+  });
+
+  it('rejects banned users with 403', async () => {
+    const { body } = await registerUser({ email: 'banned@b.com' });
+    const User = require('../src/models/User');
+    await User.findByIdAndUpdate(body.user.id, { isBanned: true });
+
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'banned@b.com', password: 'Password123!' });
+
+    expect(res.status).toBe(403);
+    expect(res.body.error).toBe('Account banned');
+  });
+});
+
+describe('GET /api/auth/me', () => {
+  it('returns the current user with a valid token', async () => {
+    const { body } = await registerUser({ email: 'me@b.com' });
+    const res = await request(app)
+      .get('/api/auth/me')
+      .set('Authorization', `Bearer ${body.token}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.user.email).toBe('me@b.com');
+    expect(res.body.user).not.toHaveProperty('passwordHash');
+  });
+
+  it('rejects missing token with 401', async () => {
+    const res = await request(app).get('/api/auth/me');
+    expect(res.status).toBe(401);
+    expect(res.body.error).toBe('Missing token');
+  });
+
+  it('rejects malformed token with 401', async () => {
+    const res = await request(app)
+      .get('/api/auth/me')
+      .set('Authorization', 'Bearer not.a.jwt');
+
+    expect(res.status).toBe(401);
+    expect(res.body.error).toBe('Invalid or expired token');
+  });
+});
+</file>
+
+<file path="server/tests/authMiddleware.test.js">
+const jwt = require('jsonwebtoken');
+const { auth, requireRole } = require('../src/middlewares/auth');
+
+const JWT_SECRET = process.env.JWT_SECRET; // set by tests/env.js
+
+function mockRes() {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+}
+
+describe('auth middleware', () => {
+  it('rejects request with no Authorization header', () => {
+    const req = { headers: {} };
+    const res = mockRes();
+    const next = jest.fn();
+
+    auth(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({ error: 'Missing token' });
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('rejects non-Bearer scheme', () => {
+    const req = { headers: { authorization: 'Basic abc123' } };
+    const res = mockRes();
+    const next = jest.fn();
+
+    auth(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({ error: 'Missing token' });
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('rejects empty Bearer token', () => {
+    const req = { headers: { authorization: 'Bearer ' } };
+    const res = mockRes();
+    const next = jest.fn();
+
+    auth(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({ error: 'Missing token' });
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('accepts valid token and populates req.user', () => {
+    const token = jwt.sign({ sub: 'user-123', role: 'admin' }, JWT_SECRET);
+    const req = { headers: { authorization: `Bearer ${token}` }, user: undefined };
+    const res = mockRes();
+    const next = jest.fn();
+
+    auth(req, res, next);
+
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(req.user).toEqual({ id: 'user-123', role: 'admin' });
+    expect(res.status).not.toHaveBeenCalled();
+  });
+
+  it('rejects token signed with wrong secret', () => {
+    const token = jwt.sign({ sub: 'x' }, 'wrong-secret');
+    const req = { headers: { authorization: `Bearer ${token}` } };
+    const res = mockRes();
+    const next = jest.fn();
+
+    auth(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({ error: 'Invalid or expired token' });
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('rejects expired token', () => {
+    const token = jwt.sign({ sub: 'x' }, JWT_SECRET, { expiresIn: '-1s' });
+    const req = { headers: { authorization: `Bearer ${token}` } };
+    const res = mockRes();
+    const next = jest.fn();
+
+    auth(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({ error: 'Invalid or expired token' });
+    expect(next).not.toHaveBeenCalled();
+  });
+});
+
+describe('requireRole middleware', () => {
+  it('blocks user when admin required', () => {
+    const req = { user: { role: 'user' } };
+    const res = mockRes();
+    const next = jest.fn();
+
+    requireRole('admin')(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledWith({ error: 'Forbidden' });
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('allows matching role', () => {
+    const req = { user: { role: 'admin' } };
+    const res = mockRes();
+    const next = jest.fn();
+
+    requireRole('admin')(req, res, next);
+
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(res.status).not.toHaveBeenCalled();
+  });
+
+  it('blocks when req.user is undefined', () => {
+    const req = {};
+    const res = mockRes();
+    const next = jest.fn();
+
+    requireRole('admin')(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledWith({ error: 'Forbidden' });
+    expect(next).not.toHaveBeenCalled();
+  });
+});
+</file>
+
+<file path="server/tests/conversations.test.js">
+const request = require('supertest');
+const { registerUser, app } = require('./helpers');
+
+describe('error handling', () => {
+  it('returns 400 for malformed ObjectId (not 500)', async () => {
+    const { body } = await registerUser();
+    const res = await request(app)
+      .get('/api/conversations/not-an-objectid')
+      .set('Authorization', `Bearer ${body.token}`);
+
+    expect(res.status).toBe(400);
+    expect(typeof res.body.error).toBe('string');
+    expect(res.body.error.length).toBeGreaterThan(0);
+  });
+
+  it('returns 400 for title exceeding maxlength (not 500)', async () => {
+    const { body } = await registerUser();
+    const res = await request(app)
+      .post('/api/conversations')
+      .set('Authorization', `Bearer ${body.token}`)
+      .send({ title: 'x'.repeat(101) });
+
+    expect(res.status).toBe(400);
+    expect(typeof res.body.error).toBe('string');
+    expect(res.body.error.length).toBeGreaterThan(0);
+  });
+});
+
+describe('POST /api/conversations — security', () => {
+  it('ignores userId in body (cannot spoof ownership)', async () => {
+    const Conversation = require('../src/models/Conversation');
+
+    const { body: alice } = await registerUser();
+    const { body: bob } = await registerUser();
+
+    const res = await request(app)
+      .post('/api/conversations')
+      .set('Authorization', `Bearer ${alice.token}`)
+      .send({ title: 'Spoof attempt', userId: bob.user.id });
+
+    expect(res.status).toBe(201);
+    expect(res.body.conversation.userId).toBe(alice.user.id);
+    expect(res.body.conversation.userId).not.toBe(bob.user.id);
+
+    // The response could look right while the DB holds the spoofed owner.
+    const stored = await Conversation.findOne({ title: 'Spoof attempt' });
+    expect(stored.userId.toString()).toBe(alice.user.id);
+  });
+});
+
+describe('DELETE /api/conversations — DB state', () => {
+  it('removes the document from MongoDB (not just 200 response)', async () => {
+    const Conversation = require('../src/models/Conversation');
+    const { body } = await registerUser();
+
+    const created = await request(app)
+      .post('/api/conversations')
+      .set('Authorization', `Bearer ${body.token}`)
+      .send({ title: 'Will be deleted' });
+    const id = created.body.conversation._id;
+
+    const res = await request(app)
+      .delete(`/api/conversations/${id}`)
+      .set('Authorization', `Bearer ${body.token}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ deleted: true });
+
+    const gone = await Conversation.findById(id);
+    expect(gone).toBeNull();
+  });
+});
+</file>
+
+<file path="server/tests/env.js">
+process.env.JWT_SECRET = 'test-secretcc-do-not-use-in-prod';
+</file>
+
+<file path="server/tests/helpers.js">
+const request = require('supertest');
+const app = require('../src/app');
+
+async function registerUser(overrides = {}) {
+  const payload = {
+    email: overrides.email || `user_${Date.now()}@example.com`,
+    password: overrides.password || 'Password123!',
+    name: overrides.name || 'Test User',
+  };
+  const res = await request(app).post('/api/auth/register').send(payload);
+  return { res, body: res.body, payload };
+}
+
+async function createConversation(token, title = 'New conversation') {
+  const res = await request(app)
+    .post('/api/conversations')
+    .set('Authorization', `Bearer ${token}`)
+    .send({ title });
+  return { res, body: res.body };
+}
+
+module.exports = { registerUser, createConversation, app };
+</file>
+
+<file path="server/tests/redactor.test.js">
+const { redact, RedactorBlockedError, RedactorUnavailableError,
+        RedactorBadInputError, RedactorInvalidResponseError } = require('../src/services/redactorClient');
+
+const mockFetch = (impl) => { global.fetch = jest.fn(impl); };
+afterEach(() => jest.restoreAllMocks());
+
+test('200 valid → returns body', async () => {
+  mockFetch(async () => new Response(JSON.stringify({
+    maskedText: 'hi [EMAIL]', detections: [], blocked: false,
+  }), { status: 200, headers: { 'content-type': 'application/json' } }));
+  await expect(redact('hi a@b.co')).resolves.toMatchObject({ maskedText: 'hi [EMAIL]' });
+});
+
+test('422 → RedactorBlockedError with detections', async () => {
+  mockFetch(async () => new Response(JSON.stringify({
+    blocked: true, detections: [{ ruleId: 'x', action: 'block' }],
+  }), { status: 422 }));
+  await expect(redact('secret')).rejects.toBeInstanceOf(RedactorBlockedError);
+});
+
+test('500 → RedactorUnavailableError', async () => {
+  mockFetch(async () => new Response('', { status: 500 }));
+  await expect(redact('hi')).rejects.toBeInstanceOf(RedactorUnavailableError);
+});
+
+test('400 → RedactorBadInputError', async () => {
+  mockFetch(async () => new Response(JSON.stringify({ error: 'bad' }), { status: 400 }));
+  await expect(redact('hi')).rejects.toBeInstanceOf(RedactorBadInputError);
+});
+
+test('200 with bad shape → RedactorInvalidResponseError', async () => {
+  mockFetch(async () => new Response(JSON.stringify({ error: 'oops' }), { status: 200 }));
+  await expect(redact('hi')).rejects.toBeInstanceOf(RedactorInvalidResponseError);
+});
+
+test('network error → RedactorUnavailableError', async () => {
+  mockFetch(async () => { throw new TypeError('ECONNREFUSED'); });
+  await expect(redact('hi')).rejects.toBeInstanceOf(RedactorUnavailableError);
+});
+
+test('timeout → RedactorUnavailableError', async () => {
+  mockFetch((_url, { signal }) => new Promise((_, reject) => {
+    signal.addEventListener('abort', () => reject(new DOMException('aborted', 'AbortError')));
+  }));
+  // shorten timeout for test, or use fake timers
+  await expect(redact('hi')).rejects.toBeInstanceOf(RedactorUnavailableError);
+}, 10_000);
+</file>
+
+<file path="server/tests/setup.js">
+// tests/setup.js
+const os = require('os');
+const { MongoMemoryServer } = require('mongodb-memory-server');
+const mongoose = require('mongoose');
+
+jest.setTimeout(30000); // first run of mongo-memory-server can be slow
+
+let mongo;
+
+beforeAll(async () => {
+  mongo = await MongoMemoryServer.create();
+
+  // The mongodb driver (v7) resolves its `os` adapter with a dynamic import().
+  // Jest's CommonJS VM rejects that with "A dynamic import callback was invoked
+  // without --experimental-vm-modules". The driver swallows the rejection and
+  // sends empty client metadata, which mongod refuses with "Missing required
+  // sub-document 'driver'", so mongoose.connect() hangs until it times out.
+  // Passing the adapter explicitly skips the dynamic import path entirely.
+  await mongoose.connect(mongo.getUri(), {
+    runtimeAdapters: { os },
+    serverSelectionTimeoutMS: 10000,
+  });
+
+  // Make sure indexes (e.g. the unique email index) exist before any request runs.
+  await Promise.all(
+    mongoose.modelNames().map((name) => mongoose.model(name).init())
+  );
+}, 60000);
+
+afterEach(async () => {
+  if (mongoose.connection.readyState !== 1) return;
+  const collections = await mongoose.connection.db.collections();
+  for (const c of collections) await c.deleteMany({});
+});
+
+afterAll(async () => {
+  await mongoose.disconnect();
+  if (mongo) await mongo.stop();
+});
+</file>
+
+<file path="server/.env.example">
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/securechat
+JWT_SECRET=
+JWT_EXPIRES_IN=1d
+REDACTOR_URL=http://localhost:4000
+GATEWAY_URL=http://127.0.0.1:8090
+GATEWAY_KEY=
+</file>
+
+<file path="server/package.json">
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch",
+    "test:api": "newman run postman/my-auth-collection.json -e postman/my-auth-env.local.json"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "setupFiles": [
+      "<rootDir>/tests/env.js"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.js"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.12.1",
+    "morgan": "^1.12.1",
+    "openai": "^7.62.0"
+  },
+  "devDependencies": {
+    "jest": "^30.5.2",
+    "mongodb-memory-server": "^11.3.0",
+    "newman": "^6.2.3",
+    "supertest": "^7.3.2"
+  }
+}
+</file>
+
+<file path=".env.example">
+# Server
+PORT=5000
+NODE_ENV=development
+
+# Database
+MONGO_URI=mongodb://localhost:27017/securechat
+
+# Auth
+JWT_SECRET=26e39fa34f5fc995434c1796c2af3dd92637c1c0a67d404
+JWT_EXPIRES_IN=1d
+
+# Redactor service
+REDACTOR_URL=http://localhost:4000
+
+# LLM
+LLM_PROVIDER=gemini
+LLM_API_KEY=your-key-here
+USE_MOCK_LLM=true
+</file>
+
+<file path=".gitignore">
+# Dependencies
+node_modules/
+
+# Environment variables (secrets!)
+.env
+
+# Build output
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/
+
+# Docker
+docker-compose.override.yml
+
+# postman/
+postman/*.local.json
+postman/*-env.json
+
+repomix-output.xml
+
+.freebuff
+</file>
+
+<file path="docker-compose.yml">
+
+</file>
+
+<file path="README.md">
+
+</file>
+
+</files>

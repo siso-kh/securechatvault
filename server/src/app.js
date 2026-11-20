@@ -6,6 +6,8 @@ const healthRoutes = require('./routes/healthRoutes');
 const authRoutes = require('./routes/authRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 const conversationRoutes = require('./routes/conversationRoutes');
+const chatRoutes = require('./routes/chatRoutes');
+
 
 const app = express();
 
@@ -16,6 +18,7 @@ app.use(express.json({ limit: '100kb' }));
 app.use('/health', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/conversations', conversationRoutes);
+app.use('/api/chat', chatRoutes);                     // ← new
 
 
 app.use((req, res) => res.status(404).json({ error: 'Not found', path: req.originalUrl }));
