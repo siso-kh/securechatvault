@@ -239,6 +239,139 @@ test('text just over 100 KiB → 413', async () => {
   });
 });
 
+// ─── The policy the service ships with (rules omitted from the request) ──
+describe('POST /redact — default policy: mask credentials, warn, block', () => {
+  const PEM =
+    '-----BEGIN RSA PRIVATE KEY-----\nMIIEow\n-----END RSA PRIVATE KEY-----';
+  const GH_TOKEN = 'ghp_' + 'a'.repeat(36);
+  const ALLOWED_ACTIONS = ['mask', 'warn', 'block'];
+
+  // Invariants every response must satisfy, whatever the policy produced.
+  // Spans index the ORIGINAL text, and `blocked` is exactly "a block rule fired".
+  const expectCoherent = (body, originalText) => {
+    for (const d of body.detections) {
+      expect(ALLOWED_ACTIONS).toContain(d.action);
+      expect(d.start).toBeGreaterThanOrEqual(0);
+      expect(d.end).toBeGreaterThan(d.start);
+      expect(d.end).toBeLessThanOrEqual(originalText.length);
+    }
+    expect(body.blocked).toBe(body.detections.some((d) => d.action === 'block'));
+    // Detections carry positions and metadata only — never the matched text.
+    expect(JSON.stringify(body.detections)).not.toContain('hunter2');
+  };
+
+  test('masks credentials, keys and personal data by default', async () => {
+    const text = [
+      'db postgres://admin:s3cret@db.internal:5432/app',
+      'key AKIAIOSFODNN7EXAMPLE',
+      `token ${GH_TOKEN}`,
+      'password=hunter2',
+      'host 10.0.0.7',
+    ].join('\n');
+
+    const res = await request(app).post('/redact').send({ text }).expect(200);
+
+    expect(res.body.maskedText).toBe(
+      [
+        'db [CONNECTION_STRING]',
+        'key [API_KEY]',
+        `token [API_KEY]`,
+        'password=[PASSWORD]',
+        'host [IP_ADDRESS]',
+      ].join('\n'),
+    );
+    for (const secret of ['s3cret', 'admin:', 'AKIAIOSFODNN7EXAMPLE', GH_TOKEN, 'hunter2', '10.0.0.7']) {
+      expect(res.body.maskedText).not.toContain(secret);
+    }
+    expect(res.body.blocked).toBe(false);
+    expect(res.body.detections.every((d) => d.action === 'mask')).toBe(true);
+    expect(res.body.detections.map((d) => d.category)).toEqual([
+      'connection_string',
+      'api_key',
+      'api_key',
+      'password',
+      'ip_address',
+    ]);
+    expectCoherent(res.body, text);
+  });
+
+  test('warns on an email without rewriting it', async () => {
+    const text = 'contact john@mail.com please';
+    const res = await request(app).post('/redact').send({ text }).expect(200);
+
+    expect(res.body.maskedText).toBe(text);
+    expect(res.body.blocked).toBe(false);
+    expect(res.body.detections).toHaveLength(1);
+    expect(res.body.detections[0]).toMatchObject({
+      ruleId: 'email',
+      category: 'email',
+      severity: 'medium',
+      action: 'warn',
+    });
+    // The reported span is the whole address in the original text.
+    const { start, end } = res.body.detections[0];
+    expect(text.slice(start, end)).toBe('john@mail.com');
+    expectCoherent(res.body, text);
+  });
+
+  test('blocks a private key and says so', async () => {
+    const res = await request(app).post('/redact').send({ text: PEM }).expect(200);
+
+    expect(res.body.blocked).toBe(true);
+    // "block" rejects the message; it does not rewrite it.
+    expect(res.body.maskedText).toBe(PEM);
+    expect(res.body.detections).toHaveLength(1);
+    expect(res.body.detections[0]).toMatchObject({
+      ruleId: 'private-key',
+      category: 'private_key',
+      action: 'block',
+    });
+    expectCoherent(res.body, PEM);
+  });
+
+  test('mixed message: mask, warn and block each behave independently', async () => {
+    const text = [
+      'Deploy with db postgres://admin:s3cret@db.internal:5432/app',
+      PEM,
+      `token ${GH_TOKEN}`,
+      'password=hunter2',
+      'contact dev@corp.io',
+    ].join('\n');
+
+    const res = await request(app).post('/redact').send({ text }).expect(200);
+    const { maskedText, detections, blocked } = res.body;
+
+    // block wins the verdict...
+    expect(blocked).toBe(true);
+    // ...credentials are still removed from the text that would be stored...
+    expect(maskedText).toContain('[CONNECTION_STRING]');
+    expect(maskedText).toContain('[API_KEY]');
+    expect(maskedText).toContain('password=[PASSWORD]');
+    for (const secret of ['s3cret', GH_TOKEN, 'hunter2']) {
+      expect(maskedText).not.toContain(secret);
+    }
+    // ...while the warned email stays readable and is only reported.
+    expect(maskedText).toContain('dev@corp.io');
+
+    expect(detections.find((d) => d.category === 'connection_string').action).toBe('mask');
+    expect(detections.find((d) => d.category === 'private_key').action).toBe('block');
+    expect(detections.find((d) => d.category === 'email').action).toBe('warn');
+    expectCoherent(res.body, text);
+  });
+
+  test('omitting rules applies defaults; an explicit [] disables them', async () => {
+    const text = 'contact john@mail.com';
+
+    const withDefaults = await request(app).post('/redact').send({ text }).expect(200);
+    expect(withDefaults.body.detections).toHaveLength(1);
+
+    const disabled = await request(app).post('/redact').send({ text, rules: [] }).expect(200);
+    expect(disabled.body.detections).toEqual([]);
+    expect(disabled.body.maskedText).toBe(text);
+    expect(disabled.body.blocked).toBe(false);
+  });
+});
+
 describe('GET /health', () => {
   test('returns ok', async () => {
     const res = await request(app).get('/health').expect(200);

@@ -22,3 +22,11 @@ Thumbs.db
 
 # Docker
 docker-compose.override.yml
+
+# postman/
+postman/*.local.json
+postman/*-env.json
+
+repomix-output.xml
+
+.freebuff
