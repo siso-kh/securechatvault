@@ -1,0 +1,20 @@
+
+import Sidebar from '../components/common/Sidebar'
+import '../styles/admin-layout.css'
+
+function AdminLayout({ children }) {
+
+  return (
+    <div className="admin-layout">
+
+      <Sidebar />
+
+      <main className="admin-main">
+        {children}
+      </main>
+
+    </div>
+  )
+}
+
+export default AdminLayout
