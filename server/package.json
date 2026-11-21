@@ -8,6 +8,8 @@
     "dev": "node --watch src/index.js",
     "test": "jest --runInBand",
     "test:watch": "jest --watch",
+    "test:integration": "REQUIRE_LIVE_SERVICES=true jest tests/integration.test.js --runInBand",
+
     "test:api": "newman run postman/my-auth-collection.json -e postman/my-auth-env.local.json"
   },
   "jest": {

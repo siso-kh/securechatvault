@@ -29,9 +29,11 @@ exports.DEFAULT_RULES = [
     pattern: R`(?<=[?&](?:token|access_token|api_key|apikey|key|secret|password|sig)=)[^&\s#]+` },
 
   // ---- Personal data ----
+    // ---- Personal data ----
   { id: 'credit-card', category: 'credit_card', severity: 'high', action: 'mask',
-    pattern: R`\b\d(?:[ -]?\d){12,18}\b`,
+    pattern: R`(?<!\d)\d{4}(?:[ -]?\d{4}){2,3}(?:[ -]?\d{1,3})?(?!\d)`,
     validator: (m) => luhn(strip(m)) },
+
   { id: 'email', category: 'email', severity: 'medium', action: 'warn',
     pattern: R`\b[\w.+-]+@[\w-]+(?:\.[\w-]+)+\b` },
   { id: 'phone-intl', category: 'phone', severity: 'medium', action: 'warn',

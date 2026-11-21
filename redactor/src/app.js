@@ -23,8 +23,6 @@ app.post('/redact', (req, res) => {
     return res.status(400).json({ error: ruleError });
   }
 
-  // Omitting "rules" means "apply the default policy". An explicit empty
-  // array still means "run no rules".
   const policy = body.rules == null ? DEFAULT_RULES : body.rules;
 
   const timedOut = { value: false };
@@ -37,7 +35,13 @@ app.post('/redact', (req, res) => {
     return res.status(503).json({ error: 'Redaction timed out' });
   }
 
-  res.json({ ...result, servedBy: os.hostname() });
+   if (result.blocked) {
+    return res.status(422).json({
+      blocked: true,
+      detections: result.detections,
+      servedBy: os.hostname(),
+    });
+  }
 });
 
 
