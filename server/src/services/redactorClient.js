@@ -39,8 +39,7 @@ async function redact(text, rules = undefined) {
     });
   } catch (err) {
     // AbortError (timeout) or network error (DNS, ECONNREFUSED)
-    console.error('[redactor]', err.name, err.message);
-    throw new RedactorUnavailableError(err);
+  console.error('[redactor]', err.name, err.cause?.code || err.message);    throw new RedactorUnavailableError(err);
   } finally {
     clearTimeout(timeout);
   }
