@@ -1,13 +1,44 @@
-
 :root {
-  --primary-color: #c8102e;
-  --secondary-color: #00d5c0;
+  /* Surfaces */
+  --bg: #141217;
+  --surface: #1c1a20;
+  --surface-raised: #232027;
+  --border: #2c2931;
 
-  --background-color: #151318;
-  --surface-color: #1c1920;
+  /* Brand */
+  --crimson: #b01228;
+  --crimson-hover: #c8182f;
+  --crimson-soft: rgba(176, 18, 40, 0.18);
+  --damask: #5a1420;
 
-  --text-color: #ffffff;
-  --text-muted: #9992a5;
+  /* Text */
+  --text: #f3eff1;
+  --text-muted: #8f8a94;
+  --text-faint: #625e68;
 
-  --border-color: #302b34;
+  /* Status */
+  --success: #2fb67c;
+  --warning: #8f8a94;
+  --danger: #e0354d;
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-ui: 'Figtree', system-ui, sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-md: 0.9375rem;
+  --text-xl: 1.75rem;
+  --text-hero: 2.5rem;
+
+  /* Shape and spacing */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --sidebar-width: 52px;
 }
