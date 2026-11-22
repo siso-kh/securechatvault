@@ -11,6 +11,16 @@ test('200 valid → returns body', async () => {
   await expect(redact('hi a@b.co')).resolves.toMatchObject({ maskedText: 'hi [EMAIL]' });
 });
 
+test('200 with blocked:true → RedactorBlockedError with detections', async () => {
+  mockFetch(async () => new Response(JSON.stringify({
+    maskedText: 'secret', detections: [{ ruleId: 'private-key', action: 'block' }],
+    blocked: true,
+  }), { status: 200, headers: { 'content-type': 'application/json' } }));
+  const err = await redact('secret').catch((e) => e);
+  expect(err).toBeInstanceOf(RedactorBlockedError);
+  expect(err.detections).toEqual([{ ruleId: 'private-key', action: 'block' }]);
+});
+
 test('422 → RedactorBlockedError with detections', async () => {
   mockFetch(async () => new Response(JSON.stringify({
     blocked: true, detections: [{ ruleId: 'x', action: 'block' }],

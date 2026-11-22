@@ -1,5 +1,33 @@
-.root { position: relative; min-height: 100%; background: var(--color-bg); overflow: hidden; }
+.root {
+  position: relative;
+  min-height: 100%;
+  background: var(--color-bg);
+  overflow: hidden;
+}
+
+.pattern {
+  position: absolute;
+  inset: 0;
+  background: url('../../assets/damask.png') repeat;
+  background-size: 520px;   /* bigger motifs */
+  opacity: 0.22;            /* much dimmer */
+  mask-image: radial-gradient(ellipse 50% 40% at 50% 50%, transparent 0%, #000 100%);
+  -webkit-mask-image: radial-gradient(ellipse 50% 40% at 50% 50%, transparent 0%, #000 100%);
+}
+
+.blurred { filter: blur(6px); transform: scale(1.05); } /* for the auth screen */
+
 .glow {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 160px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 160px;
   background: linear-gradient(to top, rgb(176 18 40 / 0.35), transparent);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  min-height: 100%;
 }

@@ -35,13 +35,12 @@ app.post('/redact', (req, res) => {
     return res.status(503).json({ error: 'Redaction timed out' });
   }
 
-   if (result.blocked) {
-    return res.status(422).json({
-      blocked: true,
-      detections: result.detections,
-      servedBy: os.hostname(),
-    });
-  }
+  return res.json({
+    maskedText: result.maskedText,
+    detections: result.detections,
+    blocked: result.blocked,
+    servedBy: os.hostname(),
+  });
 });
 
 

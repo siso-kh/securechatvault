@@ -39,7 +39,7 @@ async function redact(text, rules = undefined) {
     });
   } catch (err) {
     // AbortError (timeout) or network error (DNS, ECONNREFUSED)
-  console.error('[redactor]', err.name, err.cause?.code || err.message);    throw new RedactorUnavailableError(err);
+  $console.error('[redactor]', err.name, err.cause?.code || err.message);    throw new RedactorUnavailableError(err);
   } finally {
     clearTimeout(timeout);
   }
@@ -66,6 +66,11 @@ async function redact(text, rules = undefined) {
   ) {
     console.error('[redactor] invalid response shape', Object.keys(body || {}));
     throw new RedactorInvalidResponseError(body);
+  }
+  // The redactor reports a policy block as 200 + `blocked: true`.
+  // Treat it as a rejection so blocked text is never forwarded upstream.
+  if (body.blocked === true) {
+    throw new RedactorBlockedError(body.detections);
   }
   return body;
 }

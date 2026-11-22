@@ -9,6 +9,8 @@
     "test": "jest --runInBand",
     "test:watch": "jest --watch",
     "test:integration": "REQUIRE_LIVE_SERVICES=true jest tests/integration.test.js --runInBand",
+    "test:workflow": "node scripts/workflow_integration_test.js",
+    "test:full-pipeline": "node scripts/full_pipeline_test.js",
 
     "test:api": "newman run postman/my-auth-collection.json -e postman/my-auth-env.local.json"
   },
