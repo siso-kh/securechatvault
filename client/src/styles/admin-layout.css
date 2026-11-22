@@ -139,11 +139,14 @@
 
 /* Main content */
 
+
 .admin-main {
   flex: 1;
   min-width: 0;
   min-height: 100vh;
 
   background-color: #151318;
+
   padding: 65px 4.5%;
 }
+

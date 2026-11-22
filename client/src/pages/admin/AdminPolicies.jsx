@@ -1,28 +1,86 @@
 
+import { useState } from 'react'
+import PoliciesTable from '../../components/policies/PoliciesTable'
+import '../../styles/policies.css'
+
 function AdminPolicies() {
 
+  const [policies, setPolicies] = useState([
+    {
+      id: 1,
+      name: 'Email',
+      category: 'PII',
+      severity: 'high',
+      action: 'Mask before send',
+      enabled: true
+    },
+    {
+      id: 2,
+      name: 'Phone',
+      category: 'PII',
+      severity: 'medium',
+      action: 'Mask before send',
+      enabled: true
+    },
+    {
+      id: 3,
+      name: 'API key',
+      category: 'Secret',
+      severity: 'high',
+      action: 'Block message',
+      enabled: true
+    },
+    {
+      id: 4,
+      name: 'Password after keyword',
+      category: 'Secret',
+      severity: 'high',
+      action: 'Block message',
+      enabled: true
+    },
+    {
+      id: 5,
+      name: 'Credit card',
+      category: 'Financial',
+      severity: 'high',
+      action: 'Mask before send',
+      enabled: true
+    },
+    {
+      id: 6,
+      name: 'IP address',
+      category: 'Network',
+      severity: 'low',
+      action: 'Warn only',
+      enabled: false
+    },
+    {
+      id: 7,
+      name: 'JWT',
+      category: 'Token',
+      severity: 'high',
+      action: 'Block message',
+      enabled: true
+    }
+  ])
+
   return (
-    <div>
+    <div className="policies-page">
 
-      <div className="flex items-center justify-between mb-8">
+      <div className="policies-header">
 
-        <h1 className="text-2xl font-serif text-white">
-          Policies
-        </h1>
+        <h1>Policies</h1>
 
-        <button className="bg-[#c8102e] hover:bg-[#a80d26] text-white px-6 py-2.5 rounded-lg text-sm transition">
+        <button className="add-rule-btn">
           Add rule
         </button>
 
       </div>
 
-      <div className="border border-[#00d5c0] rounded-xl p-6">
-
-        <p className="text-gray-400 text-sm">
-          Policies management will appear here.
-        </p>
-
-      </div>
+      <PoliciesTable
+        policies={policies}
+        setPolicies={setPolicies}
+      />
 
     </div>
   )
