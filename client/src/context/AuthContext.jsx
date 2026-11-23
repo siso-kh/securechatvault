@@ -1,5 +1,5 @@
 import { createContext, useCallback, useMemo, useState } from 'react';
-import * as authService from '../services/auth';
+import { loginUser, registerUser } from '../services/auth';
 
 export const AuthContext = createContext(null);
 
@@ -16,8 +16,8 @@ export function AuthProvider({ children }) {
     setSession(s);
   };
 
-  const login = useCallback(async (data) => save(await authService.login(data)), []);
-  const register = useCallback(async (data) => save(await authService.register(data)), []);
+  const login = useCallback(async (data) => save(await loginUser(data)), []);
+  const register = useCallback(async (data) => save(await registerUser(data)), []);
   const logout = useCallback(() => {
     localStorage.removeItem(KEY);
     setSession(null);

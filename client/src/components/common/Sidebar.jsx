@@ -20,8 +20,7 @@ export default function Sidebar() {
       </NavLink>
 
       <div className="flex flex-col gap-2">
-        <NavLink to="/chat" aria-label="History" className={itemClass}><Clock size={18} /></NavLink>
-        <NavLink to="/report" aria-label="Report" className={itemClass}><BarChart3 size={18} /></NavLink>
+        <NavLink to="/history" aria-label="History" className={itemClass}><Clock size={18} /></NavLink>        <NavLink to="/report" aria-label="Report" className={itemClass}><BarChart3 size={18} /></NavLink>
         {user?.role === 'admin' && (
           <NavLink to="/admin/policies" aria-label="Admin" className={itemClass}><ShieldCheck size={18} /></NavLink>
         )}

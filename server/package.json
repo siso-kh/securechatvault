@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node scripts/start_stack.js",
+    "start:server": "node src/index.js",
     "dev": "node --watch src/index.js",
     "test": "jest --runInBand",
     "test:watch": "jest --watch",

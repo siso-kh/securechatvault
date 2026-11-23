@@ -4,6 +4,10 @@ import AdminRoute from './AdminRoute';
 import AppShell from '../layouts/AppShell';
 import AuthPage from '../pages/auth/AuthPage';
 import HomePage from '../pages/user/HomePage';
+import ChatPage from '../pages/user/ChatPage';
+import HistoryPage from '../pages/user/HistoryPage';
+
+
 
 // Temporary stand-ins until each page is built
 const Soon = ({ name }) => <div className="p-10"><h1 className="text-3xl">{name}</h1></div>;
@@ -16,7 +20,8 @@ export default function AppRouter() {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppShell />}>
           <Route index element={<HomePage />} />
-          <Route path="chat/:id?" element={<Soon name="Chat" />} />
+          <Route path="history" element={<HistoryPage />} />
+          <Route path="chat/:id?" element={<ChatPage />} />
           <Route path="report" element={<Soon name="Report" />} />
 
           <Route element={<AdminRoute />}>

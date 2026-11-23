@@ -1,13 +1,28 @@
-const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+import http from './http';
+import * as mock from './auth.mock';
 
-export async function login({ email, password }) {
-  await wait(400);
-  if (password.length < 8) throw new Error('Wrong email or password.');
-  const role = email.toLowerCase().includes('admin') ? 'admin' : 'user';
-  return { token: 'mock-jwt', user: { name: email.split('@')[0], email, role } };
+const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
+
+const toError = (err) =>
+  new Error(err.response?.data?.error || 'Cannot reach the server. Try again.');
+
+async function login({ email, password }) {
+  try {
+    const { data } = await http.post('/auth/login', { email, password });
+    return data;
+  } catch (err) {
+    throw toError(err);
+  }
 }
 
-export async function register({ name, email, password }) {
-  await wait(400);
-  return { token: 'mock-jwt', user: { name, email, role: 'user' } };
+async function register({ name, email, password }) {
+  try {
+    const { data } = await http.post('/auth/register', { name, email, password });
+    return data;
+  } catch (err) {
+    throw toError(err);
+  }
 }
+
+export const loginUser = USE_MOCK ? mock.login : login;
+export const registerUser = USE_MOCK ? mock.register : register;

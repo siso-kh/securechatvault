@@ -41,7 +41,7 @@ async function chatCompletion({ model, messages, temperature, max_tokens, extraH
       signal: controller.signal,
     });
   } catch (err) {
-    console.error('[router]', err.name, err.message);
+    console.error('[router]', err.name, err.cause?.code || err.message, '->', ENDPOINT);
     throw new RouterUnavailableError(err);
   } finally {
     clearTimeout(timer);

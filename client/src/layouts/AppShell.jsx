@@ -4,10 +4,10 @@ import DamaskBackground from '../components/common/DamaskBackground';
 
 export default function AppShell() {
   return (
-    <div className="flex h-full">
+    <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <main className="h-full flex-1 overflow-y-auto">
-        <DamaskBackground>
+      <main className="h-full min-w-0 flex-1">
+        <DamaskBackground fill>
           <Outlet />
         </DamaskBackground>
       </main>

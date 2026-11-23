@@ -9,11 +9,19 @@ export default function Composer({ onSend, disabled = false, autoFocus = true })
     if (autoFocus) inputRef.current?.focus();
   }, [autoFocus]);
 
-  const submit = () => {
+  // Resize to fit the content, up to a maximum
+  useEffect(() => {
+    const el = inputRef.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${Math.min(el.scrollHeight, 160)}px`;
+  }, [text]);
+
+  const submit = async () => {
     const value = text.trim();
     if (!value || disabled) return;
-    onSend(value);
-    setText('');
+    const sent = await onSend(value);
+    if (sent !== false) setText('');
   };
 
   const onKeyDown = (e) => {
@@ -24,7 +32,7 @@ export default function Composer({ onSend, disabled = false, autoFocus = true })
   };
 
   return (
-    <div className="flex items-center gap-3 rounded-lg border border-line bg-surface px-4 py-3 focus-within:border-faint">
+    <div className="flex items-end gap-3 rounded-lg border border-line bg-surface px-4 py-3 focus-within:border-faint">
       <textarea
         ref={inputRef}
         rows={1}
@@ -33,7 +41,7 @@ export default function Composer({ onSend, disabled = false, autoFocus = true })
         onKeyDown={onKeyDown}
         placeholder="Ask anything…"
         aria-label="Message"
-        className="max-h-40 flex-1 resize-none border-0 bg-transparent text-sm outline-none placeholder:text-faint"
+        className="max-h-40 flex-1 resize-none overflow-y-auto border-0 bg-transparent py-1 text-sm leading-5 outline-none placeholder:text-faint"
       />
       <button
         type="button"
