@@ -1,4 +1,4 @@
-
+import { Outlet } from 'react-router-dom'
 import Sidebar from '../components/common/Sidebar'
 import DamaskBackground from '../components/common/DamaskBackground'
 import '../styles/admin-layout.css'
@@ -11,7 +11,7 @@ function AdminLayout({ children }) {
       <main className="admin-main">
         <DamaskBackground fill>
           <div className="admin-page-content">
-            {children}
+            {children ?? <Outlet />}
           </div>
         </DamaskBackground>
       </main>

@@ -1,6 +1,8 @@
-
 import { NavLink } from 'react-router-dom'
-import { Users, ShieldCheck, User, LogOut } from 'lucide-react'
+import {
+  Users, ShieldCheck, LayoutDashboard, Home, MessageSquare, History, BarChart3,
+  ScrollText, User, LogOut,
+} from 'lucide-react'
 import useAuth from '../../hooks/useAuth'
 
 const itemClass = ({ isActive }) =>
@@ -10,35 +12,42 @@ const itemClass = ({ isActive }) =>
       : 'text-muted'
   }`
 
+const ADMIN_NAV = [
+  { to: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/admin/users', label: 'Users', icon: Users },
+  { to: '/admin/policies', label: 'Policies', icon: ShieldCheck },
+  { to: '/admin/audit', label: 'Audit log', icon: ScrollText },
+]
+
+const USER_NAV = [
+  { to: '/', label: 'Home', icon: Home, end: true },
+  { to: '/chat', label: 'Chat', icon: MessageSquare },
+  { to: '/history', label: 'History', icon: History },
+  { to: '/report', label: 'Report', icon: BarChart3 },
+]
+
 export default function Sidebar() {
   const { user, logout } = useAuth()
+  const items = user?.role === 'admin' ? ADMIN_NAV : USER_NAV
 
   return (
     <nav
-      aria-label="Admin navigation"
+      aria-label={user?.role === 'admin' ? 'Admin navigation' : 'Main navigation'}
       className="flex h-full w-13 shrink-0 flex-col items-center justify-between bg-surface py-4"
     >
-      {/* Admin navigation */}
       <div className="flex flex-1 flex-col justify-center gap-3">
-
-        <NavLink
-          to="/admin/users"
-          aria-label="Users"
-          title="Users"
-          className={itemClass}
-        >
-          <Users size={18} />
-        </NavLink>
-
-        <NavLink
-          to="/admin/policies"
-          aria-label="Policies"
-          title="Policies"
-          className={itemClass}
-        >
-          <ShieldCheck size={18} />
-        </NavLink>
-
+        {items.map(({ to, label, icon: Icon, end }) => (
+          <NavLink
+            key={to}
+            to={to}
+            end={end}
+            aria-label={label}
+            title={label}
+            className={itemClass}
+          >
+            <Icon size={18} />
+          </NavLink>
+        ))}
       </div>
 
       {/* Profile and logout */}

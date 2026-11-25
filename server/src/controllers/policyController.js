@@ -75,7 +75,7 @@ exports.setEnabled = async (req, res, next) => {
     if (typeof enabled !== 'boolean') {
       return res.status(400).json({ error: '"enabled" (boolean) is required' });
     }
-    const policy = await Policy.findByIdAndUpdate(req.params.id, { enabled }, { new: true });
+    const policy = await Policy.findByIdAndUpdate(req.params.id, { enabled }, { returnDocument: 'after' });
     if (!policy) return res.status(404).json({ error: 'Policy not found' });
 
     policyService.invalidate();

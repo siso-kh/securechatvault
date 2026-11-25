@@ -10,14 +10,19 @@ http.interceptors.request.use((config) => {
   return config;
 });
 
-// Expired or invalid token: clear the session and go to login
+const loginPath = () =>
+  window.location.pathname.startsWith('/admin') ? '/admin/login' : '/auth';
+
+// Expired token or banned account: clear the session and go to login
 http.interceptors.response.use(
   (res) => res,
   (err) => {
+    const { status, data } = err.response ?? {};
     const onAuthCall = err.config?.url?.startsWith('/auth/');
-    if (err.response?.status === 401 && !onAuthCall) {
+    const banned = status === 403 && data?.error === 'Account banned';
+    if ((status === 401 && !onAuthCall) || banned) {
       localStorage.removeItem('vault_session');
-      window.location.assign('/login');
+      window.location.assign(loginPath());
     }
     return Promise.reject(err);
   }

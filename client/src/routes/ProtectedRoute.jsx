@@ -1,7 +1,9 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
 export default function ProtectedRoute() {
   const { user } = useAuth();
-  return user ? <Outlet /> : <Navigate to="/login" replace />;
+  const { pathname } = useLocation();
+  if (user) return <Outlet />;
+  return <Navigate to={pathname.startsWith('/admin') ? '/admin/login' : '/auth'} replace />;
 }

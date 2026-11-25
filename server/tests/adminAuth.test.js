@@ -18,6 +18,37 @@ beforeEach(async () => {
   userToken = body.token;
 });
 
+describe('admin passcode login', () => {
+  it('signs in with the passcode only', async () => {
+    const res = await request(app)
+      .post('/api/auth/admin-login')
+      .send({ passcode: admin.password });
+
+    expect(res.status).toBe(200);
+    expect(res.body.user.role).toBe('admin');
+    expect(res.body.user.email).toBe(admin.email);
+
+    const check = await request(app).get('/api/users').set(auth(res.body.token));
+    expect(check.status).toBe(200);
+  });
+
+  it('rejects a wrong passcode (401)', async () => {
+    const res = await request(app)
+      .post('/api/auth/admin-login')
+      .send({ passcode: 'not-the-passcode' });
+
+    expect(res.status).toBe(401);
+    expect(res.body.error).toBe('Invalid passcode');
+  });
+
+  it('requires a passcode (400)', async () => {
+    const res = await request(app).post('/api/auth/admin-login').send({});
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Passcode is required');
+  });
+});
+
 describe('admin authentication', () => {
   it.each(ADMIN_ENDPOINTS)('%s %s requires a token (401)', async (method, path) => {
     const res = await request(app)[method](path);

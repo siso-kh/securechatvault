@@ -1,6 +1,8 @@
 
 import PolicyToggle from './PolicyToggle'
 
+const ACTION_LABEL = { mask: 'Mask', block: 'Block', warn: 'Warn' }
+
 function PolicyRow({ policy, onToggle, onEdit, onDelete }) {
 
   return (
@@ -22,9 +24,7 @@ function PolicyRow({ policy, onToggle, onEdit, onDelete }) {
       </td>
 
       <td>
-        {policy.action}
-      </td>
-
+        {ACTION_LABEL[policy.action] ?? policy.action}      </td>
       <td>
         <PolicyToggle
           enabled={policy.enabled}

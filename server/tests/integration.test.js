@@ -1,11 +1,44 @@
 // server/tests/integration.test.js
 const request = require('supertest');
 const { registerUser, app } = require('./helpers');
+const Policy = require('../src/models/Policy');
+const policyService = require('../src/services/policyService');
 
 const REDACTOR_URL = process.env.REDACTOR_URL || 'http://127.0.0.1:4000';
 const GATEWAY_URL = process.env.GATEWAY_URL || 'http://127.0.0.1:8090';
 
 let servicesUp = false;
+let policies; // the DB rules the chat pipeline sends to the redactor
+
+// The chat route fails closed when no policy is active, so every live test
+// seeds the same three rules an admin would configure.
+async function seedPolicies() {
+  const [block, apiKey, dbUrl] = await Policy.create([
+    {
+      name: 'Private key',
+      pattern: '-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----',
+      category: 'private key',
+      severity: 'high',
+      action: 'block',
+    },
+    {
+      name: 'API key',
+      pattern: 'sk-[A-Za-z0-9_-]{20,}',
+      category: 'api key',
+      severity: 'high',
+      action: 'mask',
+    },
+    {
+      name: 'Database URL',
+      pattern: 'postgres(?:ql)?://[^:\\s]+:[^@\\s]+@',
+      category: 'db url',
+      severity: 'medium',
+      action: 'mask',
+    },
+  ]);
+  policyService.invalidate();
+  policies = { block, apiKey, dbUrl };
+}
 
 beforeAll(async () => {
   try {
@@ -39,6 +72,8 @@ const liveTest = (name, fn, timeout = 30_000) =>
   );
 
 describe('E2E Pipeline Integration (Server -> Redactor -> Prior-Router Gateway)', () => {
+  beforeEach(seedPolicies);
+
   test('rejects unauthenticated requests to /api/chat with 401', async () => {
     const res = await request(app)
       .post('/api/chat')
@@ -69,7 +104,12 @@ describe('E2E Pipeline Integration (Server -> Redactor -> Prior-Router Gateway)'
     expect(res.body.redactor_report.blocked).toBe(true);
     expect(res.body.redactor_report.detections).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ ruleId: 'private-key', action: 'block' }),
+        expect.objectContaining({
+          ruleId: String(policies.block._id),
+          ruleName: 'Private key',
+          category: 'PRIVATE_KEY',
+          action: 'block',
+        }),
       ])
     );
   });

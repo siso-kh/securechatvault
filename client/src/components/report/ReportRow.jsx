@@ -54,6 +54,18 @@ export default function ReportRow({ item }) {
           <dd className="m-0 text-ink">{status.label}</dd>
           <dt>Categories</dt>
           <dd className="m-0 text-ink">{item.categories.join(', ') || 'None'}</dd>
+          {item.ruleName && (
+            <>
+              <dt>Rule</dt>
+              <dd className="m-0 text-ink">{item.ruleName}</dd>
+            </>
+          )}
+          {item.severity && (
+            <>
+              <dt>Severity</dt>
+              <dd className="m-0 text-ink capitalize">{item.severity}</dd>
+            </>
+          )}
           <dt className="col-span-2 mt-1 text-faint">The original value is never stored.</dt>
         </dl>
       )}

@@ -105,6 +105,21 @@
   font-weight: 500;
 }
 
+.users-table select {
+  height: 24px;
+  padding: 0 6px;
+  background: #211e25;
+  border: 1px solid #302b34;
+  border-radius: 5px;
+  color: white;
+  font-size: 10px;
+  outline: none;
+}
+
+.users-table select:focus {
+  border-color: #c8102e;
+}
+
 /* Status */
 
 .user-status {
@@ -148,6 +163,11 @@
 
 .user-actions button:last-child:hover {
   color: #e51b46;
+}
+
+.user-actions button:disabled {
+  color: #5c5566;
+  cursor: not-allowed;
 }
 
 /* Empty state */

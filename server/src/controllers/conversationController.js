@@ -47,7 +47,7 @@ exports.update = async (req, res, next) => {
     const conv = await Conversation.findOneAndUpdate(
       { _id: req.params.id, userId: req.user.id },
       { title: req.body.title },
-      { new: true, runValidators: true }  // return the updated doc, validate the title
+      { returnDocument: 'after', runValidators: true }  // return the updated doc, validate the title
     );
     if (!conv) {
       return res.status(404).json({ error: 'Conversation not found' });

@@ -30,11 +30,18 @@ async function sendMessage({ history, text, conversationId }) {
     const { status, data } = err.response ?? {};
 
     if (status === 422 && data?.code === 'CONTENT_BLOCKED') {
-      const category = data.redactor_report?.detections?.[0]?.category;
-      throw new BlockedError({ name: humanize(category), label: humanize(category) });
+      const d = data.redactor_report?.detections?.[0];
+      throw new BlockedError({
+        name: d?.ruleName || humanize(d?.category),
+        label: humanize(d?.category),
+      });
     }
     if (status === 503) {
-      throw new Error('The redaction service is unavailable, so nothing was sent.');
+      throw new Error(
+        data?.code === 'NO_ACTIVE_POLICIES'
+          ? 'No redaction policy is active, so nothing was sent. Ask an administrator.'
+          : 'The redaction service is unavailable, so nothing was sent.'
+      );
     }
     if (status === 502) {
       throw new Error('The AI service is unavailable. Try again later.');

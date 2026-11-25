@@ -1,87 +1,130 @@
-
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import PoliciesTable from '../../components/policies/PoliciesTable'
+import {
+  listPolicies,
+  createPolicy,
+  updatePolicy,
+  setPolicyEnabled,
+  deletePolicy,
+} from '../../services/policies'
 import '../../styles/policies.css'
 
-const initialPolicies = [
-  { id: 1, name: 'Email', category: 'PII', severity: 'high', action: 'Mask before send', enabled: true },
-  { id: 2, name: 'Phone', category: 'PII', severity: 'medium', action: 'Mask before send', enabled: true },
-  { id: 3, name: 'API key', category: 'Secret', severity: 'high', action: 'Block message', enabled: true },
-  { id: 4, name: 'Password after keyword', category: 'Secret', severity: 'high', action: 'Block message', enabled: true },
-  { id: 5, name: 'Credit card', category: 'Financial', severity: 'high', action: 'Mask before send', enabled: true },
-  { id: 6, name: 'IP address', category: 'Network', severity: 'low', action: 'Warn only', enabled: false },
-  { id: 7, name: 'JWT', category: 'Token', severity: 'high', action: 'Block message', enabled: true }
-]
+const emptyForm = { name: '', pattern: '', category: '', severity: 'high', action: 'mask' }
 
-const emptyForm = {
-  name: '',
-  regex: '',
-  category: 'PII',
-  severity: 'high',
-  action: 'Mask before send'
-}
+const apiError = (err) =>
+  err.response?.data?.error || 'Cannot reach the server. Try again.'
 
 function AdminPolicies() {
-  const [policies, setPolicies] = useState(initialPolicies)
-  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [policies, setPolicies] = useState(null)
+  const [error, setError] = useState('')
+  const [editing, setEditing] = useState(null) // null = closed, 'new', or the policy being edited
   const [form, setForm] = useState(emptyForm)
+  const [formError, setFormError] = useState('')
+  const [saving, setSaving] = useState(false)
+
+  useEffect(() => {
+    listPolicies().then(setPolicies).catch((e) => setError(apiError(e)))
+  }, [])
 
   function handleChange(e) {
     const { name, value } = e.target
-    setForm(prev => ({ ...prev, [name]: value }))
+    setForm((prev) => ({ ...prev, [name]: value }))
   }
 
-  function handleSave(e) {
+  function openNew() {
+    setForm(emptyForm)
+    setFormError('')
+    setEditing('new')
+  }
+
+  function openEdit(policy) {
+    setForm({
+      name: policy.name,
+      pattern: policy.pattern,
+      category: policy.category,
+      severity: policy.severity,
+      action: policy.action,
+    })
+    setFormError('')
+    setEditing(policy)
+  }
+
+  function close() {
+    setEditing(null)
+    setFormError('')
+  }
+
+  async function handleSave(e) {
     e.preventDefault()
-
-    const newPolicy = {
-      id: Date.now(),
-      name: form.name.trim(),
-      regex: form.regex.trim(),
-      category: form.category,
-      severity: form.severity,
-      action: form.action,
-      enabled: true
+    setFormError('')
+    setSaving(true)
+    try {
+      const body = { ...form, name: form.name.trim(), category: form.category.trim() }
+      if (editing === 'new') {
+        const created = await createPolicy(body)
+        setPolicies((prev) => [created, ...prev])
+      } else {
+        const updated = await updatePolicy(editing._id, body)
+        setPolicies((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
+      }
+      close()
+    } catch (err) {
+      setFormError(apiError(err))
+    } finally {
+      setSaving(false)
     }
-
-    setPolicies(prev => [...prev, newPolicy])
-    setForm(emptyForm)
-    setIsFormOpen(false)
   }
 
-  function handleCancel() {
-    setForm(emptyForm)
-    setIsFormOpen(false)
+  async function handleToggle(policy) {
+    setError('')
+    try {
+      const updated = await setPolicyEnabled(policy._id, !policy.enabled)
+      setPolicies((prev) => prev.map((p) => (p._id === updated._id ? updated : p)))
+    } catch (err) {
+      setError(apiError(err))
+    }
+  }
+
+  async function handleDelete(policy) {
+    if (!window.confirm(`Delete "${policy.name}"? This cannot be undone.`)) return
+    setError('')
+    try {
+      await deletePolicy(policy._id)
+      setPolicies((prev) => prev.filter((p) => p._id !== policy._id))
+    } catch (err) {
+      setError(apiError(err))
+    }
   }
 
   return (
     <div className="policies-page">
-
       <div className="policies-header">
         <h1>Policies</h1>
-
-        <button
-          className="add-rule-btn"
-          onClick={() => setIsFormOpen(true)}
-        >
+        <button className="add-rule-btn" onClick={openNew}>
           Add rule
         </button>
       </div>
 
-      <PoliciesTable
-        policies={policies}
-        setPolicies={setPolicies}
-      />
+      {error && <p role="alert" className="mb-3 text-xs text-danger">{error}</p>}
+      {!policies && !error && <p className="text-sm text-muted">Loading…</p>}
 
-      {isFormOpen && (
-        <div className="rule-overlay" onMouseDown={handleCancel}>
+      {policies && (
+        <PoliciesTable
+          policies={policies}
+          onToggle={handleToggle}
+          onEdit={openEdit}
+          onDelete={handleDelete}
+        />
+      )}
+
+      {editing && (
+        <div className="rule-overlay" onMouseDown={close}>
           <form
             className="rule-panel"
             onSubmit={handleSave}
-            onMouseDown={e => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
           >
             <div className="rule-fields">
-
               <div className="rule-field">
                 <label htmlFor="rule-name">Name</label>
                 <input
@@ -90,46 +133,41 @@ function AdminPolicies() {
                   value={form.name}
                   onChange={handleChange}
                   placeholder="Enter rule name"
+                  maxLength={80}
                   required
                 />
               </div>
 
               <div className="rule-field">
-                <label htmlFor="rule-regex">Regex pattern</label>
+                <label htmlFor="rule-pattern">Regex pattern</label>
                 <input
-                  id="rule-regex"
-                  name="regex"
-                  value={form.regex}
+                  id="rule-pattern"
+                  name="pattern"
+                  value={form.pattern}
                   onChange={handleChange}
-                  placeholder="Enter regex pattern"
+                  placeholder="PRJ-[0-9]{4}"
+                  maxLength={200}
+                  spellCheck={false}
                   required
                 />
               </div>
 
               <div className="rule-field">
-                <label htmlFor="rule-category">Category</label>
-                <select
+                <label htmlFor="rule-category">Category (shown as [CATEGORY])</label>
+                <input
                   id="rule-category"
                   name="category"
                   value={form.category}
                   onChange={handleChange}
-                >
-                  <option value="PII">PII</option>
-                  <option value="Secret">Secret</option>
-                  <option value="Financial">Financial</option>
-                  <option value="Network">Network</option>
-                  <option value="Token">Token</option>
-                </select>
+                  placeholder="API_KEY"
+                  maxLength={40}
+                  required
+                />
               </div>
 
               <div className="rule-field">
                 <label htmlFor="rule-severity">Severity</label>
-                <select
-                  id="rule-severity"
-                  name="severity"
-                  value={form.severity}
-                  onChange={handleChange}
-                >
+                <select id="rule-severity" name="severity" value={form.severity} onChange={handleChange}>
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
                   <option value="high">High</option>
@@ -138,37 +176,27 @@ function AdminPolicies() {
 
               <div className="rule-field">
                 <label htmlFor="rule-action">Action</label>
-                <select
-                  id="rule-action"
-                  name="action"
-                  value={form.action}
-                  onChange={handleChange}
-                >
-                  <option value="Mask before send">Mask before send</option>
-                  <option value="Block message">Block message</option>
-                  <option value="Warn only">Warn only</option>
+                <select id="rule-action" name="action" value={form.action} onChange={handleChange}>
+                  <option value="mask">Mask before send</option>
+                  <option value="block">Block message</option>
+                  <option value="warn">Warn only</option>
                 </select>
               </div>
 
+              {formError && <p role="alert" className="m-0 text-xs text-danger">{formError}</p>}
             </div>
 
             <div className="rule-panel-actions">
-              <button type="submit" className="save-rule-btn">
-                Save rule
+              <button type="submit" className="save-rule-btn" disabled={saving}>
+                {saving ? 'Saving…' : editing === 'new' ? 'Save rule' : 'Save changes'}
               </button>
-
-              <button
-                type="button"
-                className="cancel-rule-btn"
-                onClick={handleCancel}
-              >
+              <button type="button" className="cancel-rule-btn" onClick={close}>
                 Cancel
               </button>
             </div>
           </form>
         </div>
       )}
-
     </div>
   )
 }

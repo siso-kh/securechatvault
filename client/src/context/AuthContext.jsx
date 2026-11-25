@@ -1,5 +1,5 @@
 import { createContext, useCallback, useMemo, useState } from 'react';
-import { loginUser, registerUser } from '../services/auth';
+import { loginUser, loginAdmin, registerUser } from '../services/auth';
 
 export const AuthContext = createContext(null);
 
@@ -17,6 +17,7 @@ export function AuthProvider({ children }) {
   };
 
   const login = useCallback(async (data) => save(await loginUser(data)), []);
+  const adminLogin = useCallback(async (data) => save(await loginAdmin(data)), []);
   const register = useCallback(async (data) => save(await registerUser(data)), []);
   const logout = useCallback(() => {
     localStorage.removeItem(KEY);
@@ -24,8 +25,15 @@ export function AuthProvider({ children }) {
   }, []);
 
   const value = useMemo(
-    () => ({ user: session?.user ?? null, token: session?.token ?? null, login, register, logout }),
-    [session, login, register, logout]
+    () => ({
+      user: session?.user ?? null,
+      token: session?.token ?? null,
+      login,
+      adminLogin,
+      register,
+      logout,
+    }),
+    [session, login, adminLogin, register, logout]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

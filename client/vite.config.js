@@ -7,10 +7,8 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/api': {
-        target: 'http://localhost:5000', // use your server's real port
-        changeOrigin: true,
-      },
+      // keep the /api prefix: the Express routes are mounted under /api
+      '/api': { target: 'http://127.0.0.1:5000', changeOrigin: true },
     },
   },
 })

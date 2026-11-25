@@ -1,38 +1,9 @@
-
 import PolicyRow from './PolicyRow'
 
-function PoliciesTable({ policies, setPolicies }) {
-
-  function togglePolicy(id) {
-
-    setPolicies(prev =>
-      prev.map(policy =>
-        policy.id === id
-          ? { ...policy, enabled: !policy.enabled }
-          : policy
-      )
-    )
-
-  }
-
-  function deletePolicy(id) {
-
-    setPolicies(prev =>
-      prev.filter(policy => policy.id !== id)
-    )
-
-  }
-
-  function editPolicy(id) {
-    alert(`Edit policy ${id}`)
-  }
-
+function PoliciesTable({ policies, onToggle, onEdit, onDelete }) {
   return (
-
     <div className="policies-table-container">
-
       <table className="policies-table">
-
         <thead>
           <tr>
             <th>Name</th>
@@ -45,25 +16,26 @@ function PoliciesTable({ policies, setPolicies }) {
         </thead>
 
         <tbody>
-
-          {policies.map(policy => (
-
+          {policies.map((policy) => (
             <PolicyRow
-              key={policy.id}
+              key={policy._id}
               policy={policy}
-              onToggle={() => togglePolicy(policy.id)}
-              onEdit={() => editPolicy(policy.id)}
-              onDelete={() => deletePolicy(policy.id)}
+              onToggle={() => onToggle(policy)}
+              onEdit={() => onEdit(policy)}
+              onDelete={() => onDelete(policy)}
             />
-
           ))}
 
+          {policies.length === 0 && (
+            <tr>
+              <td colSpan="6" style={{ textAlign: 'center', padding: '25px 0' }}>
+                No policies yet. Add your first rule.
+              </td>
+            </tr>
+          )}
         </tbody>
-
       </table>
-
     </div>
-
   )
 }
 
