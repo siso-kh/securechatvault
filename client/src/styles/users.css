@@ -1,0 +1,176 @@
+
+/* Users page */
+
+.users-page {
+  width: 100%;
+  color: #ffffff;
+}
+
+/* Header */
+
+.users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.users-header h1 {
+  font-family: Georgia, serif;
+  font-size: 21px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.users-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.users-header-actions input {
+  width: 150px;
+  height: 26px;
+  padding: 0 10px;
+  background: #211e25;
+  border: 1px solid #302b34;
+  border-radius: 5px;
+  color: white;
+  font-size: 10px;
+  outline: none;
+}
+
+.users-header-actions input:focus {
+  border-color: #c8102e;
+}
+
+.invite-user-btn {
+  height: 26px;
+  padding: 0 18px;
+  background: #c8102e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.invite-user-btn:hover {
+  background: #a80d26;
+}
+
+/* Table */
+
+.users-table-container {
+  width: 100%;
+  overflow-x: auto;
+  background: #171419;
+  border: 1px solid #29252c;
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.users-table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 10px;
+}
+
+.users-table th {
+  color: #aaa2b1;
+  font-weight: 400;
+  font-size: 9px;
+  padding: 12px 0 15px;
+}
+
+.users-table td {
+  height: 32px;
+  color: #9992a5;
+  border-bottom: 1px solid #29252c;
+  padding: 0;
+}
+
+.users-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.users-table tbody tr:hover {
+  background: #1d1920;
+}
+
+.users-table .user-name {
+  color: white;
+  font-weight: 500;
+}
+
+/* Status */
+
+.user-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+}
+
+.user-status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #27b987;
+}
+
+.user-status.banned .user-status-dot {
+  background: #e51b46;
+}
+
+/* Actions */
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.user-actions button {
+  background: transparent;
+  border: none;
+  color: #9992a5;
+  font-size: 10px;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.user-actions button:hover {
+  color: white;
+}
+
+.user-actions button:last-child:hover {
+  color: #e51b46;
+}
+
+/* Empty state */
+
+.users-empty {
+  text-align: center;
+  padding: 25px !important;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .users-header {
+    align-items: flex-start;
+    gap: 15px;
+    flex-direction: column;
+  }
+
+  .users-header-actions {
+    width: 100%;
+  }
+
+  .users-header-actions input {
+    flex: 1;
+  }
+}
