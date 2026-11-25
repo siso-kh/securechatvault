@@ -1,62 +1,91 @@
-
 /* Users page */
 
 .users-page {
   width: 100%;
-  color: #ffffff;
+  max-width: 980px;
+  color: #f3eff1;
 }
 
 /* Header */
 
-.users-header {
+.users-head {
   display: flex;
+  align-items: flex-end;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  gap: 16px;
+  margin-bottom: 22px;
 }
 
-.users-header h1 {
+.users-title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.users-title h1 {
   font-family: Georgia, serif;
-  font-size: 21px;
+  font-size: 24px;
   font-weight: 400;
   margin: 0;
 }
 
-.users-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.users-count {
+  color: #8f8a94;
+  font-size: 11px;
 }
 
-.users-header-actions input {
-  width: 150px;
-  height: 26px;
+/* Toolbar */
+
+.users-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.users-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.users-tab {
+  padding: 5px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  color: #8f8a94;
+  font-size: 11.5px;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.users-tab:hover {
+  color: #f3eff1;
+}
+
+.users-tab[aria-selected='true'] {
+  background: rgba(243, 239, 241, 0.06);
+  color: #f3eff1;
+}
+
+.users-search {
+  width: 210px;
+  height: 28px;
   padding: 0 10px;
   background: #211e25;
   border: 1px solid #302b34;
   border-radius: 5px;
-  color: white;
-  font-size: 10px;
+  color: #f3eff1;
+  font-size: 11.5px;
   outline: none;
 }
 
-.users-header-actions input:focus {
-  border-color: #c8102e;
+.users-search::placeholder {
+  color: #625e68;
 }
 
-.invite-user-btn {
-  height: 26px;
-  padding: 0 18px;
-  background: #c8102e;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 10px;
-  cursor: pointer;
-}
-
-.invite-user-btn:hover {
-  background: #a80d26;
+.users-search:focus {
+  border-color: #b01228;
 }
 
 /* Table */
@@ -64,60 +93,103 @@
 .users-table-container {
   width: 100%;
   overflow-x: auto;
-  background: #171419;
   border: 1px solid #29252c;
   border-radius: 10px;
-  padding: 10px 14px;
+  background: #171419;
 }
 
 .users-table {
   width: 100%;
-  min-width: 600px;
+  min-width: 620px;
   border-collapse: collapse;
   text-align: left;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .users-table th {
-  color: #aaa2b1;
+  padding: 13px 18px;
+  border-bottom: 1px solid #29252c;
+  color: #8f8a94;
+  font-size: 10px;
   font-weight: 400;
-  font-size: 9px;
-  padding: 12px 0 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .users-table td {
-  height: 32px;
-  color: #9992a5;
+  padding: 11px 18px;
   border-bottom: 1px solid #29252c;
-  padding: 0;
+  vertical-align: middle;
+}
+
+.users-table tbody tr {
+  transition: background-color 0.12s ease;
+}
+
+.users-table tbody tr:hover {
+  background: rgba(243, 239, 241, 0.04);
 }
 
 .users-table tbody tr:last-child td {
   border-bottom: none;
 }
 
-.users-table tbody tr:hover {
-  background: #1d1920;
+.users-actions-col {
+  width: 150px;
+  text-align: right;
 }
 
-.users-table .user-name {
-  color: white;
+/* User cell */
+
+.user-name {
+  display: block;
+  color: #f3eff1;
+  font-size: 12.5px;
   font-weight: 500;
 }
 
-.users-table select {
-  height: 24px;
-  padding: 0 6px;
-  background: #211e25;
-  border: 1px solid #302b34;
-  border-radius: 5px;
-  color: white;
-  font-size: 10px;
-  outline: none;
+.user-email {
+  display: block;
+  margin-top: 2px;
+  color: #8f8a94;
+  font-size: 11px;
 }
 
-.users-table select:focus {
-  border-color: #c8102e;
+.users-table tr.is-banned .user-name,
+.users-table tr.is-banned .user-email {
+  color: #8f8a94;
+}
+
+/* Role: plain text that switches to the next role when clicked */
+
+.role-text {
+  color: #8f8a94;
+  font-size: 12px;
+}
+
+.role-toggle {
+  padding: 2px 0;
+  background: transparent;
+  border: none;
+  color: #8f8a94;
+  font-family: inherit;
+  font-size: 12px;
+  transition: color 0.12s ease;
+}
+
+.role-toggle:hover:not(:disabled) {
+  color: #f3eff1;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.role-toggle.role-admin {
+  color: #f3eff1;
+}
+
+.role-toggle:disabled {
+  color: #5c5566;
+  cursor: not-allowed;
 }
 
 /* Status */
@@ -125,44 +197,43 @@
 .user-status {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  color: white;
+  gap: 7px;
+  color: #f3eff1;
+  font-size: 12px;
 }
 
 .user-status-dot {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #27b987;
+  background: #2fb67c;
 }
 
 .user-status.banned .user-status-dot {
-  background: #e51b46;
+  background: #e0354d;
 }
 
-/* Actions */
+/* Row actions: visible on hover only */
 
 .user-actions {
   display: flex;
-  align-items: center;
-  gap: 22px;
+  justify-content: flex-end;
+  gap: 18px;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.users-table tr:hover .user-actions,
+.user-actions:focus-within {
+  opacity: 1;
 }
 
 .user-actions button {
+  padding: 2px 0;
   background: transparent;
   border: none;
-  color: #9992a5;
-  font-size: 10px;
-  padding: 4px 0;
-  cursor: pointer;
-}
-
-.user-actions button:hover {
-  color: white;
-}
-
-.user-actions button:last-child:hover {
-  color: #e51b46;
+  color: #f3eff1;
+  font-size: 11.5px;
 }
 
 .user-actions button:disabled {
@@ -170,27 +241,100 @@
   cursor: not-allowed;
 }
 
-/* Empty state */
+.user-actions .action-delete {
+  color: #e0354d;
+}
+
+.user-actions .action-delete:hover {
+  color: #f16177;
+}
+
+/* Inline delete confirmation */
+
+.user-confirm {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  font-size: 11px;
+}
+
+.user-confirm span {
+  color: #8f8a94;
+}
+
+.user-confirm button {
+  padding: 2px 0;
+  background: transparent;
+  border: none;
+  font-size: 11.5px;
+}
+
+.user-confirm .confirm-delete {
+  color: #e0354d;
+}
+
+.user-confirm .confirm-cancel {
+  color: #8f8a94;
+}
+
+.user-confirm .confirm-cancel:hover {
+  color: #f3eff1;
+}
+
+.user-confirm button:disabled {
+  color: #5c5566;
+  cursor: not-allowed;
+}
+
+/* Feedback and empty state */
+
+.users-error {
+  margin: 0 0 12px;
+  color: #e0354d;
+  font-size: 11px;
+}
+
+.users-loading {
+  color: #8f8a94;
+  font-size: 12px;
+}
 
 .users-empty {
+  padding: 28px 18px !important;
+  color: #8f8a94;
+  font-size: 11.5px;
   text-align: center;
-  padding: 25px !important;
+}
+
+.users-more {
+  padding: 12px;
+  border-top: 1px solid #29252c;
+  text-align: center;
+}
+
+.users-more button {
+  background: transparent;
+  border: none;
+  color: #8f8a94;
+  font-size: 11.5px;
+}
+
+.users-more button:hover {
+  color: #f3eff1;
 }
 
 /* Responsive */
 
 @media (max-width: 768px) {
-  .users-header {
+  .users-head {
     align-items: flex-start;
-    gap: 15px;
-    flex-direction: column;
+    flex-wrap: wrap;
   }
 
-  .users-header-actions {
-    width: 100%;
-  }
-
-  .users-header-actions input {
+  .users-search {
     flex: 1;
+    width: auto;
+    min-width: 160px;
   }
 }

@@ -10,3 +10,4 @@ export const setUserBanned = async (id, isBanned) =>
   (await http.patch(`/users/${id}/ban`, { isBanned })).data.user;
 
 export const deleteUser = (id) => http.delete(`/users/${id}`);
+
