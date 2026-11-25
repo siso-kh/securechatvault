@@ -137,16 +137,161 @@
   border-color: white;
 }
 
+
+
+/* Main layout */
+.admin-layout {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #151318;
+}
+
 /* Main content */
-
-
 .admin-main {
   flex: 1;
   min-width: 0;
-  min-height: 100vh;
-
+  height: 100vh;
+  overflow-y: auto;
+  padding: 0;
   background-color: #151318;
-
-  padding: 65px 4.5%;
 }
+
+/* Content positioning */
+.admin-page-content {
+  min-height: 100vh;
+  padding: 65px 4.5%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Add Rule overlay */
+
+.rule-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: flex-end;
+
+  background: rgba(0, 0, 0, 0.58);
+}
+
+/* Right side panel */
+
+.rule-panel {
+  width: 33%;
+  min-width: 300px;
+  max-width: 500px;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 105px 28px 35px;
+
+  background: #211e25;
+  border-left: 1px solid #302b34;
+  overflow-y: auto;
+}
+
+/* Form fields */
+
+.rule-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rule-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rule-field label {
+  color: #aaa2b1;
+  font-size: 11px;
+}
+
+.rule-field input,
+.rule-field select {
+  width: 100%;
+  height: 36px;
+
+  padding: 0 10px;
+
+  color: #ffffff;
+  background: #211e25;
+
+  border: 1px solid #39333e;
+  border-radius: 6px;
+
+  font-size: 11px;
+  outline: none;
+}
+
+.rule-field input:focus,
+.rule-field select:focus {
+  border-color: #c8102e;
+}
+
+.rule-field select option {
+  background: #211e25;
+  color: white;
+}
+
+/* Panel buttons */
+
+.rule-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 35px;
+}
+
+.save-rule-btn,
+.cancel-rule-btn {
+  height: 38px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.save-rule-btn {
+  flex: 1;
+  color: white;
+  background: #c8102e;
+  border: none;
+}
+
+.save-rule-btn:hover {
+  background: #a80d26;
+}
+
+.cancel-rule-btn {
+  flex: 0.65;
+  color: #ffffff;
+  background: transparent;
+  border: 1px solid #39333e;
+}
+
+.cancel-rule-btn:hover {
+  background: #302b34;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .rule-panel {
+    width: 85%;
+    min-width: 0;
+    padding: 70px 20px 25px;
+  }
+}
+
 
