@@ -12,11 +12,15 @@ const {
   ChatRedactionError,
 } = require('../services/redactorPipeline');
 
+const mongoose = require('mongoose');
+
+
 // Stores metadata only (category, rule, action), never the matched value.
-async function logEvents(userId, conversationId, detections) {
+async function logEvents(userId, conversationId, batchId, detections) {
   const docs = detections.map((d) => ({
     userId,
     conversationId,
+    batchId,
     ruleId: d.ruleId,
     category: d.category,
     action: d.action,
@@ -38,6 +42,7 @@ router.post('/', auth, async (req, res, next) => {
       return res.status(400).json({ error: 'messages[] is required' });
     }
     const lastIndex = messages.length - 1;
+    const batchId = new mongoose.Types.ObjectId();
 
     // 0. Ownership check before anything else (a bad id format goes to errorHandler -> 400)
     let conversation = null;
@@ -56,7 +61,8 @@ router.post('/', auth, async (req, res, next) => {
           await logEvents(
             req.user.id,
             conversation?._id,
-            (err.details.detections || []).map((d) => ({ ...d, action: 'block' }))
+            batchId,
+            err.details.detections || []
           );
         }
         return res.status(err.status).json({
@@ -145,8 +151,7 @@ router.post('/', auth, async (req, res, next) => {
       { role: 'assistant', content: reply, maskedContent: reply }
     );
     await conversation.save();
-    await logEvents(req.user.id, conversation._id, lastDetections);
-
+    await logEvents(req.user.id, conversation._id, batchId, lastDetections);
     return res.json({
       ...responseBody,
       conversation_id: conversation._id,

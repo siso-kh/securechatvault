@@ -1,62 +1,31 @@
 const os = require('os');
 const express = require('express');
-const { applyRules, validateRules } = require('./engine');
-const { DEFAULT_RULES } = require('./rules');
-
+const { applyRules } = require('./engine');
 
 const app = express();
-app.disable('x-powered-by');
-app.use(express.json({ limit: '100kb' }));
-
-const REDACTION_TIMEOUT_MS = 500;
+// 200kb: the backend allows 100kb messages and adds the rules to the body
+app.use(express.json({ limit: '200kb' }));
 
 app.post('/redact', (req, res) => {
-  const body = req.body || {};
-  const { text } = body;
-
+  const { text, rules } = req.body || {};
   if (typeof text !== 'string') {
     return res.status(400).json({ error: '"text" (string) is required' });
   }
-
-  const ruleError = validateRules(body.rules);
-  if (ruleError) {
-    return res.status(400).json({ error: ruleError });
+  if (rules !== undefined && !Array.isArray(rules)) {
+    return res.status(400).json({ error: '"rules" must be an array' });
   }
-
-  const policy = body.rules == null ? DEFAULT_RULES : body.rules;
-
-  const timedOut = { value: false };
-  const result = applyRules(text, policy, {
-    deadline: Date.now() + REDACTION_TIMEOUT_MS,
-    timedOut,
-  });
-
-  if (timedOut.value) {
-    return res.status(503).json({ error: 'Redaction timed out' });
-  }
-
-  return res.json({
-    maskedText: result.maskedText,
-    detections: result.detections,
-    blocked: result.blocked,
-    servedBy: os.hostname(),
-  });
+  res.json({ ...applyRules(text, rules || []), servedBy: os.hostname() });
 });
-
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', service: 'redactor' });
+  res.json({ status: 'ok', service: 'redactor', servedBy: os.hostname() });
 });
 
-app.use((err, req, res, _next) => {
-  if (err.type === 'entity.parse.failed') {
-    return res.status(400).json({ error: 'Invalid JSON body' });
-  }
-  if (err.type === 'entity.too.large') {
-    return res.status(413).json({ error: 'Payload too large' });
-  }
-  console.error(err);
-  res.status(500).json({ error: 'Internal server error' });
+// Malformed JSON, oversized body, etc. -> JSON errors instead of HTML
+app.use((err, req, res, next) => {
+  const status = err.status || err.statusCode || 500;
+  if (status >= 500) console.error('[redactor]', err.message);
+  res.status(status).json({ error: status === 413 ? 'Payload too large' : status < 500 ? 'Bad request' : 'Server error' });
 });
 
 module.exports = app;

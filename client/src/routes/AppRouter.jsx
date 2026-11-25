@@ -6,6 +6,7 @@ import AuthPage from '../pages/auth/AuthPage';
 import HomePage from '../pages/user/HomePage';
 import ChatPage from '../pages/user/ChatPage';
 import HistoryPage from '../pages/user/HistoryPage';
+import ReportPage from '../pages/user/ReportPage';
 
 
 
@@ -22,8 +23,7 @@ export default function AppRouter() {
           <Route index element={<HomePage />} />
           <Route path="history" element={<HistoryPage />} />
           <Route path="chat/:id?" element={<ChatPage />} />
-          <Route path="report" element={<Soon name="Report" />} />
-
+          <Route path="report" element={<ReportPage />} />
           <Route element={<AdminRoute />}>
             <Route path="admin/policies" element={<Soon name="Policies" />} />
             <Route path="admin/users" element={<Soon name="Users" />} />
