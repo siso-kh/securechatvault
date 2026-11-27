@@ -137,16 +137,21 @@ securechat-vault/
 ├── docs/
 │   ├── API_CRUD_REPORT.md      CRUD matrix + every endpoint + Postman guide
 │   └── architecture/           original project description/design document
-├── k8s/                        (empty)
-├── docker-compose.yml          (empty)
-├── .env.example                legacy/template
+├── k8s/                        namespace, ConfigMap/Secret and Deployments +
+│   │                           Services for mongo, redactor, prior-router,
+│   │                           backend, frontend; plus the seed Job
+│   └── examples/               secret template (copy, fill, never commit)
+├── docker-compose.yml          full local stack: mongo, seed, redactor,
+│                               prior-router, backend, frontend
+├── .env.example                Compose variables/template
 └── README.md
 ```
 
 > `docs/architecture/PROJECT_DESCRIPTION.md` describes the original design
 > (Gemini/Groq direct calls, Docker Compose, Minikube). The implementation has since
-> moved to the `prior-router` gateway, and the Compose/Kubernetes manifests are not
-> present yet. Treat this README as the source of truth for what actually runs.
+> moved to the `prior-router` gateway. The Compose and Kubernetes manifests described
+> in sections 9 and 10 are the supported deployment paths; treat this README as the
+> source of truth for what actually runs.
 
 ---
 
@@ -518,7 +523,320 @@ cd server && npm run dev
 
 ---
 
-## 10. API surface
+## 10. Deployment (Docker Compose and Kubernetes)
+
+There are two supported ways to run the whole stack in containers. Both use the
+per-service `Dockerfile`s and the same application contracts; only the orchestration
+and networking layer differ.
+
+| Service | Dockerfile | Listens on | Kubernetes image |
+|---|---|---|---|
+| Client (nginx) | `client/Dockerfile` | `8080` | `securechat-client:local` |
+| Backend API | `server/Dockerfile` | `5000` | `securechat-server:local` |
+| Redactor | `redactor/Dockerfile` | `5001` | `securechat-redactor:local` |
+| LLM gateway | `prior-router/Dockerfile` | `8090` | `securechat-prior-router:local` |
+| MongoDB | upstream `mongo:7` | `27017` | `mongo:7` |
+
+Those are the ports Compose and Kubernetes actually configure. Running a service
+directly still uses its own default (for example the redactor listens on `4000`).
+
+The client container is not a Vite dev server: it serves the built SPA from
+`nginx-unprivileged` and proxies `/api/` to `http://backend:5000` (see
+`client/nginx.conf`). That hostname only resolves inside Compose/Kubernetes.
+
+### 10.1 Environment contract
+
+Every service reads plain environment variables; nothing is baked into the images.
+This table is the quickest way to understand why a deployment can be "up" but broken.
+
+| Variable | Read by | Compose value | Kubernetes source |
+|---|---|---|---|
+| `MONGO_URI` | backend, seed | built from `MONGO_USER` / `MONGO_PASSWORD` | Secret `MONGO_URI` |
+| `MONGO_INITDB_ROOT_USERNAME` / `..._PASSWORD` | mongo image | `MONGO_USER` / `MONGO_PASSWORD` | Secret `MONGO_ROOT_*` |
+| `REDACTOR_URL` | backend | `http://redactor:5001` | ConfigMap `REDACTOR_URL` |
+| `GATEWAY_URL` | backend | `http://prior-router:5002` | ConfigMap `GATEWAY_URL` (`:8090`) |
+| `GATEWAY_KEY` | backend, redactor, gateway | `.env` (required) | Secret `GATEWAY_KEY` |
+| `JWT_SECRET` / `JWT_EXPIRES_IN` | backend | `.env` | Secret / default |
+| `OPENROUTER_API_KEY`, `GROQ_API_KEY` | gateway | `.env` (at least one) | Secret (optional keys) |
+| `ADMIN_EMAIL` / `ADMIN_PASSWORD` / `ADMIN_NAME` | seed, admin login | `.env` | Secret / ConfigMap |
+
+Two details that regularly cause failures:
+
+- **Container hostnames, not `localhost`.** Inside a container, `localhost` is the
+  container itself. Use `mongo`, `redactor`, `backend`, `prior-router` (Compose service
+  names = Kubernetes Service names) or the connection fails with
+  `ECONNREFUSED 127.0.0.1:27017`.
+- **Compose and Kubernetes use different gateway ports.** Compose sets `PORT=5002` for
+  `prior-router`; Kubernetes uses the image default `8090`. Consumers never hardcode
+  it — they follow `GATEWAY_URL`. The redactor is `5001` in both.
+
+### 10.2 Docker Compose
+
+Compose builds the four application images (the backend and seed share the server
+image), creates the `internal` network (no egress except for the gateway), and starts
+the stack in dependency order using container healthchecks.
+
+```
+                       docker compose up --build
+                                  │
+                 ┌────────────────┼─────────────────┐
+                 ▼                ▼                 ▼
+            mongo :27017     redactor :5001    prior-router :5002
+            (healthcheck:    (healthcheck:     (healthcheck:
+             mongosh ping)    wget /health)     curl /healthz)
+                 │                │                 │
+                 └────────────────┴────────┬────────┘
+                                           ▼
+                                   backend :5000
+                                  (healthcheck /health)
+                                           │
+                                           ▼
+                              frontend nginx :8080
+                              published on host :8082
+                                           │
+                     seed (one-shot, after mongo healthy)
+                     inserts 10 policies + admin, then exits
+```
+
+1. Create the root `.env` (Compose reads this file, not `server/.env`):
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Fill in `MONGO_USER`, `MONGO_PASSWORD`, `JWT_SECRET`, `GATEWAY_KEY`, at least one
+   provider key, and `ADMIN_EMAIL` / `ADMIN_PASSWORD` (8+ characters). Compose uses
+   `${VAR:?message}` for the required values, so a missing key stops the start instead
+   of booting a container with an empty credential.
+
+2. Build and start:
+
+   ```bash
+   docker compose up --build -d
+   docker compose ps
+   ```
+
+   Expected: `mongo`, `redactor`, `prior-router`, `backend`, `frontend` are `running`
+   (or `healthy`), and `seed` is `exited (0)`. The seed container runs
+   `node scripts/seed.js` once, creates the admin from `ADMIN_*`, and inserts the
+   default policy set. Re-running it is safe: existing policies are never overwritten.
+
+3. Use the app at **http://localhost:8082** (host port 8082 → container 8080; 8080/8081
+   are commonly occupied on Windows). Admin login is `/admin/login`, and the passcode
+   is the seeded `ADMIN_PASSWORD`.
+
+4. Verify and inspect:
+
+   ```bash
+   docker compose logs -f backend
+   docker compose exec backend wget -qO- http://127.0.0.1:5000/health
+   docker compose exec backend wget -qO- http://redactor:5001/health
+   docker compose exec backend wget -qO- http://prior-router:5002/healthz
+   curl -s -o /dev/null -w '%{http_code}\n' http://localhost:8082/
+   ```
+
+5. Stop, keeping or dropping data:
+
+   ```bash
+   docker compose down          # keep the mongo-data volume
+   docker compose down -v       # also delete users/conversations/policies
+   ```
+
+### 10.3 Kubernetes
+
+The manifests in `k8s/` deploy the same images into the `securechat-vault` namespace
+with one replica per service. ClusterIP Services provide stable DNS names; only the
+frontend is exposed (NodePort).
+
+```
+                              browser
+                                 │
+                NodePort 30428 / minikube tunnel / port-forward
+                                 ▼
+                    ┌──────────────────────────┐
+                    │ Service  frontend        │  NodePort 80 → 8080
+                    └────────────┬─────────────┘
+                                 │ nginx proxies /api/ → backend:5000
+                    ┌────────────▼─────────────┐
+                    │ Service  backend         │  ClusterIP :5000
+                    └───┬──────────────────┬───┘
+          REDACTOR_URL  │                  │  GATEWAY_URL
+             ┌──────────▼───────┐   ┌──────▼─────────────┐
+             │ Service redactor │   │ Service prior-router│
+             │ :5001            │   │ :8090               │
+             └──────────────────┘   └──────┬──────────────┘
+                                           │ HTTPS
+                                           ▼
+                                  free model providers
+             ┌──────────────────────────┐
+             │ Service mongo :27017     │◄──── MONGO_URI
+             └──────────────────────────┘
+```
+
+| File | Objects | Notes |
+|---|---|---|
+| `00-namespace.yaml` | Namespace | `securechat-vault` |
+| `01-configmap.yaml` | ConfigMap | `REDACTOR_URL`, `GATEWAY_URL`, `ADMIN_EMAIL`, log level |
+| `02-secret.yaml` | Secret | local values only — never commit real credentials |
+| `03-mongo.yaml` | Deployment + Service | `mongo:7`, probes run an authenticated `ping` |
+| `04-redactor.yaml` | Deployment + Service | `PORT=5001`, probes `/health` |
+| `05-prior-router.yaml` | Deployment + Service | `PORT=8090`, probes `/healthz`, optional provider keys |
+| `06-backend.yaml` | Deployment + Service | `PORT=5000`, `wait-for-mongo` initContainer, probes `/health` |
+| `07-frontend.yaml` | Deployment + Service | nginx on 8080, NodePort 80 → `targetPort: 8080` |
+| `08-seed-job.yaml` | Job | one-shot seed with the same `wait-for-mongo` initContainer |
+
+Startup order is enforced without `depends_on` (Kubernetes has none):
+
+```
+mongo starts ──► readiness: mongosh "<MONGO_URI>" → ping
+      ├─ backend initContainer waits for the same ping, then the API starts
+      ├─ seed Job initContainer waits, then runs scripts/seed.js (policies + admin)
+      └─ redactor / prior-router start independently and self-report via probes
+```
+
+#### 1. Provide the Secret
+
+`k8s/02-secret.yaml` is git-ignored (see `.gitignore`), so your local copy never
+reaches the repository — only the template is committed. For a fresh cluster, copy
+the template and fill it in:
+
+```bash
+cp k8s/examples/secret.example.yaml k8s/02-secret.yaml   # then edit values
+```
+
+Required keys: `MONGO_ROOT_USERNAME`, `MONGO_ROOT_PASSWORD`, `MONGO_URI`,
+`JWT_SECRET`, `GATEWAY_KEY`; provider keys (`OPENROUTER_API_KEY`, `GROQ_API_KEY`) are
+optional at the manifest level but the gateway needs at least one to route; `ADMIN_*`
+are optional (without them the seed still inserts the default policies but creates no
+admin). `MONGO_URI` must point at the Service name and include `authSource=admin`:
+
+```
+mongodb://<user>:<password>@mongo:27017/securechat?authSource=admin
+```
+
+Percent-encode the password if it contains `@ : / # $`.
+
+#### 2. Build and load the images
+
+The manifests use `imagePullPolicy: IfNotPresent` with local tags. With minikube, build
+straight into the cluster's image store:
+
+```bash
+minikube image build -t securechat-server:local       ./server
+minikube image build -t securechat-redactor:local     ./redactor
+minikube image build -t securechat-prior-router:local ./prior-router
+minikube image build -t securechat-client:local       ./client
+```
+
+On another cluster, push the same tags to a registry and change the `image:` fields (or
+run `eval $(minikube docker-env)` and build with `docker build`).
+
+#### 3. Apply the manifests
+
+```bash
+kubectl apply -f k8s/
+```
+
+Manifests are ordered by filename, so the Namespace, ConfigMap and Secret exist before
+the workloads that reference them. The seed Job runs once; **Jobs are immutable**, so
+re-applying after the template changes fails until you delete it:
+
+```bash
+kubectl delete job -n securechat-vault securechat-seed --ignore-not-found
+kubectl apply -f k8s/08-seed-job.yaml
+```
+
+#### 4. Open the site
+
+With the Docker driver on Windows the minikube IP/NodePort is **not reachable from the
+host**; use a tunnel. Both options below are verified:
+
+```bash
+# Option A: minikube opens a tunnel and the browser (keep the terminal open)
+minikube service -n securechat-vault frontend
+
+# Option B: port-forward, then open http://localhost:18080
+kubectl port-forward -n securechat-vault svc/frontend 18080:80
+```
+
+Avoid host port `8080` on Windows — it often falls in a reserved range and another
+process already answers there. On a cluster with a routable node, the NodePort is
+`http://<node-ip>:<nodePort>`; read it with:
+
+```bash
+kubectl get svc -n securechat-vault frontend -o jsonpath='{.spec.ports[0].nodePort}'
+```
+
+The UI is `/`, user auth is `/auth`, and admin sign-in is `/admin/login` with
+`ADMIN_PASSWORD`.
+
+#### 5. Verify the deployment
+
+```bash
+# every workload ready, seed Completed
+kubectl get pods,svc,jobs -n securechat-vault -o wide
+
+# every Service has at least one endpoint (no selector/port typos)
+kubectl get endpoints -n securechat-vault
+
+# backend reached Mongo instead of falling back to localhost
+kubectl logs -n securechat-vault deploy/backend --tail=20     # "MongoDB connected"
+
+# seed actually ran
+kubectl logs -n securechat-vault job/securechat-seed           # policies: 10 added
+
+# full in-cluster chain, from inside the backend pod
+kubectl exec -n securechat-vault deploy/backend -- sh -c \
+  'wget -qO- http://redactor:5001/health; echo; \
+   wget -qO- http://prior-router:8090/healthz; echo; \
+   wget -qO- http://backend:5000/health; echo'
+
+# public path through the frontend proxy
+curl -s -o /dev/null -w '%{http_code}\n' http://localhost:18080/
+```
+
+Expected: all pods `1/1 Running`, the Job `1/1 Complete`, all five Services with
+endpoints, `MongoDB connected` in the backend log, `policies: 10 added` in the seed log,
+and three `{"status":"ok"}` bodies.
+
+#### 6. Redeploy, inspect, tear down
+
+```bash
+# after changing backend code
+minikube image build -t securechat-server:local ./server
+kubectl rollout restart -n securechat-vault deploy/backend
+kubectl rollout status  -n securechat-vault deploy/backend
+
+# why is a pod restarting?
+kubectl describe pod -n securechat-vault -l app=backend
+kubectl get events -n securechat-vault --sort-by=.lastTimestamp | tail -20
+
+# remove everything
+kubectl delete namespace securechat-vault
+```
+
+Rolling the mongo Deployment recreates its pod; because it mounts an `emptyDir`, that
+discards users, conversations and policies. Re-run the seed Job afterwards, or move
+Mongo to a PVC/StatefulSet if the data matters.
+
+### 10.4 Troubleshooting the containerized stack
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| Backend logs `Mongo not reachable yet: ECONNREFUSED 127.0.0.1:27017` | `MONGO_URI` unset, so `db.js` falls back to localhost | Provide `MONGO_URI` in the Secret/`.env` |
+| Backend exits with `GATEWAY_KEY is required` | `GATEWAY_KEY` missing (checked at require time) | Add it to the Secret/`.env`; it must match the gateway's |
+| `502` on `POST /api/chat` | Backend cannot reach the gateway (`GATEWAY_URL` wrong host/port) | Match the Service port: `8090` in Kubernetes, `5002` in Compose |
+| `503 REDACTOR_UNAVAILABLE` | `REDACTOR_URL` points at the wrong port/service | Use `http://redactor:5001` |
+| Seed Job `Failed`, `0/1` | Same missing `MONGO_URI` (or Mongo not ready) | Fix the Secret; the `wait-for-mongo` initContainer handles readiness |
+| `field is immutable` on the Job | Job pod templates cannot be updated in place | `kubectl delete job ...` then re-apply |
+| Site unreachable at `192.168.49.2:30428` | Docker driver on Windows does not route node IPs | `minikube service ...` or `kubectl port-forward` |
+| `bind: An attempt was made to access a socket ... forbidden` | Host port in a Windows reserved range (commonly 8080) | Forward another port, e.g. `18080:80` |
+| UI loads but `/api/...` 404s | nginx proxies to `backend:5000`; the Service must be named `backend` on 5000 | Keep Service name/port or edit `client/nginx.conf` |
+| Data disappears after a rollout | Mongo uses `emptyDir` | Accept for dev, or switch to a PVC/StatefulSet |
+
+---
+
+## 11. API surface
 
 All routes are prefixed `/api` except health. `Authorization: Bearer <jwt>` is required
 where noted. Full request/response bodies and Postman instructions are in
@@ -563,7 +881,7 @@ where noted. Full request/response bodies and Postman instructions are in
 
 ---
 
-## 11. Testing
+## 12. Testing
 
 | Suite | Location | Command | Notes |
 |---|---|---|---|
@@ -583,7 +901,7 @@ Additional backend scripts: `npm run test:workflow`, `npm run test:full-pipeline
 
 ---
 
-## 12. Security model
+## 13. Security model
 
 - **No raw secrets upstream.** Every message is redacted before the gateway call; the
   API refuses to proceed when redaction is unavailable or unconfigured.
@@ -602,11 +920,15 @@ Additional backend scripts: `npm run test:workflow`, `npm run test:full-pipeline
 
 ---
 
-## 13. Current limitations and notes
+## 14. Current limitations and notes
 
-- `docker-compose.yml` and `k8s/` are empty, and only `client/Dockerfile` exists.
-  The Compose/Kubernetes deployment described in the architecture document is not
-  implemented in this checkout; run the services directly as shown above.
+- Kubernetes runs MongoDB on an `emptyDir`, so users, conversations and policies are
+  lost whenever the mongo pod is recreated. Use a PVC/StatefulSet for persistence.
+- The Kubernetes manifests are a dev/demo deployment: one replica per service, locally
+  built `securechat-*:local` images, no Ingress and no resource requests/limits.
+- `k8s/02-secret.yaml` is git-ignored and must stay that way: commit only the
+  template in `k8s/examples/secret.example.yaml`, and rotate any key that has already
+  been pushed.
 - The gateway's quarantine ledger is in-memory per process. Multiple gateway
   instances do not share failure state.
 - Catalogue files are snapshots. Models rotate and free quotas expire; rebuild the
@@ -623,7 +945,7 @@ Additional backend scripts: `npm run test:workflow`, `npm run test:full-pipeline
 
 ---
 
-## 14. Further documentation
+## 15. Further documentation
 
 - [`docs/API_CRUD_REPORT.md`](docs/API_CRUD_REPORT.md) — CRUD matrix, every endpoint,
   Postman environment/run order, example bodies, and negative cases.

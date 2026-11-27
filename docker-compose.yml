@@ -1,0 +1,117 @@
+# Values in .env (or the shell environment) are interpolated below.
+# Required secrets use ${VAR:?message} so a missing value fails loudly instead of
+# silently starting a container with an empty credential.
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:?MONGO_USER is required, see .env.example}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:?MONGO_PASSWORD is required, see .env.example}
+    volumes:
+      - mongo-data:/data/db
+    networks: [internal]
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # One-shot: inserts the default redaction policies (and the admin account
+  # when ADMIN_EMAIL/ADMIN_PASSWORD are set) and then exits. Re-running it is
+  # safe: existing policies are never overwritten and the admin is reused.
+  seed:
+    build: ./server
+    restart: "no"
+    command: ["node", "scripts/seed.js"]
+    environment:
+      MONGO_URI: mongodb://${MONGO_USER:?MONGO_USER is required, see .env.example}:${MONGO_PASSWORD:?MONGO_PASSWORD is required, see .env.example}@mongo:27017/securechat?authSource=admin
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      ADMIN_NAME: ${ADMIN_NAME:-Administrator}
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks: [internal]
+
+  redactor:
+    build: ./redactor
+    restart: unless-stopped
+    environment:
+      PORT: "5001"
+      NODE_ENV: production
+    networks: [internal]
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:5001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  prior-router:
+    build: ./prior-router
+    restart: unless-stopped
+    environment:
+      PORT: "5002"
+      # The gateway refuses to start without this, and the backend must send
+      # the exact same value.
+      GATEWAY_KEY: ${GATEWAY_KEY:?GATEWAY_KEY is required, see .env.example}
+      # Provider keys named by gateway/catalogues/*.json. A task whose key is
+      # absent is skipped at startup, so at least one is needed.
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+    networks: [internal, egress]
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:5002/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  backend:
+    build: ./server
+    restart: unless-stopped
+    environment:
+      PORT: "5000"
+      NODE_ENV: production
+      # Built here rather than taken from .env: MONGO_URI in .env points at
+      # localhost, which is the wrong host inside the container network.
+      MONGO_URI: mongodb://${MONGO_USER:?MONGO_USER is required, see .env.example}:${MONGO_PASSWORD:?MONGO_PASSWORD is required, see .env.example}@mongo:27017/securechat?authSource=admin
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required, see .env.example}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-1d}
+      REDACTOR_URL: http://redactor:5001
+      # routerClient.js throws at require-time when this is missing.
+      GATEWAY_URL: http://prior-router:5002
+      GATEWAY_KEY: ${GATEWAY_KEY:?GATEWAY_KEY is required, see .env.example}
+      # Lets /api/auth/admin-login resolve the seeded admin by email.
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+    depends_on:
+      mongo:
+        condition: service_healthy
+      redactor:
+        condition: service_healthy
+      prior-router:
+        condition: service_healthy
+    networks: [internal]
+
+  frontend:
+    build: ./client
+    restart: unless-stopped
+    ports:
+      # Host ports 8080/8081 are often taken on Windows dev machines (Oracle
+      # TNS Listener, other Docker projects), so publish the UI on 8082.
+      - "8082:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks: [public, internal]
+
+networks:
+  public:
+  internal:
+    internal: true
+  egress:
+
+volumes:
+  mongo-data:

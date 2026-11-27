@@ -1,0 +1,57 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: securechat-seed
+  namespace: securechat-vault
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        app: securechat-seed
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-for-mongo
+          image: mongo:7
+          command:
+            - sh
+            - -c
+            - >
+              until mongosh "$MONGO_URI" --quiet --eval "db.adminCommand({ ping: 1 })" >/dev/null 2>&1;
+              do echo "waiting for mongo..."; sleep 2; done
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: securechat-secrets
+                  key: MONGO_URI
+      containers:
+        - name: seed
+          image: securechat-server:local
+          imagePullPolicy: IfNotPresent
+          command: ["node", "scripts/seed.js"]
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: securechat-secrets
+                  key: MONGO_URI
+            - name: ADMIN_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: securechat-secrets
+                  key: ADMIN_EMAIL
+                  optional: true
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: securechat-secrets
+                  key: ADMIN_PASSWORD
+                  optional: true
+            - name: ADMIN_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: securechat-secrets
+                  key: ADMIN_NAME
+                  optional: true

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: securechat-config
+  namespace: securechat-vault
+data:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  # redactor listens on 5001 (see redactor/Dockerfile), prior-router on 8090
+  # and the backend on 5000. These must match the Services' ports.
+  REDACTOR_URL: "http://redactor:5001"
+  GATEWAY_URL: "http://prior-router:8090"
+  ADMIN_EMAIL: "admin@securechat.local"
